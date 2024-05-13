@@ -121,7 +121,6 @@ func (r *BookingArchive) GetArchive(ctx context.Context, req *archive.FieldValue
 	}
 
 	toSqls, args, err := toSql.ToSql()
-
 	if err != nil {
 		return nil, err
 	}
@@ -159,12 +158,15 @@ func (r *BookingArchive) GetAllArchive(ctx context.Context, req *archive.GetAllA
 	defer span.End()
 	var (
 		archivesRes archive.ArchivesType
+		count       int64
 		upTime      sql.NullTime
 		delTime     sql.NullTime
 	)
 	toSql := r.db.Sq.Builder.
 		Select(tableColumArchive()).
 		From(tableNameArchive)
+
+	countBuilder := r.db.Sq.Builder.Select("count(*)").From(tableNameArchive)
 
 	if req.Page >= 1 && req.Limit >= 1 {
 		toSql = toSql.
@@ -179,8 +181,17 @@ func (r *BookingArchive) GetAllArchive(ctx context.Context, req *archive.GetAllA
 	}
 	if !req.DeleteStatus {
 		toSql = toSql.Where(r.db.Sq.Equal("deleted_at", nil))
+		countBuilder = countBuilder.Where(r.db.Sq.Equal("deleted_at", nil))
 	}
 	toSqls, args, err := toSql.ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	queryCount, _, err := countBuilder.ToSql()
+
+	err = r.db.QueryRow(ctx, queryCount).Scan(&count)
 
 	if err != nil {
 		return nil, err
@@ -218,8 +229,8 @@ func (r *BookingArchive) GetAllArchive(ctx context.Context, req *archive.GetAllA
 			archiveRes.DeletedAt = delTime.Time
 		}
 		archivesRes.Archives = append(archivesRes.Archives, &archiveRes)
-		archivesRes.Count += 1
 	}
+	archivesRes.Count = count
 
 	return &archivesRes, nil
 }
@@ -296,12 +307,15 @@ func (r *BookingArchive) DeleteArchive(ctx context.Context, req *archive.FieldVa
 			return &archive.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &archive.StatusRes{Status: false}, err
 		}
-		return &archive.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &archive.StatusRes{Status: true}, nil
+		}
+		return &archive.StatusRes{Status: false}, nil
 
 	} else {
 		toSql, args, err := r.db.Sq.Builder.
@@ -313,11 +327,14 @@ func (r *BookingArchive) DeleteArchive(ctx context.Context, req *archive.FieldVa
 			return &archive.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &archive.StatusRes{Status: false}, err
 		}
-		return &archive.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &archive.StatusRes{Status: true}, nil
+		}
+		return &archive.StatusRes{Status: false}, nil
 	}
 }

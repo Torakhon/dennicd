@@ -136,7 +136,7 @@ func (m *StatusDoctorWorkingHours) GetStatus() bool {
 	return false
 }
 
-type GetAllDoctorWorkingHourS struct {
+type GetAllDoctorWorkingHoursReq struct {
 	Page                 int64    `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
 	Limit                int64    `protobuf:"varint,2,opt,name=limit,proto3" json:"limit"`
 	Search               string   `protobuf:"bytes,3,opt,name=search,proto3" json:"search"`
@@ -145,18 +145,18 @@ type GetAllDoctorWorkingHourS struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetAllDoctorWorkingHourS) Reset()         { *m = GetAllDoctorWorkingHourS{} }
-func (m *GetAllDoctorWorkingHourS) String() string { return proto.CompactTextString(m) }
-func (*GetAllDoctorWorkingHourS) ProtoMessage()    {}
-func (*GetAllDoctorWorkingHourS) Descriptor() ([]byte, []int) {
+func (m *GetAllDoctorWorkingHoursReq) Reset()         { *m = GetAllDoctorWorkingHoursReq{} }
+func (m *GetAllDoctorWorkingHoursReq) String() string { return proto.CompactTextString(m) }
+func (*GetAllDoctorWorkingHoursReq) ProtoMessage()    {}
+func (*GetAllDoctorWorkingHoursReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2f24b76898b6e348, []int{2}
 }
-func (m *GetAllDoctorWorkingHourS) XXX_Unmarshal(b []byte) error {
+func (m *GetAllDoctorWorkingHoursReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetAllDoctorWorkingHourS) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetAllDoctorWorkingHoursReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetAllDoctorWorkingHourS.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetAllDoctorWorkingHoursReq.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -166,33 +166,33 @@ func (m *GetAllDoctorWorkingHourS) XXX_Marshal(b []byte, deterministic bool) ([]
 		return b[:n], nil
 	}
 }
-func (m *GetAllDoctorWorkingHourS) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetAllDoctorWorkingHourS.Merge(m, src)
+func (m *GetAllDoctorWorkingHoursReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllDoctorWorkingHoursReq.Merge(m, src)
 }
-func (m *GetAllDoctorWorkingHourS) XXX_Size() int {
+func (m *GetAllDoctorWorkingHoursReq) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetAllDoctorWorkingHourS) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetAllDoctorWorkingHourS.DiscardUnknown(m)
+func (m *GetAllDoctorWorkingHoursReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllDoctorWorkingHoursReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetAllDoctorWorkingHourS proto.InternalMessageInfo
+var xxx_messageInfo_GetAllDoctorWorkingHoursReq proto.InternalMessageInfo
 
-func (m *GetAllDoctorWorkingHourS) GetPage() int64 {
+func (m *GetAllDoctorWorkingHoursReq) GetPage() int64 {
 	if m != nil {
 		return m.Page
 	}
 	return 0
 }
 
-func (m *GetAllDoctorWorkingHourS) GetLimit() int64 {
+func (m *GetAllDoctorWorkingHoursReq) GetLimit() int64 {
 	if m != nil {
 		return m.Limit
 	}
 	return 0
 }
 
-func (m *GetAllDoctorWorkingHourS) GetSearch() string {
+func (m *GetAllDoctorWorkingHoursReq) GetSearch() string {
 	if m != nil {
 		return m.Search
 	}
@@ -304,6 +304,7 @@ func (m *DoctorWorkingHours) GetDeletedAt() string {
 
 type ListDoctorWorkingHours struct {
 	Dwh                  []*DoctorWorkingHours `protobuf:"bytes,1,rep,name=dwh,proto3" json:"dwh"`
+	Count                int32                 `protobuf:"varint,2,opt,name=count,proto3" json:"count"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
 	XXX_sizecache        int32                 `json:"-"`
@@ -349,10 +350,17 @@ func (m *ListDoctorWorkingHours) GetDwh() []*DoctorWorkingHours {
 	return nil
 }
 
+func (m *ListDoctorWorkingHours) GetCount() int32 {
+	if m != nil {
+		return m.Count
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*GetReqInt)(nil), "healthcare.GetReqInt")
 	proto.RegisterType((*StatusDoctorWorkingHours)(nil), "healthcare.StatusDoctorWorkingHours")
-	proto.RegisterType((*GetAllDoctorWorkingHourS)(nil), "healthcare.GetAllDoctorWorkingHourS")
+	proto.RegisterType((*GetAllDoctorWorkingHoursReq)(nil), "healthcare.GetAllDoctorWorkingHoursReq")
 	proto.RegisterType((*DoctorWorkingHours)(nil), "healthcare.Doctor_working_hours")
 	proto.RegisterType((*ListDoctorWorkingHours)(nil), "healthcare.ListDoctorWorkingHours")
 }
@@ -362,39 +370,40 @@ func init() {
 }
 
 var fileDescriptor_2f24b76898b6e348 = []byte{
-	// 500 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xc6, 0x71, 0x1b, 0xe2, 0x89, 0xf8, 0xd1, 0xaa, 0x54, 0x4b, 0x51, 0x4d, 0x64, 0x21, 0x94,
-	0x4b, 0x83, 0x14, 0x9e, 0x20, 0x25, 0x52, 0x1a, 0xa9, 0x12, 0x92, 0x5b, 0x94, 0x0b, 0xaa, 0x59,
-	0xbc, 0x93, 0x7a, 0x15, 0x27, 0x0e, 0xbb, 0x93, 0x46, 0xb9, 0xf1, 0x18, 0x3c, 0x12, 0x47, 0x1e,
-	0x01, 0x85, 0x13, 0x6f, 0x81, 0xb2, 0x6b, 0x68, 0x01, 0x47, 0xe5, 0xc2, 0xcd, 0xf3, 0x7d, 0x33,
-	0xdf, 0x7e, 0x3b, 0x33, 0x6b, 0x38, 0xca, 0x50, 0xe4, 0x94, 0xa5, 0x42, 0xe3, 0x91, 0x41, 0x7d,
-	0xa5, 0x52, 0x7c, 0x21, 0x8b, 0x94, 0x0a, 0x9d, 0x2c, 0x0b, 0x3d, 0x51, 0xb3, 0xcb, 0x24, 0x2b,
-	0x16, 0xda, 0x74, 0xe6, 0xba, 0xa0, 0x82, 0xc1, 0x75, 0x7a, 0xf4, 0x0e, 0x82, 0x01, 0x52, 0x8c,
-	0x1f, 0x86, 0x33, 0x62, 0xf7, 0xa1, 0xa6, 0x24, 0xf7, 0x5a, 0x5e, 0x7b, 0x37, 0xae, 0x29, 0xc9,
-	0x9e, 0x40, 0xa0, 0x4c, 0x22, 0x52, 0x52, 0x57, 0xc8, 0x6b, 0x2d, 0xaf, 0xdd, 0x88, 0x1b, 0xca,
-	0xf4, 0x6c, 0xcc, 0x9e, 0xc3, 0x03, 0x65, 0x92, 0x4c, 0x68, 0x99, 0x48, 0xcc, 0x91, 0x50, 0x72,
-	0xdf, 0xa6, 0xdc, 0x53, 0xe6, 0x44, 0x68, 0xd9, 0x77, 0x60, 0xd4, 0x05, 0x7e, 0x46, 0x82, 0x16,
-	0xa6, 0x6f, 0x1d, 0x8d, 0x9c, 0xa1, 0x93, 0x8d, 0x1f, 0xb6, 0x0f, 0x75, 0x63, 0x39, 0x7b, 0x68,
-	0x23, 0x2e, 0xa3, 0xe8, 0x2d, 0xf0, 0x01, 0x52, 0x2f, 0xcf, 0xff, 0xaa, 0x39, 0x63, 0x0c, 0x76,
-	0xe6, 0xe2, 0x12, 0x6d, 0x85, 0x1f, 0xdb, 0x6f, 0xb6, 0x07, 0xbb, 0xb9, 0x9a, 0x2a, 0xb2, 0x26,
-	0xfd, 0xd8, 0x05, 0x56, 0x1d, 0x85, 0x4e, 0x33, 0x6b, 0x2c, 0x88, 0xcb, 0x28, 0xfa, 0x58, 0x83,
-	0xbd, 0x7e, 0x45, 0x7b, 0xaa, 0xee, 0x5f, 0xb6, 0x51, 0x49, 0x2b, 0x1d, 0xc4, 0x0d, 0x07, 0x0c,
-	0x25, 0x0b, 0xa1, 0x29, 0xc5, 0x2a, 0x29, 0xc6, 0xc9, 0x12, 0x71, 0x52, 0x1e, 0x11, 0x48, 0xb1,
-	0x7a, 0x3d, 0x1e, 0x21, 0x4e, 0xd8, 0x21, 0x80, 0x21, 0xa1, 0x29, 0x21, 0x35, 0x45, 0xbe, 0xe3,
-	0x68, 0x8b, 0x9c, 0xab, 0x29, 0xb2, 0xa7, 0xd0, 0x1c, 0xab, 0x99, 0x32, 0x99, 0xe3, 0x77, 0x2d,
-	0x0f, 0x0e, 0xb2, 0x09, 0x87, 0x00, 0xa9, 0x46, 0x41, 0x28, 0x13, 0x41, 0xbc, 0xee, 0xea, 0x4b,
-	0xa4, 0x47, 0x1b, 0x7a, 0x31, 0x97, 0x3f, 0xe9, 0xbb, 0x8e, 0x2e, 0x11, 0x47, 0x97, 0x53, 0xd9,
-	0xd0, 0x8d, 0xd2, 0x9c, 0x43, 0x7a, 0x14, 0x9d, 0xc2, 0xfe, 0xa9, 0x32, 0x54, 0x31, 0x92, 0x2e,
-	0xf8, 0x72, 0x99, 0x71, 0xaf, 0xe5, 0xb7, 0x9b, 0xdd, 0x56, 0xe7, 0x7a, 0x55, 0x3a, 0x55, 0x2d,
-	0x8b, 0x37, 0xc9, 0xdd, 0xef, 0x3e, 0xb0, 0x0a, 0xa9, 0x0b, 0xe0, 0xaf, 0xac, 0xdf, 0x0a, 0xee,
-	0x56, 0xe5, 0x83, 0x5b, 0x33, 0xd8, 0x39, 0x3c, 0x1e, 0x60, 0xc5, 0x1d, 0x8e, 0x57, 0x43, 0xc9,
-	0x1e, 0xdd, 0x2c, 0xff, 0xb5, 0xe2, 0xff, 0xa0, 0x2a, 0xb7, 0xee, 0x9e, 0x61, 0xcf, 0xfe, 0x10,
-	0xad, 0xdc, 0xd0, 0x83, 0xe8, 0x66, 0xd6, 0x96, 0x36, 0x5f, 0x00, 0x7f, 0x63, 0x87, 0xf5, 0x9f,
-	0x7a, 0x33, 0x02, 0xee, 0x1e, 0x60, 0x85, 0xfe, 0x96, 0xd6, 0xfc, 0x76, 0xb9, 0x6d, 0x4f, 0xf6,
-	0xf8, 0xe1, 0xe7, 0x75, 0xe8, 0x7d, 0x59, 0x87, 0xde, 0xd7, 0x75, 0xe8, 0x7d, 0xfa, 0x16, 0xde,
-	0x79, 0x5f, 0xb7, 0x7f, 0x95, 0x97, 0x3f, 0x02, 0x00, 0x00, 0xff, 0xff, 0xe7, 0x20, 0xf6, 0x6a,
-	0x86, 0x04, 0x00, 0x00,
+	// 518 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0x5d, 0x6e, 0x1a, 0x3d,
+	0x14, 0xfd, 0x86, 0x09, 0x7c, 0x70, 0x51, 0x7f, 0x64, 0xa5, 0x91, 0x93, 0x28, 0x14, 0x8d, 0xaa,
+	0x96, 0x97, 0x50, 0x89, 0xae, 0x80, 0x14, 0x89, 0x20, 0x55, 0xaa, 0xe4, 0xa4, 0xe2, 0x2d, 0xae,
+	0x33, 0xbe, 0x30, 0x16, 0x3f, 0x43, 0x6c, 0x13, 0xc4, 0x5b, 0x97, 0xd1, 0x25, 0xf5, 0xb1, 0x4b,
+	0xa8, 0xe8, 0x12, 0xba, 0x81, 0x0a, 0x7b, 0xda, 0xa0, 0x66, 0x46, 0xe9, 0x4b, 0xdf, 0xb8, 0xe7,
+	0xdc, 0x9f, 0x33, 0xe7, 0x5e, 0x03, 0xa7, 0x09, 0x8a, 0xa9, 0x4d, 0x62, 0xa1, 0xf1, 0xd4, 0xa0,
+	0xbe, 0x55, 0x31, 0xbe, 0x96, 0x69, 0x6c, 0x53, 0xcd, 0x57, 0xa9, 0x9e, 0xa8, 0xf9, 0x98, 0x27,
+	0xe9, 0x52, 0x9b, 0xf6, 0x42, 0xa7, 0x36, 0x25, 0x70, 0x97, 0x1e, 0x7d, 0x84, 0x5a, 0x1f, 0x2d,
+	0xc3, 0x9b, 0xc1, 0xdc, 0x92, 0xc7, 0x50, 0x52, 0x92, 0x06, 0xcd, 0xa0, 0x55, 0x66, 0x25, 0x25,
+	0xc9, 0x31, 0xd4, 0x94, 0xe1, 0x22, 0xb6, 0xea, 0x16, 0x69, 0xa9, 0x19, 0xb4, 0xaa, 0xac, 0xaa,
+	0x4c, 0xd7, 0xc5, 0xe4, 0x25, 0x3c, 0x51, 0x86, 0x27, 0x42, 0x4b, 0x2e, 0x71, 0x8a, 0x16, 0x25,
+	0x0d, 0x5d, 0xca, 0x23, 0x65, 0xce, 0x85, 0x96, 0x3d, 0x0f, 0x46, 0x1d, 0xa0, 0x17, 0x56, 0xd8,
+	0xa5, 0xe9, 0x39, 0x45, 0x43, 0x2f, 0xe8, 0x7c, 0xab, 0x87, 0x1c, 0x40, 0xc5, 0x38, 0xce, 0x0d,
+	0xad, 0xb2, 0x2c, 0x8a, 0x38, 0x1c, 0xf7, 0xd1, 0x76, 0xa7, 0xd3, 0xfb, 0x35, 0x0c, 0x6f, 0x08,
+	0x81, 0xbd, 0x85, 0x18, 0xa3, 0x2b, 0x0a, 0x99, 0xfb, 0x4d, 0xf6, 0xa1, 0x3c, 0x55, 0x33, 0x65,
+	0x9d, 0xce, 0x90, 0xf9, 0xc0, 0x0d, 0x40, 0xa1, 0xe3, 0xc4, 0x69, 0xab, 0xb1, 0x2c, 0x8a, 0x3e,
+	0x95, 0x60, 0xbf, 0x97, 0xe3, 0x50, 0x9e, 0x05, 0x99, 0x93, 0x4a, 0xba, 0xd6, 0x35, 0x56, 0xf5,
+	0xc0, 0x40, 0x92, 0x06, 0xd4, 0xa5, 0x58, 0xf3, 0x74, 0xc4, 0x57, 0x88, 0x93, 0x6c, 0x44, 0x4d,
+	0x8a, 0xf5, 0xfb, 0xd1, 0x10, 0x71, 0x42, 0x4e, 0x00, 0x8c, 0x15, 0xda, 0x72, 0xab, 0x66, 0x48,
+	0xf7, 0x3c, 0xed, 0x90, 0x4b, 0x35, 0x43, 0xf2, 0x1c, 0xea, 0x23, 0x35, 0x57, 0x26, 0xf1, 0x7c,
+	0xd9, 0xf1, 0xe0, 0x21, 0x97, 0x70, 0x02, 0x10, 0x6b, 0x14, 0x16, 0x25, 0x17, 0x96, 0x56, 0x7c,
+	0x7d, 0x86, 0x74, 0xed, 0x96, 0x5e, 0x2e, 0xe4, 0x2f, 0xfa, 0x7f, 0x4f, 0x67, 0x88, 0xa7, 0xb3,
+	0xc5, 0x6c, 0xe9, 0x6a, 0x26, 0xce, 0x23, 0x5d, 0x1b, 0x5d, 0xc3, 0xc1, 0x3b, 0x65, 0x6c, 0xce,
+	0x56, 0x3a, 0x10, 0xca, 0x55, 0x42, 0x83, 0x66, 0xd8, 0xaa, 0x77, 0x9a, 0xed, 0xbb, 0x6b, 0x69,
+	0xe7, 0x59, 0xc6, 0xb6, 0xc9, 0x5b, 0xfb, 0xe3, 0x74, 0x39, 0xf7, 0xf6, 0x97, 0x99, 0x0f, 0x3a,
+	0x3f, 0x42, 0x38, 0xbc, 0x3f, 0xe0, 0xc2, 0x9f, 0x28, 0xb9, 0x02, 0xfa, 0xd6, 0x7d, 0x4c, 0x8e,
+	0x86, 0x07, 0xc7, 0x1e, 0x3d, 0x98, 0x41, 0x2e, 0xe1, 0xb0, 0x8f, 0x39, 0x1f, 0x78, 0xb6, 0x1e,
+	0x48, 0xf2, 0x6c, 0xb7, 0xfc, 0xf7, 0x13, 0xf8, 0x8b, 0xae, 0x63, 0xa0, 0x45, 0xb7, 0x49, 0x5e,
+	0xfd, 0xd1, 0xb4, 0xe8, 0x82, 0x8f, 0xa2, 0xdd, 0xc4, 0x82, 0x35, 0x5c, 0x01, 0xfd, 0xe0, 0x96,
+	0xf9, 0x8f, 0xec, 0x19, 0x02, 0xf5, 0x6f, 0x34, 0xa7, 0x7f, 0x81, 0x3b, 0x2f, 0x76, 0xe1, 0xa2,
+	0x57, 0x7d, 0xf6, 0xf4, 0xcb, 0xa6, 0x11, 0x7c, 0xdd, 0x34, 0x82, 0x6f, 0x9b, 0x46, 0xf0, 0xf9,
+	0x7b, 0xe3, 0xbf, 0xeb, 0x8a, 0xfb, 0xe3, 0x79, 0xf3, 0x33, 0x00, 0x00, 0xff, 0xff, 0x57, 0x00,
+	0x86, 0xeb, 0xa9, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -405,216 +414,216 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// DoctorWorkingHoursClient is the client API for DoctorWorkingHours service.
+// DoctorWorkingHoursServiceClient is the client API for DoctorWorkingHoursService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type DoctorWorkingHoursClient interface {
+type DoctorWorkingHoursServiceClient interface {
 	CreateDoctorWorkingHours(ctx context.Context, in *DoctorWorkingHours, opts ...grpc.CallOption) (*DoctorWorkingHours, error)
 	GetDoctorWorkingHoursById(ctx context.Context, in *GetReqInt, opts ...grpc.CallOption) (*DoctorWorkingHours, error)
-	GetAllDoctorWorkingHours(ctx context.Context, in *GetAllDoctorWorkingHourS, opts ...grpc.CallOption) (*ListDoctorWorkingHours, error)
+	GetAllDoctorWorkingHours(ctx context.Context, in *GetAllDoctorWorkingHoursReq, opts ...grpc.CallOption) (*ListDoctorWorkingHours, error)
 	UpdateDoctorWorkingHours(ctx context.Context, in *DoctorWorkingHours, opts ...grpc.CallOption) (*DoctorWorkingHours, error)
 	DeleteDoctorWorkingHours(ctx context.Context, in *GetReqInt, opts ...grpc.CallOption) (*StatusDoctorWorkingHours, error)
 }
 
-type doctorWorkingHoursClient struct {
+type doctorWorkingHoursServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewDoctorWorkingHoursClient(cc *grpc.ClientConn) DoctorWorkingHoursClient {
-	return &doctorWorkingHoursClient{cc}
+func NewDoctorWorkingHoursServiceClient(cc *grpc.ClientConn) DoctorWorkingHoursServiceClient {
+	return &doctorWorkingHoursServiceClient{cc}
 }
 
-func (c *doctorWorkingHoursClient) CreateDoctorWorkingHours(ctx context.Context, in *DoctorWorkingHours, opts ...grpc.CallOption) (*DoctorWorkingHours, error) {
+func (c *doctorWorkingHoursServiceClient) CreateDoctorWorkingHours(ctx context.Context, in *DoctorWorkingHours, opts ...grpc.CallOption) (*DoctorWorkingHours, error) {
 	out := new(DoctorWorkingHours)
-	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHours/CreateDoctorWorkingHours", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHoursService/CreateDoctorWorkingHours", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *doctorWorkingHoursClient) GetDoctorWorkingHoursById(ctx context.Context, in *GetReqInt, opts ...grpc.CallOption) (*DoctorWorkingHours, error) {
+func (c *doctorWorkingHoursServiceClient) GetDoctorWorkingHoursById(ctx context.Context, in *GetReqInt, opts ...grpc.CallOption) (*DoctorWorkingHours, error) {
 	out := new(DoctorWorkingHours)
-	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHours/GetDoctorWorkingHoursById", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHoursService/GetDoctorWorkingHoursById", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *doctorWorkingHoursClient) GetAllDoctorWorkingHours(ctx context.Context, in *GetAllDoctorWorkingHourS, opts ...grpc.CallOption) (*ListDoctorWorkingHours, error) {
+func (c *doctorWorkingHoursServiceClient) GetAllDoctorWorkingHours(ctx context.Context, in *GetAllDoctorWorkingHoursReq, opts ...grpc.CallOption) (*ListDoctorWorkingHours, error) {
 	out := new(ListDoctorWorkingHours)
-	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHours/GetAllDoctorWorkingHours", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHoursService/GetAllDoctorWorkingHours", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *doctorWorkingHoursClient) UpdateDoctorWorkingHours(ctx context.Context, in *DoctorWorkingHours, opts ...grpc.CallOption) (*DoctorWorkingHours, error) {
+func (c *doctorWorkingHoursServiceClient) UpdateDoctorWorkingHours(ctx context.Context, in *DoctorWorkingHours, opts ...grpc.CallOption) (*DoctorWorkingHours, error) {
 	out := new(DoctorWorkingHours)
-	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHours/UpdateDoctorWorkingHours", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHoursService/UpdateDoctorWorkingHours", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *doctorWorkingHoursClient) DeleteDoctorWorkingHours(ctx context.Context, in *GetReqInt, opts ...grpc.CallOption) (*StatusDoctorWorkingHours, error) {
+func (c *doctorWorkingHoursServiceClient) DeleteDoctorWorkingHours(ctx context.Context, in *GetReqInt, opts ...grpc.CallOption) (*StatusDoctorWorkingHours, error) {
 	out := new(StatusDoctorWorkingHours)
-	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHours/DeleteDoctorWorkingHours", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/healthcare.DoctorWorkingHoursService/DeleteDoctorWorkingHours", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// DoctorWorkingHoursServer is the server API for DoctorWorkingHours service.
-type DoctorWorkingHoursServer interface {
+// DoctorWorkingHoursServiceServer is the server API for DoctorWorkingHoursService service.
+type DoctorWorkingHoursServiceServer interface {
 	CreateDoctorWorkingHours(context.Context, *DoctorWorkingHours) (*DoctorWorkingHours, error)
 	GetDoctorWorkingHoursById(context.Context, *GetReqInt) (*DoctorWorkingHours, error)
-	GetAllDoctorWorkingHours(context.Context, *GetAllDoctorWorkingHourS) (*ListDoctorWorkingHours, error)
+	GetAllDoctorWorkingHours(context.Context, *GetAllDoctorWorkingHoursReq) (*ListDoctorWorkingHours, error)
 	UpdateDoctorWorkingHours(context.Context, *DoctorWorkingHours) (*DoctorWorkingHours, error)
 	DeleteDoctorWorkingHours(context.Context, *GetReqInt) (*StatusDoctorWorkingHours, error)
 }
 
-// UnimplementedDoctorWorkingHoursServer can be embedded to have forward compatible implementations.
-type UnimplementedDoctorWorkingHoursServer struct {
+// UnimplementedDoctorWorkingHoursServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedDoctorWorkingHoursServiceServer struct {
 }
 
-func (*UnimplementedDoctorWorkingHoursServer) CreateDoctorWorkingHours(ctx context.Context, req *DoctorWorkingHours) (*DoctorWorkingHours, error) {
+func (*UnimplementedDoctorWorkingHoursServiceServer) CreateDoctorWorkingHours(ctx context.Context, req *DoctorWorkingHours) (*DoctorWorkingHours, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateDoctorWorkingHours not implemented")
 }
-func (*UnimplementedDoctorWorkingHoursServer) GetDoctorWorkingHoursById(ctx context.Context, req *GetReqInt) (*DoctorWorkingHours, error) {
+func (*UnimplementedDoctorWorkingHoursServiceServer) GetDoctorWorkingHoursById(ctx context.Context, req *GetReqInt) (*DoctorWorkingHours, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDoctorWorkingHoursById not implemented")
 }
-func (*UnimplementedDoctorWorkingHoursServer) GetAllDoctorWorkingHours(ctx context.Context, req *GetAllDoctorWorkingHourS) (*ListDoctorWorkingHours, error) {
+func (*UnimplementedDoctorWorkingHoursServiceServer) GetAllDoctorWorkingHours(ctx context.Context, req *GetAllDoctorWorkingHoursReq) (*ListDoctorWorkingHours, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllDoctorWorkingHours not implemented")
 }
-func (*UnimplementedDoctorWorkingHoursServer) UpdateDoctorWorkingHours(ctx context.Context, req *DoctorWorkingHours) (*DoctorWorkingHours, error) {
+func (*UnimplementedDoctorWorkingHoursServiceServer) UpdateDoctorWorkingHours(ctx context.Context, req *DoctorWorkingHours) (*DoctorWorkingHours, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDoctorWorkingHours not implemented")
 }
-func (*UnimplementedDoctorWorkingHoursServer) DeleteDoctorWorkingHours(ctx context.Context, req *GetReqInt) (*StatusDoctorWorkingHours, error) {
+func (*UnimplementedDoctorWorkingHoursServiceServer) DeleteDoctorWorkingHours(ctx context.Context, req *GetReqInt) (*StatusDoctorWorkingHours, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDoctorWorkingHours not implemented")
 }
 
-func RegisterDoctorWorkingHoursServer(s *grpc.Server, srv DoctorWorkingHoursServer) {
-	s.RegisterService(&_DoctorWorkingHours_serviceDesc, srv)
+func RegisterDoctorWorkingHoursServiceServer(s *grpc.Server, srv DoctorWorkingHoursServiceServer) {
+	s.RegisterService(&_DoctorWorkingHoursService_serviceDesc, srv)
 }
 
-func _DoctorWorkingHours_CreateDoctorWorkingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DoctorWorkingHoursService_CreateDoctorWorkingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DoctorWorkingHours)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DoctorWorkingHoursServer).CreateDoctorWorkingHours(ctx, in)
+		return srv.(DoctorWorkingHoursServiceServer).CreateDoctorWorkingHours(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/healthcare.DoctorWorkingHours/CreateDoctorWorkingHours",
+		FullMethod: "/healthcare.DoctorWorkingHoursService/CreateDoctorWorkingHours",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorWorkingHoursServer).CreateDoctorWorkingHours(ctx, req.(*DoctorWorkingHours))
+		return srv.(DoctorWorkingHoursServiceServer).CreateDoctorWorkingHours(ctx, req.(*DoctorWorkingHours))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DoctorWorkingHours_GetDoctorWorkingHoursById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DoctorWorkingHoursService_GetDoctorWorkingHoursById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetReqInt)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DoctorWorkingHoursServer).GetDoctorWorkingHoursById(ctx, in)
+		return srv.(DoctorWorkingHoursServiceServer).GetDoctorWorkingHoursById(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/healthcare.DoctorWorkingHours/GetDoctorWorkingHoursById",
+		FullMethod: "/healthcare.DoctorWorkingHoursService/GetDoctorWorkingHoursById",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorWorkingHoursServer).GetDoctorWorkingHoursById(ctx, req.(*GetReqInt))
+		return srv.(DoctorWorkingHoursServiceServer).GetDoctorWorkingHoursById(ctx, req.(*GetReqInt))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DoctorWorkingHours_GetAllDoctorWorkingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllDoctorWorkingHourS)
+func _DoctorWorkingHoursService_GetAllDoctorWorkingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllDoctorWorkingHoursReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DoctorWorkingHoursServer).GetAllDoctorWorkingHours(ctx, in)
+		return srv.(DoctorWorkingHoursServiceServer).GetAllDoctorWorkingHours(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/healthcare.DoctorWorkingHours/GetAllDoctorWorkingHours",
+		FullMethod: "/healthcare.DoctorWorkingHoursService/GetAllDoctorWorkingHours",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorWorkingHoursServer).GetAllDoctorWorkingHours(ctx, req.(*GetAllDoctorWorkingHourS))
+		return srv.(DoctorWorkingHoursServiceServer).GetAllDoctorWorkingHours(ctx, req.(*GetAllDoctorWorkingHoursReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DoctorWorkingHours_UpdateDoctorWorkingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DoctorWorkingHoursService_UpdateDoctorWorkingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DoctorWorkingHours)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DoctorWorkingHoursServer).UpdateDoctorWorkingHours(ctx, in)
+		return srv.(DoctorWorkingHoursServiceServer).UpdateDoctorWorkingHours(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/healthcare.DoctorWorkingHours/UpdateDoctorWorkingHours",
+		FullMethod: "/healthcare.DoctorWorkingHoursService/UpdateDoctorWorkingHours",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorWorkingHoursServer).UpdateDoctorWorkingHours(ctx, req.(*DoctorWorkingHours))
+		return srv.(DoctorWorkingHoursServiceServer).UpdateDoctorWorkingHours(ctx, req.(*DoctorWorkingHours))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DoctorWorkingHours_DeleteDoctorWorkingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DoctorWorkingHoursService_DeleteDoctorWorkingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetReqInt)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DoctorWorkingHoursServer).DeleteDoctorWorkingHours(ctx, in)
+		return srv.(DoctorWorkingHoursServiceServer).DeleteDoctorWorkingHours(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/healthcare.DoctorWorkingHours/DeleteDoctorWorkingHours",
+		FullMethod: "/healthcare.DoctorWorkingHoursService/DeleteDoctorWorkingHours",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorWorkingHoursServer).DeleteDoctorWorkingHours(ctx, req.(*GetReqInt))
+		return srv.(DoctorWorkingHoursServiceServer).DeleteDoctorWorkingHours(ctx, req.(*GetReqInt))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _DoctorWorkingHours_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "healthcare.DoctorWorkingHours",
-	HandlerType: (*DoctorWorkingHoursServer)(nil),
+var _DoctorWorkingHoursService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "healthcare.DoctorWorkingHoursService",
+	HandlerType: (*DoctorWorkingHoursServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateDoctorWorkingHours",
-			Handler:    _DoctorWorkingHours_CreateDoctorWorkingHours_Handler,
+			Handler:    _DoctorWorkingHoursService_CreateDoctorWorkingHours_Handler,
 		},
 		{
 			MethodName: "GetDoctorWorkingHoursById",
-			Handler:    _DoctorWorkingHours_GetDoctorWorkingHoursById_Handler,
+			Handler:    _DoctorWorkingHoursService_GetDoctorWorkingHoursById_Handler,
 		},
 		{
 			MethodName: "GetAllDoctorWorkingHours",
-			Handler:    _DoctorWorkingHours_GetAllDoctorWorkingHours_Handler,
+			Handler:    _DoctorWorkingHoursService_GetAllDoctorWorkingHours_Handler,
 		},
 		{
 			MethodName: "UpdateDoctorWorkingHours",
-			Handler:    _DoctorWorkingHours_UpdateDoctorWorkingHours_Handler,
+			Handler:    _DoctorWorkingHoursService_UpdateDoctorWorkingHours_Handler,
 		},
 		{
 			MethodName: "DeleteDoctorWorkingHours",
-			Handler:    _DoctorWorkingHours_DeleteDoctorWorkingHours_Handler,
+			Handler:    _DoctorWorkingHoursService_DeleteDoctorWorkingHours_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -710,7 +719,7 @@ func (m *StatusDoctorWorkingHours) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 
-func (m *GetAllDoctorWorkingHourS) Marshal() (dAtA []byte, err error) {
+func (m *GetAllDoctorWorkingHoursReq) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -720,12 +729,12 @@ func (m *GetAllDoctorWorkingHourS) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetAllDoctorWorkingHourS) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetAllDoctorWorkingHoursReq) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetAllDoctorWorkingHourS) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetAllDoctorWorkingHoursReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -859,6 +868,11 @@ func (m *ListDoctorWorkingHours) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.Count != 0 {
+		i = encodeVarintDoctorWorkingHours(dAtA, i, uint64(m.Count))
+		i--
+		dAtA[i] = 0x10
+	}
 	if len(m.Dwh) > 0 {
 		for iNdEx := len(m.Dwh) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -923,7 +937,7 @@ func (m *StatusDoctorWorkingHours) Size() (n int) {
 	return n
 }
 
-func (m *GetAllDoctorWorkingHourS) Size() (n int) {
+func (m *GetAllDoctorWorkingHoursReq) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -999,6 +1013,9 @@ func (m *ListDoctorWorkingHours) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovDoctorWorkingHours(uint64(l))
 		}
+	}
+	if m.Count != 0 {
+		n += 1 + sovDoctorWorkingHours(uint64(m.Count))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1193,7 +1210,7 @@ func (m *StatusDoctorWorkingHours) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetAllDoctorWorkingHourS) Unmarshal(dAtA []byte) error {
+func (m *GetAllDoctorWorkingHoursReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1216,10 +1233,10 @@ func (m *GetAllDoctorWorkingHourS) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetAllDoctorWorkingHourS: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetAllDoctorWorkingHoursReq: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetAllDoctorWorkingHourS: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetAllDoctorWorkingHoursReq: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1671,6 +1688,25 @@ func (m *ListDoctorWorkingHours) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
+			}
+			m.Count = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDoctorWorkingHours
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Count |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDoctorWorkingHours(dAtA[iNdEx:])

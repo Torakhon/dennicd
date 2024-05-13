@@ -53,7 +53,6 @@ func (a adminRPC) Create(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 		EndWorkYear:   admin.EndWorkYear,
 		WorkYears:     admin.WorkYears,
 		RefreshToken:  admin.RefreshToken,
-		CreatedAt:     time.Now(),
 	}
 	AdminId, err := a.admin.Create(ctx, &req)
 	if err != nil {
@@ -208,7 +207,7 @@ func (a adminRPC) Update(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 		StartWorkYear: admin.StartWorkYear,
 		EndWorkYear:   admin.EndWorkYear,
 		WorkYears:     admin.WorkYears,
-		UpdatedAt:     time.Now(),
+		UpdatedAt:     time.Now().Add(time.Hour * 5),
 	}
 
 	err := a.admin.Update(ctx, &req)

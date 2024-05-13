@@ -58,7 +58,6 @@ func (p userRepo) Create(ctx context.Context, user *entity.User) error {
 		"password":      user.Password,
 		"gender":        user.Gender,
 		"refresh_token": user.RefreshToken,
-		"created_at":    user.CreatedAt,
 	}
 
 	query, args, err := p.db.Sq.Builder.Insert(p.tableName).SetMap(data).ToSql()
@@ -152,8 +151,11 @@ func (p userRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.Us
 	if req.OrderBy != "" {
 		toSql = toSql.OrderBy(req.OrderBy)
 	}
+	countBuilder := p.db.Sq.Builder.Select("count(*)").From(userTableName)
+
 	if !req.DeleteStatus {
 		toSql = toSql.Where(p.db.Sq.Equal("deleted_at", nil))
+		countBuilder = countBuilder.Where("deleted_at IS NULL")
 	}
 	toSqls, args, err := toSql.ToSql()
 
@@ -172,6 +174,15 @@ func (p userRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.Us
 		deletedAt sql.NullTime
 		count     int64
 	)
+	queryCount, _, err := countBuilder.ToSql()
+	if err != nil {
+		return nil, p.db.Error(err)
+	}
+	err = p.db.QueryRow(ctx, queryCount).Scan(&count)
+	if err != nil {
+		return nil, p.db.Error(err)
+	}
+
 	for rows.Next() {
 		var user entity.User
 		if err = rows.Scan(
@@ -199,11 +210,10 @@ func (p userRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.Us
 		if deletedAt.Valid {
 			user.DeletedAt = deletedAt.Time
 		}
-		count += 1
-		users = append(users, &user)
 		user.Count = count
+		users = append(users, &user)
 	}
-
+	
 	return users, nil
 }
 
@@ -211,11 +221,11 @@ func (p userRepo) Update(ctx context.Context, user *entity.User) error {
 	ctx, span := otlp.Start(ctx, userServiceName, userSpanRepoPrefix+"Update")
 	defer span.End()
 	clauses := map[string]any{
-		"first_name":   user.FirstName,
-		"last_name":    user.LastName,
-		"birth_date":   user.BirthDate,
-		"gender":       user.Gender,
-		"updated_at":   user.UpdatedAt,
+		"first_name": user.FirstName,
+		"last_name":  user.LastName,
+		"birth_date": user.BirthDate,
+		"gender":     user.Gender,
+		"updated_at": user.UpdatedAt,
 	}
 
 	updateBuilder := p.db.Sq.Builder.
@@ -249,7 +259,7 @@ func (p *userRepo) Delete(ctx context.Context, req *entity.FieldValueReq) (*enti
 	if !req.DeleteStatus {
 		toSql, args, err := p.db.Sq.Builder.
 			Update(p.tableName).
-			Set("deleted_at", time.Now()).
+			Set("deleted_at", time.Now().Add(time.Hour * 5)).
 			Where(p.db.Sq.And(
 				p.db.Sq.Equal("deleted_at", nil),
 				p.db.Sq.Equal(req.Field, req.Value),

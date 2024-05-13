@@ -68,7 +68,6 @@ func (p adminRepo) Create(ctx context.Context, admin *entity.Admin) error {
 		"end_work_year":   admin.EndWorkYear,
 		"work_years":      admin.WorkYears,
 		"refresh_token":   admin.RefreshToken,
-		"created_at":      admin.CreatedAt,
 	}
 
 	query, args, err := p.db.Sq.Builder.Insert(p.tableName).SetMap(data).ToSql()
@@ -179,7 +178,9 @@ func (p adminRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.A
 	if req.OrderBy != "" {
 		toSql = toSql.OrderBy(req.OrderBy)
 	}
+	countBuilder := p.db.Sq.Builder.Select("count(*)").From(adminTableName)
 	if !req.DeleteStatus {
+		countBuilder = countBuilder.Where("deleted_at IS NULL")
 		toSql = toSql.Where(p.db.Sq.Equal("deleted_at", nil))
 	}
 	toSqls, args, err := toSql.ToSql()
@@ -201,6 +202,14 @@ func (p adminRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.A
 		count           int64
 		deletedAt       sql.NullTime
 	)
+	queryCount, _, err := countBuilder.ToSql()
+	if err != nil {
+		return nil, p.db.Error(err)
+	}
+	err = p.db.QueryRow(ctx, queryCount).Scan(&count)
+	if err != nil {
+		return nil, p.db.Error(err)
+	}
 	for rows.Next() {
 		var admin entity.Admin
 		if err = rows.Scan(
@@ -241,7 +250,6 @@ func (p adminRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.A
 		if deletedAt.Valid {
 			admin.DeletedAt = deletedAt.Time
 		}
-		count += 1
 		admins = append(admins, &admin)
 		admin.Count = count
 	}
@@ -296,7 +304,7 @@ func (p *adminRepo) Delete(ctx context.Context, req *entity.FieldValueReq) (*ent
 	if !req.DeleteStatus {
 		toSql, args, err := p.db.Sq.Builder.
 			Update(p.tableName).
-			Set("deleted_at", time.Now()).
+			Set("deleted_at", time.Now().Add(time.Hour * 5)).
 			Where(p.db.Sq.EqualMany(map[string]interface{}{
 				"deleted_at": nil,
 				req.Field:    req.Value,

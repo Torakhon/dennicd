@@ -33,8 +33,7 @@ type Empty struct {
 }
 
 type StrUserReq struct {
-	UserId   string
-	IsActive bool
+	UserId string
 }
 
 type UserSessionsList struct {

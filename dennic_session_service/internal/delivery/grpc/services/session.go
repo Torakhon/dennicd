@@ -96,7 +96,7 @@ func (s sessionRPC) DeleteSessionByUserId(ctx context.Context, req *pb.StrUserRe
 }
 
 func (s sessionRPC) GetUserSessions(ctx context.Context, req *pb.StrUserReq) (*pb.UserSessionsList, error) {
-	resp, err := s.session.GetUserSessions(ctx, &entity.StrUserReq{UserId: req.UserId, IsActive: req.IsActive})
+	resp, err := s.session.GetUserSessions(ctx, &entity.StrUserReq{UserId: req.UserId})
 	if err != nil {
 		s.logger.Error("GetSessionById", zap.Error(err))
 	}

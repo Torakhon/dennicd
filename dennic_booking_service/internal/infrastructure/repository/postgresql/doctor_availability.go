@@ -155,6 +155,7 @@ func (r *DoctorAvailability) GetAllDoctorAvailability(ctx context.Context, req *
 
 	var (
 		docAvails doctor_availability.DoctorAvailabilityType
+		count     int64
 		upAt      sql.NullTime
 		delAt     sql.NullTime
 	)
@@ -162,6 +163,8 @@ func (r *DoctorAvailability) GetAllDoctorAvailability(ctx context.Context, req *
 	toSql := r.db.Sq.Builder.
 		Select(tableColumDoctorAvailability()).
 		From(tableNameDoctorAvailability)
+
+	countBuilder := r.db.Sq.Builder.Select("count(*)").From(tableNameDoctorAvailability)
 
 	if req.Page >= 1 && req.Limit >= 1 {
 		toSql = toSql.
@@ -176,8 +179,17 @@ func (r *DoctorAvailability) GetAllDoctorAvailability(ctx context.Context, req *
 	}
 	if !req.DeleteStatus {
 		toSql = toSql.Where(r.db.Sq.Equal("deleted_at", nil))
+		countBuilder = countBuilder.Where(r.db.Sq.Equal("deleted_at", nil))
 	}
 	toSqls, args, err := toSql.ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	queryCount, _, err := countBuilder.ToSql()
+
+	err = r.db.QueryRow(ctx, queryCount).Scan(&count)
 
 	if err != nil {
 		return nil, err
@@ -216,8 +228,8 @@ func (r *DoctorAvailability) GetAllDoctorAvailability(ctx context.Context, req *
 
 		docAvails.DoctorAvailabilitys = append(docAvails.DoctorAvailabilitys, &docAvail)
 
-		docAvails.Count += 1
 	}
+	docAvails.Count = count
 	return &docAvails, nil
 }
 
@@ -289,12 +301,15 @@ func (r *DoctorAvailability) DeleteDoctorAvailability(ctx context.Context, req *
 			return &doctor_availability.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &doctor_availability.StatusRes{Status: false}, err
 		}
-		return &doctor_availability.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &doctor_availability.StatusRes{Status: true}, nil
+		}
+		return &doctor_availability.StatusRes{Status: false}, nil
 
 	} else {
 		toSql, args, err := r.db.Sq.Builder.
@@ -306,11 +321,14 @@ func (r *DoctorAvailability) DeleteDoctorAvailability(ctx context.Context, req *
 			return &doctor_availability.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &doctor_availability.StatusRes{Status: false}, err
 		}
-		return &doctor_availability.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &doctor_availability.StatusRes{Status: true}, nil
+		}
+		return &doctor_availability.StatusRes{Status: false}, nil
 	}
 }

@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS sessions (
     user_id UUID NOT NULL,
     fcm_token VARCHAR(250),
     platform_name VARCHAR(150) NOT NULL,
-    platform_type VARCHAR(10) CHECK (platform_type IN ('mobile','pk')) NOT NULL,
+    platform_type VARCHAR(10) CHECK (platform_type IN ('mobile')) NOT NULL,
     login_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP,

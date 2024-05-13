@@ -164,6 +164,7 @@ func (r *BookingAppointment) GetAllAppointment(ctx context.Context, req *appoint
 
 	var (
 		response appointment.AppointmentsType
+		count    int64
 		upAt     sql.NullTime
 		delAt    sql.NullTime
 	)
@@ -171,6 +172,8 @@ func (r *BookingAppointment) GetAllAppointment(ctx context.Context, req *appoint
 	toSql := r.db.Sq.Builder.
 		Select(tableColums()).
 		From(tableNameAppointment)
+
+	countBuilder := r.db.Sq.Builder.Select("count(*)").From(tableNameAppointment)
 
 	if req.Page >= 1 && req.Limit >= 1 {
 		toSql = toSql.
@@ -186,9 +189,18 @@ func (r *BookingAppointment) GetAllAppointment(ctx context.Context, req *appoint
 	}
 	if !req.DeleteStatus {
 		toSql = toSql.Where(r.db.Sq.Equal("deleted_at", nil))
+		countBuilder = countBuilder.Where(r.db.Sq.Equal("deleted_at", nil))
 	}
 
 	toSqls, args, err := toSql.ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	queryCount, _, err := countBuilder.ToSql()
+
+	err = r.db.QueryRow(ctx, queryCount).Scan(&count)
 
 	if err != nil {
 		return nil, err
@@ -228,10 +240,9 @@ func (r *BookingAppointment) GetAllAppointment(ctx context.Context, req *appoint
 			res.DeletedAt = delAt.Time
 		}
 
-		response.Count += 1
-
 		response.Appointments = append(response.Appointments, &res)
 	}
+	response.Count = count
 	return &response, nil
 }
 
@@ -307,12 +318,15 @@ func (r *BookingAppointment) DeleteAppointment(ctx context.Context, req *appoint
 			return &appointment.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &appointment.StatusRes{Status: false}, err
 		}
-		return &appointment.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &appointment.StatusRes{Status: true}, nil
+		}
+		return &appointment.StatusRes{Status: false}, nil
 
 	} else {
 		toSql, args, err := r.db.Sq.Builder.
@@ -324,11 +338,14 @@ func (r *BookingAppointment) DeleteAppointment(ctx context.Context, req *appoint
 			return &appointment.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &appointment.StatusRes{Status: false}, err
 		}
-		return &appointment.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &appointment.StatusRes{Status: true}, nil
+		}
+		return &appointment.StatusRes{Status: false}, nil
 	}
 }

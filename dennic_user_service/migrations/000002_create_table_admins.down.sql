@@ -1,5 +1,3 @@
-
-
 DROP INDEX IF EXISTS deleted_at_idx2;
 
 DROP TABLE IF EXISTS admins;

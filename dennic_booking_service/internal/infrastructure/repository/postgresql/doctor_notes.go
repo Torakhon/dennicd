@@ -144,6 +144,7 @@ func (r *DoctorNotes) GetAllDoctorNotes(ctx context.Context, req *doctor_notes.G
 
 	var (
 		notes   doctor_notes.DoctorNotesType
+		count   int64
 		upTime  sql.NullTime
 		delTime sql.NullTime
 	)
@@ -151,6 +152,8 @@ func (r *DoctorNotes) GetAllDoctorNotes(ctx context.Context, req *doctor_notes.G
 	toSql := r.db.Sq.Builder.
 		Select(tableColumNotes()).
 		From(tableNameDoctorNotes)
+
+	countBuilder := r.db.Sq.Builder.Select("count(*)").From(tableNameDoctorNotes)
 
 	if req.Page >= 1 && req.Limit >= 1 {
 		toSql = toSql.
@@ -165,8 +168,17 @@ func (r *DoctorNotes) GetAllDoctorNotes(ctx context.Context, req *doctor_notes.G
 	}
 	if !req.DeleteStatus {
 		toSql = toSql.Where(r.db.Sq.Equal("deleted_at", nil))
+		countBuilder = countBuilder.Where(r.db.Sq.Equal("deleted_at", nil))
 	}
 	toSqls, args, err := toSql.ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	queryCount, _, err := countBuilder.ToSql()
+
+	err = r.db.QueryRow(ctx, queryCount).Scan(&count)
 
 	if err != nil {
 		return nil, err
@@ -203,8 +215,8 @@ func (r *DoctorNotes) GetAllDoctorNotes(ctx context.Context, req *doctor_notes.G
 
 		notes.DoctorNotes = append(notes.DoctorNotes, &note)
 
-		notes.Count += 1
 	}
+	notes.Count = count
 	return &notes, nil
 }
 
@@ -276,12 +288,15 @@ func (r *DoctorNotes) DeleteDoctorNotes(ctx context.Context, req *doctor_notes.F
 			return &doctor_notes.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &doctor_notes.StatusRes{Status: false}, err
 		}
-		return &doctor_notes.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &doctor_notes.StatusRes{Status: true}, nil
+		}
+		return &doctor_notes.StatusRes{Status: false}, nil
 
 	} else {
 		toSql, args, err := r.db.Sq.Builder.
@@ -293,11 +308,14 @@ func (r *DoctorNotes) DeleteDoctorNotes(ctx context.Context, req *doctor_notes.F
 			return &doctor_notes.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &doctor_notes.StatusRes{Status: false}, err
 		}
-		return &doctor_notes.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &doctor_notes.StatusRes{Status: true}, nil
+		}
+		return &doctor_notes.StatusRes{Status: false}, nil
 	}
 }

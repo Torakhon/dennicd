@@ -58,10 +58,8 @@ func (s *SessionRepository) CreateSession(ctx context.Context, session *entity.S
 	}
 	query, args, err := s.db.Sq.Builder.Insert(s.tableName).SetMap(data).Suffix(fmt.Sprintf("RETURNING %s", s.sessionSelectQueryPrefix())).ToSql()
 	if err != nil {
-
 		return nil, s.db.ErrSQLBuild(err, fmt.Sprintf("%s %s", s.tableName, " create"))
 	}
-	
 	var resp entity.Session
 	var updatedAt, deletedAt sql.NullTime
 
@@ -81,7 +79,6 @@ func (s *SessionRepository) CreateSession(ctx context.Context, session *entity.S
 	if err != nil {
 		return nil, s.db.Error(err)
 	}
-
 	if updatedAt.Valid {
 		resp.UpdatedAt = updatedAt.Time
 	}
@@ -120,7 +117,6 @@ func (s *SessionRepository) GetSessionById(ctx context.Context, req *entity.StrR
 	if err != nil {
 		return nil, s.db.ErrSQLBuild(err, fmt.Sprintf("%s %s", s.tableName, " get"))
 	}
-
 	if updatedAt.Valid {
 		resp.UpdatedAt = updatedAt.Time
 	}
@@ -174,12 +170,9 @@ func (s *SessionRepository) GetUserSessions(ctx context.Context, req *entity.Str
 	ctx, span := otlp.Start(ctx, serviceNameSession, serviceNameSessionRepoPrefix+"Get")
 	span.SetAttributes(attribute.Key("GetUserSessions").String(req.UserId))
 	defer span.End()
-	queryBuilder := s.db.Sq.Builder.Select(s.sessionSelectQueryPrefix()).From(s.tableName)
-	if !req.IsActive {
-		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
-	}
 
-	query, args, err := queryBuilder.Where(s.db.Sq.Equal("user_id", req.UserId)).ToSql()
+	query, args, err := s.db.Sq.Builder.Select(s.sessionSelectQueryPrefix()).From(s.tableName).
+		Where(s.db.Sq.Equal("user_id", req.UserId)).ToSql()
 	if err != nil {
 		return nil, s.db.Error(err)
 	}
@@ -188,7 +181,6 @@ func (s *SessionRepository) GetUserSessions(ctx context.Context, req *entity.Str
 	if err != nil {
 		return nil, s.db.ErrSQLBuild(err, fmt.Sprintf("%s %s", s.tableName, " get"))
 	}
-
 	var userSessions []*entity.Session
 	for rows.Next() {
 		var resp entity.Session
@@ -209,7 +201,6 @@ func (s *SessionRepository) GetUserSessions(ctx context.Context, req *entity.Str
 		if err != nil {
 			return nil, s.db.ErrSQLBuild(err, fmt.Sprintf("%s %s", s.tableName, " get"))
 		}
-
 		if updatedAt.Valid {
 			resp.UpdatedAt = updatedAt.Time
 		}

@@ -45,7 +45,6 @@ func (u userRPC) Create(ctx context.Context, user *pb.User) (*pb.User, error) {
 		Password:     user.Password,
 		Gender:       user.Gender,
 		RefreshToken: user.RefreshToken,
-		CreatedAt:    time.Now(),
 	}
 	UserId, err := u.user.Create(ctx, &req)
 	if err != nil {
@@ -172,7 +171,7 @@ func (u userRPC) Update(ctx context.Context, user *pb.User) (*pb.User, error) {
 		LastName:  user.LastName,
 		BirthDate: user.BirthDate,
 		Gender:    user.Gender,
-		UpdatedAt: time.Now(),
+		UpdatedAt: time.Now().Add(time.Hour * 5),
 	}
 
 	err := u.user.Update(ctx, &req)

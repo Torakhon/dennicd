@@ -29,26 +29,11 @@ type Config struct {
 		Port string
 	}
 
-	MongoDb struct {
-		MongoURI      string
-		MongoDatabase string
-	}
-
 	Kafka struct {
 		Address []string
 		Topic   struct {
 			InvestorCreate string
 		}
-	}
-
-	PostService struct {
-		PostServiceHost string
-		PostServicePort string
-	}
-
-	CommentService struct {
-		CommentServiceHost string
-		CommentServicePort string
 	}
 }
 
@@ -77,9 +62,6 @@ func New() *Config {
 	// kafka configuration
 	c.Kafka.Address = strings.Split(getEnv("KAFKA_ADDRESS", "localhost:29092"), ",")
 	c.Kafka.Topic.InvestorCreate = getEnv("KAFKA_TOPIC_INVESTOR_CREATE", "investor.created")
-
-	c.MongoDb.MongoURI = getEnv("MONGO_URI", "mongodb://localhost:27018")
-	c.MongoDb.MongoDatabase = getEnv("MONGO_DATABASE", "userdb")
 
 	return &c
 }

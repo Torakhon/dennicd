@@ -15,8 +15,7 @@ func (u *BaseUseCase) Error(msg string, err error) error {
 	return err
 }
 
-func (u *BaseUseCase) BeforeRequest(guid *string, createdAt *time.Time, updatedAt *time.Time) {
-	_ = guid
+func (u *BaseUseCase) beforeRequest(guid *string, createdAt *time.Time, updatedAt *time.Time) {
 
 	if createdAt != nil {
 		*createdAt = time.Now().UTC()

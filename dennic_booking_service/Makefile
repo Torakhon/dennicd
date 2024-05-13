@@ -6,16 +6,28 @@ APP=Booking_service
 CMD_DIR=./cmd
 
 .DEFAULT_GOAL = build
+
+#OTLP_COLLECTOR_HOST = localhost
+#
 #POSTGRES_USER = postgres
 #POSTGRES_PASSWORD = 20030505
 #POSTGRES_HOST = localhost
 #POSTGRES_PORT = 5432
-#POSTGRES_DATABASE = dennic_booking_service
+#POSTGRES_DATABASE = dennic
+
+#---------DOCKER---------
+OTLP_COLLECTOR_HOST = otlp-collector
+
+POSTGRES_USER = postgres
+POSTGRES_PASSWORD = 20030505
+POSTGRES_HOST = postgresdb
+POSTGRES_PORT = 5432
+POSTGRES_DATABASE = dennic
 
 # run service
 .PHONY: run
 run:
-	go run ${CMD_DIR}/app/main.go
+	go run cmd/app/main.go
 
 .PHONY: create-migration
 create-migration:
@@ -39,3 +51,21 @@ migrate-down:
 .PHONY: migrate-force
 migrate-force:
 	migrate -path migrations -database $(DB_URL) -verbose force 1
+# run test
+test:
+	go test -v -cover -race ./internal/...
+
+# -------------- for deploy --------------
+build-image:
+	docker build --rm -t ${REGISTRY}/${PROJECT_NAME}/${APP}:${TAG} .
+	docker tag ${REGISTRY}/${PROJECT_NAME}/${APP}:${TAG} ${REGISTRY}/${PROJECT_NAME}/${APP}:${ENV_TAG}
+
+push-image:
+	docker push ${REGISTRY}/${PROJECT_NAME}/${APP}:${TAG}
+	docker push ${REGISTRY}/${PROJECT_NAME}/${APP}:${ENV_TAG}
+
+pull-proto-module:
+	git submodule update --init --recursive
+
+update-proto-module:
+	git submodule update --remote --merge

@@ -175,6 +175,7 @@ func (r *BookingPatients) GetAllPatiens(ctx context.Context, req *patients.GetAl
 	var (
 		patientss patients.PatientsType
 		upTime    sql.NullTime
+		count     int64
 		delTime   sql.NullTime
 	)
 
@@ -182,6 +183,7 @@ func (r *BookingPatients) GetAllPatiens(ctx context.Context, req *patients.GetAl
 		Select(tableColumPatients()).
 		From(tableNamePatients)
 
+	countBuilder := r.db.Sq.Builder.Select("count(*)").From(tableNamePatients)
 	if req.Page >= 1 && req.Limit >= 1 {
 		toSql = toSql.
 			Limit(req.Limit).
@@ -192,11 +194,20 @@ func (r *BookingPatients) GetAllPatiens(ctx context.Context, req *patients.GetAl
 	}
 	if req.OrderBy != "" {
 		toSql = toSql.OrderBy(req.OrderBy)
+		countBuilder = countBuilder.Where(r.db.Sq.Equal("deleted_at", nil))
 	}
 	if !req.DeleteStatus {
 		toSql = toSql.Where(r.db.Sq.Equal("deleted_at", nil))
 	}
 	toSqls, args, err := toSql.ToSql()
+
+	if err != nil {
+		return nil, err
+	}
+
+	queryCount, _, err := countBuilder.ToSql()
+
+	err = r.db.QueryRow(ctx, queryCount).Scan(&count)
 
 	if err != nil {
 		return nil, err
@@ -229,10 +240,9 @@ func (r *BookingPatients) GetAllPatiens(ctx context.Context, req *patients.GetAl
 			return nil, err
 		}
 
-		patientss.Count += 1
-
 		patientss.Patients = append(patientss.Patients, &res)
 	}
+	patientss.Count = count
 	return &patientss, nil
 }
 
@@ -343,12 +353,15 @@ func (r *BookingPatients) DeletePatient(ctx context.Context, req *patients.Field
 			return &patients.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 
 		if err != nil {
 			return &patients.StatusRes{Status: false}, err
 		}
-		return &patients.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &patients.StatusRes{Status: true}, nil
+		}
+		return &patients.StatusRes{Status: false}, nil
 
 	} else {
 		toSql, args, err := r.db.Sq.Builder.
@@ -360,10 +373,13 @@ func (r *BookingPatients) DeletePatient(ctx context.Context, req *patients.Field
 			return &patients.StatusRes{Status: false}, err
 		}
 
-		_, err = r.db.Exec(ctx, toSql, args...)
+		resp, err := r.db.Exec(ctx, toSql, args...)
 		if err != nil {
 			return &patients.StatusRes{Status: false}, err
 		}
-		return &patients.StatusRes{Status: true}, nil
+		if resp.RowsAffected() > 0 {
+			return &patients.StatusRes{Status: true}, nil
+		}
+		return &patients.StatusRes{Status: false}, nil
 	}
 }

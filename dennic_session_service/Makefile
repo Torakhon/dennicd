@@ -3,22 +3,33 @@ CURRENT_DIR=$(shell pwd)
 build:
 	CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -installsuffix cgo -o ${CURRENT_DIR}/bin/${APP} ${APP_CMD_DIR}/main.go
 
-	./scripts/genproto.sh	migrate -path migrations -database $(DB_URL) -verbose up
+#OTLP_COLLECTOR_HOST = 0.0.0.0
+#
+#POSTGRES_HOST = localhost
+#POSTGRES_PORT = 5432
+#POSTGRES_USER = postgres
+#POSTGRES_PASSWORD = 20030505
+#POSTGRES_DATABASE = dennic
 
-# run service
-.PHONY: run
-run:
-	go run cmd/app/main.go
+#-------------DOCKER----------------
+OTLP_COLLECTOR_HOST = otlp-collector
 
-DB_URL := "postgres://postgres:20030505@localhost:5432/dennic_session_service?sslmode=disable"
-
-migrate-up:
-
-
-migrate-down:
+POSTGRES_HOST = postgresdb
+POSTGRES_PORT = 5432
+POSTGRES_USER = postgres
+POSTGRES_PASSWORD = 20030505
+POSTGRES_DATABASE = dennic
 
 proto-gen:
 	./scripts/genproto.sh
+
+DB_URL := "postgres://postgres:123@localhost:5432/dennic_session_service?sslmode=disable"
+
+migrate-up:
+	migrate -path migrations -database $(DB_URL) -verbose up
+
+migrate-down:
+	migrate -path migrations -database $(DB_URL) -verbose down
 
 migrate-force:
 	migrate -path migrations -database $(DB_URL) -verbose force 1
