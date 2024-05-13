@@ -12,3 +12,8 @@ type DoctorWorkingHours struct {
 	UpdatedAt  time.Time
 	DeletedAt  time.Time
 }
+
+type ListDoctorWorkingHours struct {
+	DoctorWhs []DoctorWorkingHours
+	Count     int32
+}

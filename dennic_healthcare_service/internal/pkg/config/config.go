@@ -5,6 +5,11 @@ import (
 	"strings"
 )
 
+type Minio struct {
+	Endpoint   string
+	BucketName string
+}
+
 type Config struct {
 	APP         string
 	Environment string
@@ -32,36 +37,41 @@ type Config struct {
 	Kafka struct {
 		Address []string
 		Topic   struct {
-			UserCreate string
+			Healthcare string
 		}
 	}
+	MinioService Minio
 }
 
 func New() *Config {
 	var config Config
 
 	// general configuration
-	config.APP = getEnv("APP", "dennic_healthcare_service")
+	config.APP = getEnv("APP", "app")
 	config.Environment = getEnv("ENVIRONMENT", "develop")
 	config.LogLevel = getEnv("LOG_LEVEL", "debug")
 	config.RPCPort = getEnv("RPC_PORT", ":9080")
 	config.Context.Timeout = getEnv("CONTEXT_TIMEOUT", "30s")
 
 	// db configuration
-	config.DB.Host = getEnv("POSTGRES_HOST", "localhost")
+	config.DB.Host = getEnv("POSTGRES_HOST", "postgresdb")
 	config.DB.Port = getEnv("POSTGRES_PORT", "5432")
 	config.DB.User = getEnv("POSTGRES_USER", "postgres")
 	config.DB.Password = getEnv("POSTGRES_PASSWORD", "20030505")
 	config.DB.SslMode = getEnv("POSTGRES_SSLMODE", "disable")
 	config.DB.Name = getEnv("POSTGRES_DATABASE", "dennic")
 
+
 	// otlp collector configuration
-	config.OTLPCollector.Host = getEnv("OTLP_COLLECTOR_HOST", "localhost")
+	config.OTLPCollector.Host = getEnv("OTLP_COLLECTOR_HOST", "otel-collector")
 	config.OTLPCollector.Port = getEnv("OTLP_COLLECTOR_PORT", ":4317")
 
 	// kafka configuration
 	config.Kafka.Address = strings.Split(getEnv("KAFKA_ADDRESS", "localhost:29092"), ",")
-	config.Kafka.Topic.UserCreate = getEnv("KAFKA_TOPIC_USER_CREATE", "user.created")
+	config.Kafka.Topic.Healthcare = getEnv("KAFKA_TOPIC_HEALTHCARE_CREATE", "user.created")
+
+	config.MinioService.Endpoint = getEnv("MINIO_SERVICE_ENDPOINT", "localhost:9191")
+	config.MinioService.BucketName = getEnv("MINIO_SERVICE_BUCKET_NAME", "test-bucket")
 
 	return &config
 }

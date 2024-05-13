@@ -8,6 +8,7 @@ type Specialization struct {
 	Name         string
 	Description  string
 	DepartmentId string
+	ImageUrl     string
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	DeletedAt    time.Time
@@ -15,4 +16,5 @@ type Specialization struct {
 
 type ListSpecializations struct {
 	Specializations []Specialization
+	Count           int32
 }

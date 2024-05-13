@@ -114,7 +114,6 @@ func (s *DoctorTestSuite) TestDoctorCrud() {
 	s.Suite.Equal(getDoctor.Salary, doctor.Salary)
 	s.Suite.Equal(getDoctor.Bio, doctor.Bio)
 	s.Suite.Equal(getDoctor.StartWorkDate, doctor.StartWorkDate)
-	s.Suite.Equal(getDoctor.EndWorkDate, doctor.EndWorkDate)
 	s.Suite.Equal(getDoctor.WorkYears, doctor.WorkYears)
 	s.Suite.Equal(getDoctor.DepartmentId, doctor.DepartmentId)
 	s.Suite.Equal(getDoctor.RoomNumber, doctor.RoomNumber)
@@ -169,11 +168,22 @@ func (s *DoctorTestSuite) TestDoctorCrud() {
 	s.Suite.Equal(updatedDoctor.Salary, float32(newUpSalary))
 	s.Suite.Equal(updatedDoctor.Bio, newUpBio)
 	s.Suite.Equal(updatedDoctor.StartWorkDate, doctor.StartWorkDate)
-	s.Suite.Equal(updatedDoctor.EndWorkDate, doctor.EndWorkDate)
 	s.Suite.Equal(updatedDoctor.WorkYears, doctor.WorkYears)
 	s.Suite.Equal(updatedDoctor.DepartmentId, doctor.DepartmentId)
 	s.Suite.Equal(updatedDoctor.RoomNumber, doctor.RoomNumber)
 	s.Suite.Equal(updatedDoctor.Password, doctor.Password)
+
+	resp, err := s.Repository.ListDoctorsByDepartmentId(ctx, &entity.GetReqStrDep{
+		DepartmentId: doctor.DepartmentId,
+		IsActive:     true,
+		Page:         1,
+		Limit:        10,
+		Field:        "",
+		Value:        "",
+		OrderBy:      "",
+	})
+	s.Suite.NoError(err)
+	s.Suite.NotNil(resp)
 
 	deleteDoctor, err := s.Repository.DeleteDoctor(ctx, &entity.GetReqStr{
 		Id:            doctor.Id,

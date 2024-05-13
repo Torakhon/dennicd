@@ -9,6 +9,8 @@ type DoctorServices struct {
 	SpecializationId string
 	OnlinePrice      float32
 	OfflinePrice     float32
+	Name             string
+	Duration         time.Time
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	DeletedAt        time.Time
@@ -16,4 +18,5 @@ type DoctorServices struct {
 
 type ListDoctorServices struct {
 	DoctorServices []DoctorServices
+	Count          int64
 }

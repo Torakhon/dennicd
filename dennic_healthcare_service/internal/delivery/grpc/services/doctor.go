@@ -92,9 +92,9 @@ func (r doctorRPC) CreateDoctor(ctx context.Context, doctor *pb.Doctor) (*pb.Doc
 
 func (r doctorRPC) GetDoctorById(ctx context.Context, str *pb.GetReqStrDoctor) (*pb.Doctor, error) {
 	ctx, span := otlp.Start(ctx, serviceNameDoctorDelivery, serviceNameDoctorDeliveryRepoPrefix+"Get")
-	span.SetAttributes(attribute.Key("GetDoctorById").String(str.Id))
+	span.SetAttributes(attribute.Key("GetDoctorById").String(str.Value))
 	defer span.End()
-	doctor, err := r.doctor.GetDoctorById(ctx, &entity.GetReqStr{Id: str.Id, IsActive: str.IsActive})
+	doctor, err := r.doctor.GetDoctorById(ctx, &entity.GetReqStr{Field: str.Field, Value: str.Value, IsActive: str.IsActive})
 	if err != nil {
 		r.logger.Error("Failed to get doctor", zap.Error(err))
 		return nil, err
@@ -128,9 +128,16 @@ func (r doctorRPC) GetDoctorById(ctx context.Context, str *pb.GetReqStrDoctor) (
 func (r doctorRPC) GetAllDoctors(ctx context.Context, all *pb.GetAllDoctorS) (*pb.ListDoctors, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorDelivery, serviceNameDoctorDeliveryRepoPrefix+"Get all")
-	span.SetAttributes(attribute.Key("GetAllDoctors").String(all.Search))
+	span.SetAttributes(attribute.Key("GetAllDoctors").String(all.Value))
 	defer span.End()
-	resp, err := r.doctor.GetAllDoctors(ctx, all.Page, all.Limit, all.Search)
+	resp, err := r.doctor.GetAllDoctors(ctx, &entity.GetAll{
+		Page:     all.Page,
+		Limit:    all.Limit,
+		Field:    all.Field,
+		Value:    all.Value,
+		OrderBy:  all.OrderBy,
+		IsActive: all.IsActive,
+	})
 	if err != nil {
 		r.logger.Error("Failed to get all doctors", zap.Error(err))
 		return nil, err
@@ -138,7 +145,7 @@ func (r doctorRPC) GetAllDoctors(ctx context.Context, all *pb.GetAllDoctorS) (*p
 
 	var doctors pb.ListDoctors
 
-	for _, doctor := range resp {
+	for _, doctor := range resp.Doctors {
 		doctors.Doctors = append(doctors.Doctors, &pb.Doctor{
 			Id:            doctor.Id,
 			Order:         doctor.Order,
@@ -164,6 +171,7 @@ func (r doctorRPC) GetAllDoctors(ctx context.Context, all *pb.GetAllDoctorS) (*p
 			DeletedAt:     doctor.DeletedAt.String(),
 		})
 	}
+	doctors.Count = resp.Count
 
 	return &doctors, nil
 }
@@ -231,13 +239,64 @@ func (r doctorRPC) UpdateDoctor(ctx context.Context, doctor *pb.Doctor) (*pb.Doc
 func (r doctorRPC) DeleteDoctor(ctx context.Context, str *pb.GetReqStrDoctor) (*pb.StatusDoctor, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorDelivery, serviceNameDoctorDeliveryRepoPrefix+"Delete")
-	span.SetAttributes(attribute.Key("DeleteDoctor").String(str.Id))
+	span.SetAttributes(attribute.Key("DeleteDoctor").String(str.Value))
 	defer span.End()
 
-	status, err := r.doctor.DeleteDoctor(ctx, &entity.GetReqStr{Id: str.Id, IsHardDeleted: str.IsHardDeleted})
+	status, err := r.doctor.DeleteDoctor(ctx, &entity.GetReqStr{Field: str.Field, Value: str.Value, IsActive: str.IsActive})
 	if err != nil {
 		r.logger.Error("deleted doctor error", zap.Error(err))
 		return nil, err
 	}
 	return &pb.StatusDoctor{Status: status}, nil
+}
+
+func (r doctorRPC) ListDoctorsByDepartmentId(ctx context.Context, dep *pb.GetReqStrDep) (*pb.ListDoctors, error) {
+	ctx, span := otlp.Start(ctx, serviceNameDoctorDelivery, serviceNameDoctorDeliveryRepoPrefix+"Get all")
+	span.SetAttributes(attribute.Key("GetAllDoctors").String(dep.Field))
+	defer span.End()
+	resp, err := r.doctor.ListDoctorsByDepartmentId(ctx, &entity.GetReqStrDep{
+		DepartmentId: dep.DepartmentId,
+		IsActive:     dep.IsActive,
+		Page:         dep.Page,
+		Limit:        dep.Limit,
+		Field:        dep.Field,
+		Value:        dep.Value,
+		OrderBy:      dep.OrderBy,
+	})
+	if err != nil {
+		r.logger.Error("Failed to get all doctors", zap.Error(err))
+		return nil, err
+	}
+
+	var doctors pb.ListDoctors
+
+	for _, doctor := range resp {
+		doctors.Doctors = append(doctors.Doctors, &pb.Doctor{
+			Id:            doctor.Id,
+			Order:         doctor.Order,
+			FirstName:     doctor.FirstName,
+			LastName:      doctor.LastName,
+			Gender:        doctor.Gender,
+			BirthDate:     doctor.BirthDate,
+			PhoneNumber:   doctor.PhoneNumber,
+			Email:         doctor.Email,
+			Address:       doctor.Address,
+			City:          doctor.City,
+			Country:       doctor.Country,
+			Salary:        doctor.Salary,
+			Bio:           doctor.Bio,
+			StartWorkDate: doctor.StartWorkDate,
+			EndWorkDate:   doctor.EndWorkDate,
+			WorkYears:     doctor.WorkYears,
+			DepartmentId:  doctor.DepartmentId,
+			RoomNumber:    doctor.RoomNumber,
+			Password:      doctor.Password,
+			CreatedAt:     doctor.CreatedAt.String(),
+			UpdatedAt:     doctor.UpdatedAt.String(),
+			DeletedAt:     doctor.DeletedAt.String(),
+		})
+		doctors.Count += 1
+	}
+
+	return &doctors, nil
 }

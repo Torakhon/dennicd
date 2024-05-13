@@ -17,7 +17,7 @@ const (
 type SpecializationUsecase interface {
 	CreateSpecialization(ctx context.Context, specialization *entity.Specialization) (*entity.Specialization, error)
 	GetSpecializationById(ctx context.Context, in *entity.GetReqStr) (*entity.Specialization, error)
-	GetAllSpecializations(ctx context.Context, page, limit int64, search string) ([]*entity.Specialization, error)
+	GetAllSpecializations(ctx context.Context, all *entity.GetAll) (*entity.ListSpecializations, error)
 	UpdateSpecialization(ctx context.Context, in *entity.Specialization) (*entity.Specialization, error)
 	DeleteSpecialization(ctx context.Context, in *entity.GetReqStr) (bool, error)
 }
@@ -51,26 +51,27 @@ func (n newsSpecService) GetSpecializationById(ctx context.Context, in *entity.G
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameSpecializationUseCase, serviceNameSpecializationUseCaseRepoPrefix+"Get")
-	span.SetAttributes(attribute.String("GetSpecializationById", in.Id))
+	span.SetAttributes(attribute.String(in.Field, in.Value))
 
 	defer span.End()
 
 	return n.repo.GetSpecializationById(ctx, &entity.GetReqStr{
-		Id:       in.Id,
+		Field:    in.Field,
+		Value:    in.Value,
 		IsActive: in.IsActive,
 	})
 }
 
-func (n newsSpecService) GetAllSpecializations(ctx context.Context, page, limit int64, search string) ([]*entity.Specialization, error) {
+func (n newsSpecService) GetAllSpecializations(ctx context.Context, all *entity.GetAll) (*entity.ListSpecializations, error) {
 	ctx, cancel := context.WithTimeout(ctx, n.ctxTimeout)
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameSpecializationUseCase, serviceNameSpecializationUseCaseRepoPrefix+"Get all")
-	span.SetAttributes(attribute.String("GetAllSpecializations", search))
+	span.SetAttributes(attribute.String(all.Field, all.Value))
 
 	defer span.End()
 
-	return n.repo.GetAllSpecializations(ctx, page, limit, search)
+	return n.repo.GetAllSpecializations(ctx, all)
 }
 
 func (n newsSpecService) UpdateSpecialization(ctx context.Context, in *entity.Specialization) (*entity.Specialization, error) {
@@ -89,7 +90,7 @@ func (n newsSpecService) DeleteSpecialization(ctx context.Context, in *entity.Ge
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameSpecializationUseCase, serviceNameSpecializationUseCaseRepoPrefix+"Delete")
-	span.SetAttributes(attribute.String("DeleteSpecialization", in.Id))
+	span.SetAttributes(attribute.String("DeleteSpecialization", in.Value))
 
 	defer span.End()
 

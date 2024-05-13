@@ -1,9 +1,9 @@
 package kafka
 
 import (
-	"encoding/json"
 	"Healthcare_Evrone/internal/entity"
 	"Healthcare_Evrone/internal/pkg/config"
+	"encoding/json"
 	// "Healthcare_Evrone/internal/pkg/otlp"
 	"context"
 
@@ -21,7 +21,7 @@ func NewProducer(config *config.Config, logger *zap.Logger) *producer {
 		logger: logger,
 		userCreate: &kafka.Writer{
 			Addr:                   kafka.TCP(config.Kafka.Address...),
-			Topic:                  config.Kafka.Topic.UserCreate,
+			Topic:                  config.Kafka.Topic.Healthcare,
 			Balancer:               &kafka.Hash{},
 			RequiredAcks:           kafka.RequireAll,
 			AllowAutoTopicCreation: true,
@@ -51,7 +51,7 @@ func (p *producer) buildMessage(key string, value []byte) kafka.Message {
 	}
 }
 
-func (p *producer) ProduceUserToCreate(ctx context.Context, key string, value *entity.User) error {
+func (p *producer) ProduceUserToCreate(ctx context.Context, key string, value *entity.Doctor) error {
 
 	byteValue, err := json.Marshal(&value)
 	if err != nil {

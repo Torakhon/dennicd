@@ -21,7 +21,7 @@ const (
 	serviceNameDoctorWorkingHoursDeliveryRepoPrefix = "doctorWorkingHoursDelivery"
 )
 
-func DoctorWorkingHoursServiceRPC(logger *zap.Logger, dwhUsecase usecase.DoctorWorkingHoursUseCase) pb.DoctorWorkingHoursServer {
+func DoctorWorkingHoursServiceRPC(logger *zap.Logger, dwhUsecase usecase.DoctorWorkingHoursUseCase) pb.DoctorWorkingHoursServiceServer {
 	return &doctorWorkingHoursServiceRPC{
 		logger,
 		dwhUsecase,
@@ -58,10 +58,11 @@ func (r doctorWorkingHoursServiceRPC) CreateDoctorWorkingHours(ctx context.Conte
 
 func (r doctorWorkingHoursServiceRPC) GetDoctorWorkingHoursById(ctx context.Context, in *pb.GetReqInt) (*pb.DoctorWorkingHours, error) {
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHoursDelivery, serviceNameDoctorWorkingHoursDeliveryRepoPrefix+"Get")
-	span.SetAttributes(attribute.Key("GetDoctorWorkingHoursById").String(string(in.Id)))
+	span.SetAttributes(attribute.Key("GetDoctorWorkingHoursById").String(string(in.Value)))
 	defer span.End()
-	dwh, err := r.doctorWorkingHours.GetDoctorWorkingHoursById(ctx, &entity.GetReqInt{
-		Id:       in.Id,
+	dwh, err := r.doctorWorkingHours.GetDoctorWorkingHoursById(ctx, &entity.GetReqStr{
+		Field:    in.Field,
+		Value:    in.Value,
 		IsActive: in.IsActive,
 	})
 	if err != nil {
@@ -79,16 +80,23 @@ func (r doctorWorkingHoursServiceRPC) GetDoctorWorkingHoursById(ctx context.Cont
 	}, nil
 }
 
-func (r doctorWorkingHoursServiceRPC) GetAllDoctorWorkingHours(ctx context.Context, all *pb.GetAllDoctorWorkingHourS) (*pb.ListDoctorWorkingHours, error) {
+func (r doctorWorkingHoursServiceRPC) GetAllDoctorWorkingHours(ctx context.Context, all *pb.GetAllDoctorWorkingHoursReq) (*pb.ListDoctorWorkingHours, error) {
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHoursDelivery, serviceNameDoctorWorkingHoursDeliveryRepoPrefix+"Get all")
-	span.SetAttributes(attribute.Key("GetAllDoctorWorkingHours").String(all.Search))
+	span.SetAttributes(attribute.Key("GetAllDoctorWorkingHours").String(all.Value))
 	defer span.End()
-	dwh, err := r.doctorWorkingHours.GetAllDoctorWorkingHours(ctx, all.Page, all.Limit, all.Search)
+	dwh, err := r.doctorWorkingHours.GetAllDoctorWorkingHours(ctx, &entity.GetAll{
+		Page:     all.Page,
+		Limit:    all.Limit,
+		Field:    all.Field,
+		Value:    all.Value,
+		OrderBy:  all.OrderBy,
+		IsActive: all.IsActive,
+	})
 	if err != nil {
 		return nil, err
 	}
 	var listDoctorWorkingHours pb.ListDoctorWorkingHours
-	for _, d := range dwh {
+	for _, d := range dwh.DoctorWhs {
 		listDoctorWorkingHours.Dwh = append(listDoctorWorkingHours.Dwh, &pb.DoctorWorkingHours{
 			Id:         d.Id,
 			DoctorId:   d.DoctorId,
@@ -100,6 +108,7 @@ func (r doctorWorkingHoursServiceRPC) GetAllDoctorWorkingHours(ctx context.Conte
 			DeletedAt:  d.DeletedAt.String(),
 		})
 	}
+	listDoctorWorkingHours.Count = dwh.Count
 	return &listDoctorWorkingHours, nil
 }
 
@@ -134,9 +143,9 @@ func (r doctorWorkingHoursServiceRPC) UpdateDoctorWorkingHours(ctx context.Conte
 
 func (r doctorWorkingHoursServiceRPC) DeleteDoctorWorkingHours(ctx context.Context, reqInt *pb.GetReqInt) (*pb.StatusDoctorWorkingHours, error) {
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHoursDelivery, serviceNameDoctorWorkingHoursDeliveryRepoPrefix+"Delete")
-	span.SetAttributes(attribute.Key("DeleteDoctorWorkingHours").String(string(reqInt.Id)))
+	span.SetAttributes(attribute.Key("DeleteDoctorWorkingHours").String(string(reqInt.Value)))
 	defer span.End()
-	status, err := r.doctorWorkingHours.DeleteDoctorWorkingHours(ctx, &entity.GetReqInt{Id: reqInt.Id, IsHardDeleted: reqInt.IsHardDeleted})
+	status, err := r.doctorWorkingHours.DeleteDoctorWorkingHours(ctx, &entity.GetReqStr{Field: reqInt.Field, Value: reqInt.Value, IsActive: reqInt.IsActive})
 	if err != nil {
 		return nil, err
 	}

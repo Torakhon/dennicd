@@ -103,10 +103,11 @@ func (a *App) Run() error {
 	specialization := repo.NewSpecializationRepo(a.DB)
 	dwh := repo.NewDoctorWorkingHoursRepo(a.DB)
 	ds := repo.NewDoctorServicesRepo(a.DB)
+	reas := repo.NewReasonsRepo(a.DB)
 
 	// usecase initialization
 	doctorWorkingHours := usecase.NewDoctorWorkingHoursService(contextTimeout, dwh)
-	pb.RegisterDoctorWorkingHoursServer(a.GrpcServer, invest_grpc.DoctorWorkingHoursServiceRPC(a.Logger, doctorWorkingHours))
+	pb.RegisterDoctorWorkingHoursServiceServer(a.GrpcServer, invest_grpc.DoctorWorkingHoursServiceRPC(a.Logger, doctorWorkingHours))
 
 	doctorUsecase := usecase.NewDoctorService(contextTimeout, healthRepo)
 	pb.RegisterDoctorServiceServer(a.GrpcServer, invest_grpc.DoctorRPC(a.Logger, doctorUsecase))
@@ -119,6 +120,9 @@ func (a *App) Run() error {
 
 	doctorsServicesUsecase := usecase.NewDoctorServices(contextTimeout, ds)
 	pb.RegisterDoctorsServiceServer(a.GrpcServer, invest_grpc.DoctorsServiceRPC(a.Logger, doctorsServicesUsecase))
+
+	reasonsUsecase := usecase.NewReasons(contextTimeout, reas)
+	pb.RegisterReasonsServiceServer(a.GrpcServer, invest_grpc.ReasonsServiceRPC(a.Logger, reasonsUsecase))
 
 	a.Logger.Info("gRPC Server Listening", zap.String("url", a.Config.RPCPort))
 	if err := grpc_server.Run(a.Config, a.GrpcServer); err != nil {

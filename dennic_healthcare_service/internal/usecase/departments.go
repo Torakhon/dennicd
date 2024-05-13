@@ -17,7 +17,7 @@ const (
 type DepartmentsUsecase interface {
 	CreateDepartment(ctx context.Context, dep *entity.Department) (*entity.Department, error)
 	GetDepartmentById(ctx context.Context, get *entity.GetReqStr) (*entity.Department, error)
-	GetAllDepartments(ctx context.Context, page, limit int64, search string) ([]*entity.Department, error)
+	GetAllDepartments(ctx context.Context, all *entity.GetAll) (*entity.ListDepartments, error)
 	UpdateDepartment(ctx context.Context, update *entity.Department) (*entity.Department, error)
 	DeleteDepartment(ctx context.Context, del *entity.GetReqStr) (bool, error)
 }
@@ -55,23 +55,23 @@ func (u newsDepService) GetDepartmentById(ctx context.Context, get *entity.GetRe
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDepartmentUseCase, serviceNameDepartmentUseCaseRepoPrefix+"Get")
-	span.SetAttributes(attribute.Key("GetDepartmentById").String(get.Id))
+	span.SetAttributes(attribute.Key(get.Field).String(get.Value))
 
 	defer span.End()
 
 	return u.repo.GetDepartmentById(ctx, get)
 }
 
-func (u newsDepService) GetAllDepartments(ctx context.Context, page, limit int64, search string) ([]*entity.Department, error) {
+func (u newsDepService) GetAllDepartments(ctx context.Context, all *entity.GetAll) (*entity.ListDepartments, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDepartmentUseCase, serviceNameDepartmentUseCaseRepoPrefix+"Get all")
-	span.SetAttributes(attribute.Key("GetAllDepartments").String(search))
+	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
 
 	defer span.End()
 
-	return u.repo.GetAllDepartments(ctx, page, limit, search)
+	return u.repo.GetAllDepartments(ctx, all)
 }
 
 func (u newsDepService) UpdateDepartment(ctx context.Context, update *entity.Department) (*entity.Department, error) {
@@ -91,7 +91,7 @@ func (u newsDepService) DeleteDepartment(ctx context.Context, del *entity.GetReq
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDepartmentUseCase, serviceNameDepartmentUseCaseRepoPrefix+"Delete")
-	span.SetAttributes(attribute.Key("DeleteDepartment").String(del.Id))
+	span.SetAttributes(attribute.Key("DeleteDepartment").String(del.Value))
 	defer span.End()
 
 	return u.repo.DeleteDepartment(ctx, del)

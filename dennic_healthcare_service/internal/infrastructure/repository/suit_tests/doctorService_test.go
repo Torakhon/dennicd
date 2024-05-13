@@ -115,12 +115,16 @@ func (s *DoctorServiceTestSuite) TestDoctorServiceCrud() {
 	s.Suite.Equal(respSpec.Description, special.Description)
 	s.Suite.Equal(respSpec.DepartmentId, special.DepartmentId)
 
+	tm, err := time.Parse("15:04", "12:12")
+	s.Suite.NoError(err)
 	doctorServices := &entity.DoctorServices{
 		Id:               uuid.NewString(),
 		DoctorId:         doctor.Id,
 		SpecializationId: special.ID,
 		OnlinePrice:      1,
 		OfflinePrice:     1,
+		Name:             "Test Name",
+		Duration:         tm,
 	}
 	respDoctorService, err := s.Repository.CreateDoctorServices(ctx, doctorServices)
 	s.Suite.NoError(err)
@@ -131,6 +135,8 @@ func (s *DoctorServiceTestSuite) TestDoctorServiceCrud() {
 	s.Suite.Equal(respDoctorService.SpecializationId, doctorServices.SpecializationId)
 	s.Suite.Equal(respDoctorService.OnlinePrice, doctorServices.OnlinePrice)
 	s.Suite.Equal(respDoctorService.OfflinePrice, doctorServices.OfflinePrice)
+	s.Suite.Equal(respDoctorService.Name, doctorServices.Name)
+	s.Suite.Equal(respDoctorService.Duration, doctorServices.Duration)
 
 	getDoctorService, err := s.Repository.GetDoctorServiceByID(ctx, &entity.GetReqStr{
 		Id:       doctorServices.Id,
@@ -143,6 +149,8 @@ func (s *DoctorServiceTestSuite) TestDoctorServiceCrud() {
 	s.Suite.Equal(respDoctorService.SpecializationId, doctorServices.SpecializationId)
 	s.Suite.Equal(respDoctorService.OnlinePrice, doctorServices.OnlinePrice)
 	s.Suite.Equal(respDoctorService.OfflinePrice, doctorServices.OfflinePrice)
+	s.Suite.Equal(respDoctorService.Name, doctorServices.Name)
+	s.Suite.Equal(respDoctorService.Duration, doctorServices.Duration)
 
 	respAll, err := s.Repository.GetAllDoctorServices(ctx, 1, 10, "")
 	s.Suite.NoError(err)
@@ -157,6 +165,8 @@ func (s *DoctorServiceTestSuite) TestDoctorServiceCrud() {
 		SpecializationId: doctorServices.SpecializationId,
 		OnlinePrice:      float32(newUpOnlinePrice),
 		OfflinePrice:     float32(newUpOfflinePrice),
+		Name:             doctorServices.Name,
+		Duration:         doctorServices.Duration,
 	})
 	s.Suite.NoError(err)
 	s.Suite.NotNil(updatedDoctorService)
@@ -165,6 +175,8 @@ func (s *DoctorServiceTestSuite) TestDoctorServiceCrud() {
 	s.Suite.Equal(doctorServices.SpecializationId, updatedDoctorService.SpecializationId)
 	s.Suite.Equal(float32(newUpOnlinePrice), updatedDoctorService.OfflinePrice)
 	s.Suite.Equal(float32(newUpOfflinePrice), updatedDoctorService.OfflinePrice)
+	s.Suite.Equal(doctorServices.Name, updatedDoctorService.Name)
+	s.Suite.Equal(doctorServices.Duration, updatedDoctorService.Duration)
 
 	deleteDoctorService, err := s.Repository.DeleteDoctorService(ctx, &entity.GetReqStr{
 		Id:            doctorServices.Id,

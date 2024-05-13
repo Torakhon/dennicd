@@ -32,11 +32,13 @@ func NewDoctorServicesRepo(db *postgres.PostgresDB) *Ds {
 func (d Ds) doctorServicesSelectQueryPrefix() string {
 	return `
 			id,
-			Dservice_order,
+			doctor_service_order,
 			doctor_id,
 			specialization_id,
 			online_price,
 			offline_price,
+			name,
+			duration,
 			created_at,
 			updated_at,
 			deleted_at
@@ -55,6 +57,8 @@ func (d Ds) CreateDoctorServices(ctx context.Context, in *entity.DoctorServices)
 		"specialization_id": in.SpecializationId,
 		"online_price":      in.OnlinePrice,
 		"offline_price":     in.OfflinePrice,
+		"name":              in.Name,
+		"duration":          in.Duration,
 	}
 	query, args, err := d.db.Sq.Builder.Insert(d.tableName).
 		SetMap(data).Suffix(fmt.Sprintf("RETURNING %s", d.doctorServicesSelectQueryPrefix())).ToSql()
@@ -70,6 +74,8 @@ func (d Ds) CreateDoctorServices(ctx context.Context, in *entity.DoctorServices)
 		&in.SpecializationId,
 		&in.OnlinePrice,
 		&in.OfflinePrice,
+		&in.Name,
+		&in.Duration,
 		&in.CreatedAt,
 		&updatedAt,
 		&deletedAt,
@@ -90,6 +96,7 @@ func (d Ds) CreateDoctorServices(ctx context.Context, in *entity.DoctorServices)
 func (d Ds) GetDoctorServiceByID(ctx context.Context, in *entity.GetReqStr) (*entity.DoctorServices, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorServices, serviceNameDoctorServicesRepoPrefix+"Get")
+	span.SetAttributes(attribute.Key(in.Field).String(in.Value))
 	defer span.End()
 
 	var doctorService entity.DoctorServices
@@ -97,7 +104,7 @@ func (d Ds) GetDoctorServiceByID(ctx context.Context, in *entity.GetReqStr) (*en
 	if !in.IsActive {
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 	}
-	queryBuilder = queryBuilder.Where(d.db.Sq.Equal("id", in.Id))
+	queryBuilder = queryBuilder.Where(d.db.Sq.Equal(in.Field, in.Value))
 	query, args, err := queryBuilder.ToSql()
 	if err != nil {
 		return nil, err
@@ -110,6 +117,8 @@ func (d Ds) GetDoctorServiceByID(ctx context.Context, in *entity.GetReqStr) (*en
 		&doctorService.SpecializationId,
 		&doctorService.OnlinePrice,
 		&doctorService.OfflinePrice,
+		&doctorService.Name,
+		&doctorService.Duration,
 		&doctorService.CreatedAt,
 		&updatedAt,
 		&deletedAt,
@@ -126,23 +135,32 @@ func (d Ds) GetDoctorServiceByID(ctx context.Context, in *entity.GetReqStr) (*en
 	return &doctorService, nil
 }
 
-func (d Ds) GetAllDoctorServices(ctx context.Context, page, limit int64, search string) ([]*entity.DoctorServices, error) {
+func (d Ds) GetAllDoctorServices(ctx context.Context, all *entity.GetAll) (*entity.ListDoctorServices, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorServices, serviceNameDoctorServicesRepoPrefix+"Get all")
+	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
 	defer span.End()
 
-	offset := limit * (page - 1)
+	offset := all.Limit * (all.Page - 1)
 
 	queryBuilder := d.db.Sq.Builder.Select(d.doctorServicesSelectQueryPrefix()).From(d.tableName)
-	//if search != "" {
-	//	queryBuilder = queryBuilder.Where(fmt.Sprintf(`online_price ILIKE %f OR offline_price ILIKE %s`, search+"%", search+"%"))
-	//}
-	queryBuilder = queryBuilder.Limit(uint64(limit)).Offset(uint64(offset))
+	if all.Field != "" {
+		queryBuilder = queryBuilder.Where(fmt.Sprintf(`%s ILIKE %s`, all.Field, all.Value+"%"))
+	}
+	if all.OrderBy != "" {
+		queryBuilder = queryBuilder.OrderBy(all.OrderBy)
+	}
+	countBuilder := d.db.Sq.Builder.Select("count(*)").From(departmentTableName)
+	if !all.IsActive {
+		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
+		countBuilder = countBuilder.Where("deleted_at IS NULL")
+	}
+	queryBuilder = queryBuilder.Limit(uint64(all.Limit)).Offset(uint64(offset))
 	query, args, err := queryBuilder.ToSql()
 	if err != nil {
 		return nil, err
 	}
-	var doctorServices []*entity.DoctorServices
+	var doctorServices entity.ListDoctorServices
 	rows, err := d.db.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err
@@ -157,6 +175,8 @@ func (d Ds) GetAllDoctorServices(ctx context.Context, page, limit int64, search 
 			&dService.SpecializationId,
 			&dService.OnlinePrice,
 			&dService.OfflinePrice,
+			&dService.Name,
+			&dService.Duration,
 			&dService.CreatedAt,
 			&updatedAt,
 			&deletedAt,
@@ -170,14 +190,22 @@ func (d Ds) GetAllDoctorServices(ctx context.Context, page, limit int64, search 
 		if err != nil {
 			return nil, err
 		}
-		doctorServices = append(doctorServices, &dService)
+		doctorServices.DoctorServices = append(doctorServices.DoctorServices, dService)
 	}
-	return doctorServices, nil
+	var count int64
+	queryCount, _, err := countBuilder.ToSql()
+	err = d.db.QueryRow(ctx, queryCount).Scan(&count)
+	if err != nil {
+		return nil, d.db.Error(err)
+	}
+	doctorServices.Count = count
+	return &doctorServices, nil
 }
 
 func (d Ds) UpdateDoctorServices(ctx context.Context, services *entity.DoctorServices) (*entity.DoctorServices, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorServices, serviceNameDoctorServicesRepoPrefix+"Update")
+	span.SetAttributes(attribute.Key("UpdateDoctorServices").String(services.Id))
 	defer span.End()
 
 	data := map[string]any{
@@ -185,7 +213,9 @@ func (d Ds) UpdateDoctorServices(ctx context.Context, services *entity.DoctorSer
 		"specialization_id": services.SpecializationId,
 		"online_price":      services.OnlinePrice,
 		"offline_price":     services.OfflinePrice,
-		"updated_at":        time.Now(),
+		"name":              services.Name,
+		"duration":          services.Duration,
+		"updated_at":        time.Now().Add(time.Hour * 5),
 	}
 	query, args, err := d.db.Sq.Builder.Update(d.tableName).
 		SetMap(data).Where(d.db.Sq.Equal("id", services.Id)).
@@ -202,6 +232,8 @@ func (d Ds) UpdateDoctorServices(ctx context.Context, services *entity.DoctorSer
 		&services.SpecializationId,
 		&services.OnlinePrice,
 		&services.OfflinePrice,
+		&services.Name,
+		&services.Duration,
 		&services.CreatedAt,
 		&updatedAt,
 		&deletedAt,
@@ -221,29 +253,35 @@ func (d Ds) UpdateDoctorServices(ctx context.Context, services *entity.DoctorSer
 func (d Ds) DeleteDoctorService(ctx context.Context, in *entity.GetReqStr) (bool, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorServices, serviceNameDoctorServicesRepoPrefix+"Delete")
+	span.SetAttributes(attribute.Key(in.Field).String(in.Value))
 	defer span.End()
 
 	data := map[string]any{
-		"deleted_at": time.Now(),
+		"deleted_at": time.Now().Add(time.Hour * 5),
 	}
 
 	var args []interface{}
 	var query string
 	var err error
-	if in.IsHardDeleted {
-		query, args, err = d.db.Sq.Builder.Delete(d.tableName).From(d.tableName).Where(d.db.Sq.Equal("id", in.Id)).ToSql()
+	if in.IsActive {
+		query, args, err = d.db.Sq.Builder.Delete(d.tableName).From(d.tableName).
+			Where(d.db.Sq.And(d.db.Sq.Equal(in.Field, in.Value), d.db.Sq.Equal("deleted_at", nil))).ToSql()
 		if err != nil {
 			return false, d.db.ErrSQLBuild(err, d.tableName+" delete")
 		}
 	} else {
-		query, args, err = d.db.Sq.Builder.Update(d.tableName).SetMap(data).Where(d.db.Sq.Equal("id", in.Id)).ToSql()
+		query, args, err = d.db.Sq.Builder.Update(d.tableName).SetMap(data).
+			Where(d.db.Sq.And(d.db.Sq.Equal(in.Field, in.Value), d.db.Sq.Equal("deleted_at", nil))).ToSql()
 		if err != nil {
 			return false, d.db.ErrSQLBuild(err, d.tableName+" delete")
 		}
 	}
-	_, err = d.db.Exec(ctx, query, args...)
+	resp, err := d.db.Exec(ctx, query, args...)
 	if err != nil {
 		return false, d.db.Error(err)
 	}
-	return true, nil
+	if resp.RowsAffected() > 0 {
+		return true, nil
+	}
+	return false, nil
 }

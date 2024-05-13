@@ -9,5 +9,3 @@ CREATE TABLE IF NOT EXISTS doctor_working_hours
     updated_at      TIMESTAMP,
     deleted_at      TIMESTAMP
 );
-
-

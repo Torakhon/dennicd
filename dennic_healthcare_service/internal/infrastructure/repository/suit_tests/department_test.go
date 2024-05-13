@@ -34,11 +34,12 @@ func (s *DepartmentTestSuite) TestDepartmentCrud() {
 	defer cancel()
 
 	department := &entity.Department{
-		Id:          uuid.NewString(),
-		Name:        "Test name",
-		Description: "Test description",
-		ImageUrl:    "Test imageUrl",
-		FloorNumber: 1,
+		Id:               uuid.NewString(),
+		Name:             "Test name",
+		Description:      "Test description",
+		ImageUrl:         "Test imageUrl",
+		FloorNumber:      1,
+		ShortDescription: "Test shortDescription",
 	}
 	respDep, err := s.Repository.CreateDepartment(ctx, department)
 	s.Suite.NoError(err)
@@ -48,6 +49,7 @@ func (s *DepartmentTestSuite) TestDepartmentCrud() {
 	s.Suite.Equal(respDep.Description, department.Description)
 	s.Suite.Equal(respDep.ImageUrl, department.ImageUrl)
 	s.Suite.Equal(respDep.FloorNumber, department.FloorNumber)
+	s.Suite.Equal(respDep.ShortDescription, department.ShortDescription)
 
 	getDepartment, err := s.Repository.GetDepartmentById(ctx, &entity.GetReqStr{
 		Id:       department.Id,
@@ -60,6 +62,7 @@ func (s *DepartmentTestSuite) TestDepartmentCrud() {
 	s.Suite.Equal(getDepartment.Description, department.Description)
 	s.Suite.Equal(getDepartment.ImageUrl, department.ImageUrl)
 	s.Suite.Equal(getDepartment.FloorNumber, department.FloorNumber)
+	s.Suite.Equal(getDepartment.ShortDescription, department.ShortDescription)
 
 	respAll, err := s.Repository.GetAllDepartments(ctx, 1, 10, "")
 	s.Suite.NoError(err)
@@ -70,11 +73,12 @@ func (s *DepartmentTestSuite) TestDepartmentCrud() {
 	newUpImageUrl := "Update image url"
 
 	updatedDepartment, err := s.Repository.UpdateDepartment(ctx, &entity.Department{
-		Id:          department.Id,
-		Name:        newUpName,
-		Description: newUpDescription,
-		ImageUrl:    newUpImageUrl,
-		FloorNumber: 1,
+		Id:               department.Id,
+		Name:             newUpName,
+		Description:      newUpDescription,
+		ImageUrl:         newUpImageUrl,
+		FloorNumber:      1,
+		ShortDescription: department.ShortDescription,
 	})
 	s.Suite.NoError(err)
 	s.Suite.NotNil(updatedDepartment)
@@ -83,6 +87,7 @@ func (s *DepartmentTestSuite) TestDepartmentCrud() {
 	s.Suite.Equal(newUpName, updatedDepartment.Name)
 	s.Suite.Equal(newUpDescription, updatedDepartment.Description)
 	s.Suite.Equal(newUpImageUrl, updatedDepartment.ImageUrl)
+	s.Suite.Equal(department.ShortDescription, updatedDepartment.ShortDescription)
 
 	deleteDep, err := s.Repository.DeleteDepartment(ctx, &entity.GetReqStr{
 		Id:            department.Id,

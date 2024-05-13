@@ -5,7 +5,6 @@ import (
 	"Healthcare_Evrone/internal/infrastructure/repository"
 	"Healthcare_Evrone/internal/pkg/otlp"
 	"go.opentelemetry.io/otel/attribute"
-
 	// "Healthcare_Evrone/internal/pkg/otlp"
 	"context"
 	"time"
@@ -19,9 +18,10 @@ const (
 type DoctorUsecase interface {
 	CreateDoctor(ctx context.Context, doctor *entity.Doctor) (*entity.Doctor, error)
 	GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*entity.Doctor, error)
-	GetAllDoctors(ctx context.Context, page, limit int64, search string) (doctors []*entity.Doctor, err error)
+	GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity.ListDoctors, error)
 	UpdateDoctor(ctx context.Context, update *entity.Doctor) (*entity.Doctor, error)
 	DeleteDoctor(ctx context.Context, del *entity.GetReqStr) (bool, error)
+	ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetReqStrDep) (doctors []*entity.Doctor, err error)
 }
 
 type newsService struct {
@@ -54,22 +54,22 @@ func (u newsService) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorUseCase, serviceNameDoctorUseCaseRepoPrefix+"Get")
-	span.SetAttributes(attribute.Key("GetDoctorById").String(get.Id))
+	span.SetAttributes(attribute.Key(get.Field).String(get.Value))
 	defer span.End()
 
 	return u.repo.GetDoctorById(ctx, get)
 }
 
-func (u newsService) GetAllDoctors(ctx context.Context, page, limit int64, search string) (doctors []*entity.Doctor, err error) {
+func (u newsService) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity.ListDoctors, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorUseCase, serviceNameDoctorUseCaseRepoPrefix+"Get all")
-	span.SetAttributes(attribute.Key("GetAllDoctors").String(search))
+	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
 
 	defer span.End()
 
-	return u.repo.GetAllDoctors(ctx, page, limit, search)
+	return u.repo.GetAllDoctors(ctx, all)
 }
 
 func (u newsService) UpdateDoctor(ctx context.Context, update *entity.Doctor) (*entity.Doctor, error) {
@@ -88,8 +88,20 @@ func (u newsService) DeleteDoctor(ctx context.Context, del *entity.GetReqStr) (b
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorUseCase, serviceNameDoctorUseCaseRepoPrefix+"Delete")
-	span.SetAttributes(attribute.Key("DeleteDoctor").String(del.Id))
+	span.SetAttributes(attribute.Key("DeleteDoctor").String(del.Value))
 	defer span.End()
 
 	return u.repo.DeleteDoctor(ctx, del)
+}
+
+func (u newsService) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetReqStrDep) (doctors []*entity.Doctor, err error) {
+	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
+	defer cancel()
+
+	ctx, span := otlp.Start(ctx, serviceNameDoctorUseCase, serviceNameDoctorUseCaseRepoPrefix+"Get all")
+	span.SetAttributes(attribute.Key("GetAllDoctors").String(in.Value))
+
+	defer span.End()
+
+	return u.repo.ListDoctorsByDepartmentId(ctx, in)
 }

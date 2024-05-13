@@ -16,10 +16,10 @@ const (
 
 type DoctorWorkingHoursUseCase interface {
 	CreateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWorkingHours) (*entity.DoctorWorkingHours, error)
-	GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqInt) (*entity.DoctorWorkingHours, error)
-	GetAllDoctorWorkingHours(ctx context.Context, page, limit int64, search string) ([]*entity.DoctorWorkingHours, error)
+	GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqStr) (*entity.DoctorWorkingHours, error)
+	GetAllDoctorWorkingHours(ctx context.Context, in *entity.GetAll) (*entity.ListDoctorWorkingHours, error)
 	UpdateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWorkingHours) (*entity.DoctorWorkingHours, error)
-	DeleteDoctorWorkingHours(ctx context.Context, in *entity.GetReqInt) (bool, error)
+	DeleteDoctorWorkingHours(ctx context.Context, in *entity.GetReqStr) (bool, error)
 }
 
 type dwhService struct {
@@ -45,28 +45,28 @@ func (d dwhService) CreateDoctorWorkingHours(ctx context.Context, in *entity.Doc
 	return d.repo.CreateDoctorWorkingHours(ctx, in)
 }
 
-func (d dwhService) GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqInt) (*entity.DoctorWorkingHours, error) {
+func (d dwhService) GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqStr) (*entity.DoctorWorkingHours, error) {
 	ctx, cancel := context.WithTimeout(ctx, d.ctxTimeout)
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHoursUseCase, serviceNameDoctorWorkingHoursUseCaseRepoPrefix+"Get")
-	span.SetAttributes(attribute.Key("GetDoctorWorkingHoursById").String(string(in.Id)))
+	span.SetAttributes(attribute.Key(in.Field).String(in.Value))
 
 	defer span.End()
 
 	return d.repo.GetDoctorWorkingHoursById(ctx, in)
 }
 
-func (d dwhService) GetAllDoctorWorkingHours(ctx context.Context, page, limit int64, search string) ([]*entity.DoctorWorkingHours, error) {
+func (d dwhService) GetAllDoctorWorkingHours(ctx context.Context, all *entity.GetAll) (*entity.ListDoctorWorkingHours, error) {
 	ctx, cancel := context.WithTimeout(ctx, d.ctxTimeout)
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHoursUseCase, serviceNameDoctorWorkingHoursUseCaseRepoPrefix+"Get all")
-	span.SetAttributes(attribute.Key("GetAllDoctorWorkingHours").String(search))
+	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
 
 	defer span.End()
 
-	return d.repo.GetAllDoctorWorkingHours(ctx, page, limit, search)
+	return d.repo.GetAllDoctorWorkingHours(ctx, all)
 }
 
 func (d dwhService) UpdateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWorkingHours) (*entity.DoctorWorkingHours, error) {
@@ -80,12 +80,12 @@ func (d dwhService) UpdateDoctorWorkingHours(ctx context.Context, in *entity.Doc
 	return d.repo.UpdateDoctorWorkingHours(ctx, in)
 }
 
-func (d dwhService) DeleteDoctorWorkingHours(ctx context.Context, in *entity.GetReqInt) (bool, error) {
+func (d dwhService) DeleteDoctorWorkingHours(ctx context.Context, in *entity.GetReqStr) (bool, error) {
 	ctx, cancel := context.WithTimeout(ctx, d.ctxTimeout)
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHoursUseCase, serviceNameDoctorWorkingHoursUseCaseRepoPrefix+"Delete")
-	span.SetAttributes(attribute.Key("DeleteDoctorWorkingHours").String(string(in.Id)))
+	span.SetAttributes(attribute.Key("DeleteDoctorWorkingHours").String(in.Value))
 	defer span.End()
 
 	return d.repo.DeleteDoctorWorkingHours(ctx, in)

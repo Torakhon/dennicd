@@ -83,10 +83,10 @@ func (p Dwh) CreateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWork
 	return in, nil
 }
 
-func (p Dwh) GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqInt) (*entity.DoctorWorkingHours, error) {
+func (p Dwh) GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqStr) (*entity.DoctorWorkingHours, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHours, serviceNameDoctorWorkingHoursRepoPrefix+"Get")
-	span.SetAttributes(attribute.Key("GetDoctorWorkingHoursById").String(string(in.Id)))
+	span.SetAttributes(attribute.Key(in.Field).String(in.Value))
 
 	defer span.End()
 
@@ -95,7 +95,7 @@ func (p Dwh) GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqInt
 	if !in.IsActive {
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 	}
-	queryBuilder = queryBuilder.Where(p.db.Sq.Equal("id", in.Id))
+	queryBuilder = queryBuilder.Where(p.db.Sq.Equal(in.Field, in.Value))
 	query, args, err := queryBuilder.ToSql()
 	if err != nil {
 		return nil, err
@@ -126,25 +126,33 @@ func (p Dwh) GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqInt
 	return &doctorWorkingHours, nil
 }
 
-func (p Dwh) GetAllDoctorWorkingHours(ctx context.Context, page, limit int64, search string) ([]*entity.DoctorWorkingHours, error) {
+func (p Dwh) GetAllDoctorWorkingHours(ctx context.Context, all *entity.GetAll) (*entity.ListDoctorWorkingHours, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHours, serviceNameDoctorWorkingHoursRepoPrefix+"Get all")
-	span.SetAttributes(attribute.Key("GetAllDoctorWorkingHours").String(search))
+	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
 
 	defer span.End()
 
-	offset := limit * (page - 1)
+	offset := all.Limit * (all.Page - 1)
 
 	queryBuilder := p.db.Sq.Builder.Select(p.doctorWorkingHoursSelectQueryPrefix()).From(p.tableName)
-	if search != "" {
-		queryBuilder = queryBuilder.Where(fmt.Sprintf(`day_of_week ILIKE '%s'`, search+"%"))
+	if all.Field != "" {
+		queryBuilder = queryBuilder.Where(fmt.Sprintf(`%s ILIKE '%s'`, all.Field, all.Value+"%"))
 	}
-	queryBuilder = queryBuilder.Limit(uint64(limit)).Offset(uint64(offset))
+	if all.OrderBy != "" {
+		queryBuilder = queryBuilder.OrderBy(all.OrderBy)
+	}
+	countBuilder := p.db.Sq.Builder.Select("count(*)").From(departmentTableName)
+	if !all.IsActive {
+		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
+		countBuilder = countBuilder.Where("deleted_at IS NULL")
+	}
+	queryBuilder = queryBuilder.Limit(uint64(all.Limit)).Offset(uint64(offset))
 	query, args, err := queryBuilder.ToSql()
 	if err != nil {
 		return nil, err
 	}
-	var doctorWorkHour []*entity.DoctorWorkingHours
+	var doctorWorkHour entity.ListDoctorWorkingHours
 	rows, err := p.db.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err
@@ -174,9 +182,16 @@ func (p Dwh) GetAllDoctorWorkingHours(ctx context.Context, page, limit int64, se
 		if err != nil {
 			return nil, err
 		}
-		doctorWorkHour = append(doctorWorkHour, &Dwhour)
+		doctorWorkHour.DoctorWhs = append(doctorWorkHour.DoctorWhs, Dwhour)
 	}
-	return doctorWorkHour, nil
+	var count int32
+	queryCount, _, err := countBuilder.ToSql()
+	err = p.db.QueryRow(ctx, queryCount).Scan(&count)
+	if err != nil {
+		return nil, p.db.Error(err)
+	}
+	doctorWorkHour.Count = count
+	return &doctorWorkHour, nil
 }
 
 func (p Dwh) UpdateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWorkingHours) (*entity.DoctorWorkingHours, error) {
@@ -192,7 +207,7 @@ func (p Dwh) UpdateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWork
 		"day_of_week": in.DayOfWeek,
 		"start_time":  in.StartTime,
 		"finish_time": in.FinishTime,
-		"updated_at":  time.Now(),
+		"updated_at":  time.Now().Add(time.Hour * 5),
 	}
 	query, args, err := p.db.Sq.Builder.Update(p.tableName).
 		SetMap(data).Where(p.db.Sq.Equal("id", in.Id)).Suffix(fmt.Sprintf("RETURNING %s", p.doctorWorkingHoursSelectQueryPrefix())).ToSql()
@@ -226,34 +241,39 @@ func (p Dwh) UpdateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWork
 	return in, nil
 }
 
-func (p Dwh) DeleteDoctorWorkingHours(ctx context.Context, in *entity.GetReqInt) (bool, error) {
+func (p Dwh) DeleteDoctorWorkingHours(ctx context.Context, in *entity.GetReqStr) (bool, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorWorkingHours, serviceNameDoctorWorkingHoursRepoPrefix+"Delete")
-	span.SetAttributes(attribute.Key("DeleteDoctorWorkingHours").String(string(in.Id)))
+	span.SetAttributes(attribute.Key("DeleteDoctorWorkingHours").String(in.Value))
 
 	defer span.End()
 
 	data := map[string]any{
-		"deleted_at": time.Now(),
+		"deleted_at": time.Now().Add(time.Hour * 5),
 	}
 
 	var args []interface{}
 	var query string
 	var err error
-	if in.IsHardDeleted {
-		query, args, err = p.db.Sq.Builder.Delete(p.tableName).From(p.tableName).Where(p.db.Sq.Equal("id", in.Id)).ToSql()
+	if in.IsActive {
+		query, args, err = p.db.Sq.Builder.Delete(p.tableName).From(p.tableName).
+			Where(p.db.Sq.And(p.db.Sq.Equal(in.Field, in.Value), p.db.Sq.Equal("deleted_at", nil))).ToSql()
 		if err != nil {
 			return false, p.db.ErrSQLBuild(err, p.tableName+" delete")
 		}
 	} else {
-		query, args, err = p.db.Sq.Builder.Update(p.tableName).SetMap(data).Where(p.db.Sq.Equal("id", in.Id)).ToSql()
+		query, args, err = p.db.Sq.Builder.Update(p.tableName).SetMap(data).
+			Where(p.db.Sq.And(p.db.Sq.Equal(in.Field, in.Value), p.db.Sq.Equal("deleted_at", nil))).ToSql()
 		if err != nil {
 			return false, p.db.ErrSQLBuild(err, p.tableName+" delete")
 		}
 	}
-	_, err = p.db.Exec(ctx, query, args...)
+	resp, err := p.db.Exec(ctx, query, args...)
 	if err != nil {
 		return false, p.db.Error(err)
 	}
-	return true, nil
+	if resp.RowsAffected() > 0 {
+		return true, nil
+	}
+	return false, nil
 }

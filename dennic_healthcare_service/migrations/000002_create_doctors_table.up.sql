@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS doctors
     salary          FLOAT NOT NULL,
     biography       TEXT NOT NULL,
     start_work_date DATE NOT NULL,
-    end_work_date   DATE NOT NULL,
+    end_work_date   DATE,
     work_years      INT NOT NULL,
     department_id   UUID REFERENCES departments(id) ON DELETE CASCADE NOT NULL,
     room_number INT NOT NULL,
@@ -30,3 +30,4 @@ CREATE INDEX department_id_idx ON doctors(department_id);
 CREATE INDEX first_name_idx ON doctors(first_name);
 CREATE INDEX last_name_idx ON doctors(last_name);
 CREATE INDEX work_years_idx ON doctors(work_years);
+

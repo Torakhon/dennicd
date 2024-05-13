@@ -3,12 +3,17 @@ package entity
 import "time"
 
 type GetReqStr struct {
-	Id            string
-	IsActive      bool
-	IsHardDeleted bool
+	Field    string
+	Value    string
+	IsActive bool
 }
 
 type Status struct {
+}
+
+type ListDoctors struct {
+	Doctors []Doctor
+	Count   int64
 }
 
 type Doctor struct {
@@ -34,4 +39,14 @@ type Doctor struct {
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	DeletedAt     time.Time
+}
+
+type GetReqStrDep struct {
+	DepartmentId string
+	IsActive     bool
+	Page         int32
+	Limit        int32
+	Field        string
+	Value        string
+	OrderBy      string
 }

@@ -35,6 +35,7 @@ func (p *Specialization) specializationSelectQueryPrefix() string {
 			name,
 			description,
 			department_id,
+			image_url,
 			created_at,
 			updated_at,
 			deleted_at
@@ -52,6 +53,7 @@ func (p *Specialization) CreateSpecialization(ctx context.Context, specializatio
 		"name":          specialization.Name,
 		"description":   specialization.Description,
 		"department_id": specialization.DepartmentId,
+		"image_url":     specialization.ImageUrl,
 	}
 	query, args, err := p.db.Sq.Builder.Insert(p.tableName).
 		SetMap(data).Suffix(fmt.Sprintf("RETURNING %s", p.specializationSelectQueryPrefix())).ToSql()
@@ -66,6 +68,7 @@ func (p *Specialization) CreateSpecialization(ctx context.Context, specializatio
 		&specialization.Name,
 		&specialization.Description,
 		&specialization.DepartmentId,
+		&specialization.ImageUrl,
 		&specialization.CreatedAt,
 		&updatedAt,
 		&deletedAt,
@@ -86,7 +89,7 @@ func (p *Specialization) CreateSpecialization(ctx context.Context, specializatio
 func (p *Specialization) GetSpecializationById(ctx context.Context, in *entity.GetReqStr) (*entity.Specialization, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameSpecialization, serviceNameSpecializationRepoPrefix+"Get")
-	span.SetAttributes(attribute.Key("GetSpecializationById").String(in.Id))
+	span.SetAttributes(attribute.Key(in.Field).String(in.Value))
 	defer span.End()
 
 	var spec entity.Specialization
@@ -94,7 +97,7 @@ func (p *Specialization) GetSpecializationById(ctx context.Context, in *entity.G
 	if !in.IsActive {
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 	}
-	queryBuilder = queryBuilder.Where(p.db.Sq.Equal("id", in.Id))
+	queryBuilder = queryBuilder.Where(p.db.Sq.Equal(in.Field, in.Value))
 	query, args, err := queryBuilder.ToSql()
 	if err != nil {
 		return nil, err
@@ -106,6 +109,7 @@ func (p *Specialization) GetSpecializationById(ctx context.Context, in *entity.G
 		&spec.Name,
 		&spec.Description,
 		&spec.DepartmentId,
+		&spec.ImageUrl,
 		&spec.CreatedAt,
 		&updatedAt,
 		&deletedAt,
@@ -122,25 +126,34 @@ func (p *Specialization) GetSpecializationById(ctx context.Context, in *entity.G
 	return &spec, nil
 }
 
-func (p *Specialization) GetAllSpecializations(ctx context.Context, page, limit int64, search string) ([]*entity.Specialization, error) {
+func (p *Specialization) GetAllSpecializations(ctx context.Context, all *entity.GetAll) (*entity.ListSpecializations, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameSpecialization, serviceNameSpecializationRepoPrefix+"Get all")
-	span.SetAttributes(attribute.Key("GetAllSpecializations").String(search))
+	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
 
 	defer span.End()
 
-	offset := limit * (page - 1)
+	offset := all.Limit * (all.Page - 1)
 
 	queryBuilder := p.db.Sq.Builder.Select(p.specializationSelectQueryPrefix()).From(p.tableName)
-	if search != "" {
-		queryBuilder = queryBuilder.Where(fmt.Sprintf(`name ILIKE '%s'`, search+"%"))
+	if all.Field != "" {
+		queryBuilder = queryBuilder.Where(fmt.Sprintf(`%s ILIKE '%s'`, all.Field, all.Value+"%"))
 	}
-	queryBuilder = queryBuilder.Limit(uint64(limit)).Offset(uint64(offset))
+	countBuilder := p.db.Sq.Builder.Select("count(*)").From(departmentTableName)
+
+	if !all.IsActive {
+		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
+		countBuilder = countBuilder.Where("deleted_at IS NULL")
+	}
+	if all.OrderBy != "" {
+		queryBuilder = queryBuilder.OrderBy(all.OrderBy)
+	}
+	queryBuilder = queryBuilder.Limit(uint64(all.Limit)).Offset(uint64(offset))
 	query, args, err := queryBuilder.ToSql()
 	if err != nil {
 		return nil, err
 	}
-	var Specializations []*entity.Specialization
+	var Specializations entity.ListSpecializations
 	rows, err := p.db.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err
@@ -154,6 +167,7 @@ func (p *Specialization) GetAllSpecializations(ctx context.Context, page, limit 
 			&spec.Name,
 			&spec.Description,
 			&spec.DepartmentId,
+			&spec.ImageUrl,
 			&spec.CreatedAt,
 			&updatedAt,
 			&deletedAt,
@@ -167,9 +181,16 @@ func (p *Specialization) GetAllSpecializations(ctx context.Context, page, limit 
 		if err != nil {
 			return nil, err
 		}
-		Specializations = append(Specializations, &spec)
+		Specializations.Specializations = append(Specializations.Specializations, spec)
 	}
-	return Specializations, nil
+	var count int32
+	queryCount, _, err := countBuilder.ToSql()
+	err = p.db.QueryRow(ctx, queryCount).Scan(&count)
+	if err != nil {
+		return nil, p.db.Error(err)
+	}
+	Specializations.Count = count
+	return &Specializations, nil
 }
 
 func (p *Specialization) UpdateSpecialization(ctx context.Context, in *entity.Specialization) (*entity.Specialization, error) {
@@ -183,7 +204,8 @@ func (p *Specialization) UpdateSpecialization(ctx context.Context, in *entity.Sp
 		"name":          in.Name,
 		"description":   in.Description,
 		"department_id": in.DepartmentId,
-		"updated_at":    time.Now(),
+		"image_url":     in.ImageUrl,
+		"updated_at":    time.Now().Add(time.Hour * 5),
 	}
 	query, args, err := p.db.Sq.Builder.Update(p.tableName).
 		SetMap(data).Where(p.db.Sq.Equal("id", in.ID)).Suffix(fmt.Sprintf("RETURNING %s", p.specializationSelectQueryPrefix())).ToSql()
@@ -198,6 +220,7 @@ func (p *Specialization) UpdateSpecialization(ctx context.Context, in *entity.Sp
 		&in.Name,
 		&in.Description,
 		&in.DepartmentId,
+		&in.ImageUrl,
 		&in.CreatedAt,
 		&in.UpdatedAt,
 		&deletedAt,
@@ -214,31 +237,36 @@ func (p *Specialization) UpdateSpecialization(ctx context.Context, in *entity.Sp
 func (p *Specialization) DeleteSpecialization(ctx context.Context, in *entity.GetReqStr) (bool, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameSpecialization, serviceNameSpecializationRepoPrefix+"Delete")
-	span.SetAttributes(attribute.Key("DeleteSpecialization").String(in.Id))
+	span.SetAttributes(attribute.Key("DeleteSpecialization").String(in.Value))
 
 	defer span.End()
 
 	data := map[string]any{
-		"deleted_at": time.Now(),
+		"deleted_at": time.Now().Add(time.Hour * 5),
 	}
 
 	var args []interface{}
 	var query string
 	var err error
-	if in.IsHardDeleted {
-		query, args, err = p.db.Sq.Builder.Delete(p.tableName).From(p.tableName).Where(p.db.Sq.Equal("id", in.Id)).ToSql()
+	if in.IsActive {
+		query, args, err = p.db.Sq.Builder.Delete(p.tableName).From(p.tableName).
+			Where(p.db.Sq.And(p.db.Sq.Equal(in.Field, in.Value), p.db.Sq.Equal("deleted_at", nil))).ToSql()
 		if err != nil {
 			return false, p.db.ErrSQLBuild(err, p.tableName+" delete")
 		}
 	} else {
-		query, args, err = p.db.Sq.Builder.Update(p.tableName).SetMap(data).Where(p.db.Sq.Equal("id", in.Id)).ToSql()
+		query, args, err = p.db.Sq.Builder.Update(p.tableName).SetMap(data).
+			Where(p.db.Sq.And(p.db.Sq.Equal(in.Field, in.Value), p.db.Sq.Equal("deleted_at", nil))).ToSql()
 		if err != nil {
 			return false, p.db.ErrSQLBuild(err, p.tableName+" delete")
 		}
 	}
-	_, err = p.db.Exec(ctx, query, args...)
+	resp, err := p.db.Exec(ctx, query, args...)
 	if err != nil {
 		return false, p.db.Error(err)
 	}
-	return true, nil
+	if resp.RowsAffected() > 0 {
+		return true, nil
+	}
+	return false, nil
 }

@@ -36,6 +36,7 @@ func (h *DepartMent) departmentSelectQueryPrefix() string {
 			description,
 			image_url,
 			floor_number,
+			short_description,
 			created_at,
 			updated_at,
 			deleted_at`
@@ -48,11 +49,12 @@ func (h *DepartMent) CreateDepartment(ctx context.Context, dep *entity.Departmen
 	defer span.End()
 
 	data := map[string]any{
-		"id":           dep.Id,
-		"name":         dep.Name,
-		"description":  dep.Description,
-		"image_url":    dep.ImageUrl,
-		"floor_number": dep.FloorNumber,
+		"id":                dep.Id,
+		"name":              dep.Name,
+		"description":       dep.Description,
+		"image_url":         dep.ImageUrl,
+		"floor_number":      dep.FloorNumber,
+		"short_description": dep.ShortDescription,
 	}
 	query, args, err := h.db.Sq.Builder.
 		Insert(h.tableName).
@@ -72,11 +74,11 @@ func (h *DepartMent) CreateDepartment(ctx context.Context, dep *entity.Departmen
 		&resp.Description,
 		&resp.ImageUrl,
 		&resp.FloorNumber,
+		&resp.ShortDescription,
 		&resp.CreatedAt,
 		&updatedAt,
 		&deletedAt,
 	)
-
 	if err != nil {
 		return nil, h.db.Error(err)
 	}
@@ -87,14 +89,13 @@ func (h *DepartMent) CreateDepartment(ctx context.Context, dep *entity.Departmen
 		resp.DeletedAt = deletedAt.Time
 	}
 
-	return dep, nil
+	return &resp, nil
 }
 
 func (p *DepartMent) GetDepartmentById(ctx context.Context, get *entity.GetReqStr) (*entity.Department, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDepartment, serviceNameDepartmentRepoPrefix+"Get")
-	span.SetAttributes(attribute.Key("GetDepartmentById").String(get.Id))
-	defer span.End()
+	span.SetAttributes(attribute.Key(get.Field).String(get.Value))
 	defer span.End()
 
 	var dep entity.Department
@@ -102,7 +103,7 @@ func (p *DepartMent) GetDepartmentById(ctx context.Context, get *entity.GetReqSt
 	if !get.IsActive {
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 	}
-	queryBuilder = queryBuilder.Where(p.db.Sq.Equal("id", get.Id))
+	queryBuilder = queryBuilder.Where(p.db.Sq.Equal(get.Field, get.Value))
 	query, args, err := queryBuilder.ToSql()
 	if err != nil {
 		return nil, err
@@ -115,6 +116,7 @@ func (p *DepartMent) GetDepartmentById(ctx context.Context, get *entity.GetReqSt
 		&dep.Description,
 		&dep.ImageUrl,
 		&dep.FloorNumber,
+		&dep.ShortDescription,
 		&dep.CreatedAt,
 		&updatedAt,
 		&deletedAt,
@@ -131,19 +133,27 @@ func (p *DepartMent) GetDepartmentById(ctx context.Context, get *entity.GetReqSt
 	return &dep, nil
 }
 
-func (p *DepartMent) GetAllDepartments(ctx context.Context, page, limit int64, search string) ([]*entity.Department, error) {
+func (p *DepartMent) GetAllDepartments(ctx context.Context, all *entity.GetAll) (*entity.ListDepartments, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDepartment, serviceNameDepartmentRepoPrefix+"Get All")
-
+	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
 	defer span.End()
 
-	offset := limit * (page - 1)
+	offset := all.Limit * (all.Page - 1)
 
 	queryBuilder := p.db.Sq.Builder.Select(p.departmentSelectQueryPrefix()).From(departmentTableName)
-	if search != "" {
-		queryBuilder = queryBuilder.Where(fmt.Sprintf(`name ILIKE '%s'`, search+"%"))
+	if all.Field != "" {
+		queryBuilder = queryBuilder.Where(fmt.Sprintf(`%s ILIKE '%s'`, all.Field, all.Value+"%"))
 	}
-	queryBuilder = queryBuilder.Limit(uint64(limit)).Offset(uint64(offset))
+	if all.OrderBy != "" {
+		queryBuilder = queryBuilder.OrderBy(all.OrderBy)
+	}
+	countBuilder := p.db.Sq.Builder.Select("count(*)").From(departmentTableName)
+	if !all.IsActive {
+		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
+		countBuilder = countBuilder.Where("deleted_at IS NULL")
+	}
+	queryBuilder = queryBuilder.Limit(uint64(all.Limit)).Offset(uint64(offset))
 	query, args, err := queryBuilder.ToSql()
 
 	if err != nil {
@@ -154,7 +164,7 @@ func (p *DepartMent) GetAllDepartments(ctx context.Context, page, limit int64, s
 	if err != nil {
 		return nil, err
 	}
-	var departments []*entity.Department
+	var departments entity.ListDepartments
 	for rows.Next() {
 		var dep entity.Department
 		var updatedAt, deletedAt sql.NullTime
@@ -165,6 +175,7 @@ func (p *DepartMent) GetAllDepartments(ctx context.Context, page, limit int64, s
 			&dep.Description,
 			&dep.ImageUrl,
 			&dep.FloorNumber,
+			&dep.ShortDescription,
 			&dep.CreatedAt,
 			&updatedAt,
 			&deletedAt,
@@ -178,9 +189,16 @@ func (p *DepartMent) GetAllDepartments(ctx context.Context, page, limit int64, s
 		if deletedAt.Valid {
 			dep.DeletedAt = deletedAt.Time
 		}
-		departments = append(departments, &dep)
+		departments.Departments = append(departments.Departments, dep)
 	}
-	return departments, nil
+	var count int64
+	queryCount, _, err := countBuilder.ToSql()
+	err = p.db.QueryRow(ctx, queryCount).Scan(&count)
+	if err != nil {
+		return nil, p.db.Error(err)
+	}
+	departments.Count = count
+	return &departments, nil
 }
 
 func (p *DepartMent) UpdateDepartment(ctx context.Context, up *entity.Department) (*entity.Department, error) {
@@ -188,14 +206,14 @@ func (p *DepartMent) UpdateDepartment(ctx context.Context, up *entity.Department
 	ctx, span := otlp.Start(ctx, serviceNameDepartment, serviceNameDepartmentRepoPrefix+"Update")
 	span.SetAttributes(attribute.Key("UpdateDepartment").String(up.Id))
 	defer span.End()
-
 	data := map[string]any{
-		"id":           up.Id,
-		"name":         up.Name,
-		"description":  up.Description,
-		"image_url":    up.ImageUrl,
-		"floor_number": up.FloorNumber,
-		"updated_at":   time.Now(),
+		"id":                up.Id,
+		"name":              up.Name,
+		"description":       up.Description,
+		"image_url":         up.ImageUrl,
+		"floor_number":      up.FloorNumber,
+		"short_description": up.ShortDescription,
+		"updated_at":        time.Now().Add(time.Hour * 5),
 	}
 	query, args, err := p.db.Sq.Builder.Update(p.tableName).SetMap(data).Where(p.db.Sq.Equal("id", up.Id)).Suffix(fmt.Sprintf("RETURNING %s", p.departmentSelectQueryPrefix())).ToSql()
 
@@ -210,6 +228,7 @@ func (p *DepartMent) UpdateDepartment(ctx context.Context, up *entity.Department
 		&up.Description,
 		&up.ImageUrl,
 		&up.FloorNumber,
+		&up.ShortDescription,
 		&up.CreatedAt,
 		&up.UpdatedAt,
 		&deletedAt,
@@ -226,29 +245,34 @@ func (p *DepartMent) UpdateDepartment(ctx context.Context, up *entity.Department
 func (p *DepartMent) DeleteDepartment(ctx context.Context, get *entity.GetReqStr) (bool, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDepartment, serviceNameDepartmentRepoPrefix+"Delete")
-	span.SetAttributes(attribute.Key("DeleteDepartment").String(get.Id))
+	span.SetAttributes(attribute.Key("DeleteDepartment").String(get.Value))
 	defer span.End()
 
 	data := map[string]any{
-		"deleted_at": time.Now(),
+		"deleted_at": time.Now().Add(time.Hour * 5),
 	}
 	var args []interface{}
 	var query string
 	var err error
-	if get.IsHardDeleted {
-		query, args, err = p.db.Sq.Builder.Delete(p.tableName).From(p.tableName).Where(p.db.Sq.Equal("id", get.Id)).ToSql()
+	if get.IsActive {
+		query, args, err = p.db.Sq.Builder.Delete(p.tableName).From(p.tableName).
+			Where(p.db.Sq.And(p.db.Sq.Equal(get.Field, get.Value), p.db.Sq.Equal("deleted_at", nil))).ToSql()
 		if err != nil {
 			return false, p.db.ErrSQLBuild(err, p.tableName+" delete")
 		}
 	} else {
-		query, args, err = p.db.Sq.Builder.Update(p.tableName).SetMap(data).Where(p.db.Sq.Equal("id", get.Id)).ToSql()
+		query, args, err = p.db.Sq.Builder.Update(p.tableName).SetMap(data).
+			Where(p.db.Sq.And(p.db.Sq.Equal(get.Field, get.Value), p.db.Sq.Equal("deleted_at", nil))).ToSql()
 		if err != nil {
 			return false, p.db.ErrSQLBuild(err, p.tableName+" delete")
 		}
 	}
-	_, err = p.db.Exec(ctx, query, args...)
+	resp, err := p.db.Exec(ctx, query, args...)
 	if err != nil {
 		return false, p.db.Error(err)
 	}
-	return true, nil
+	if resp.RowsAffected() > 0 {
+		return true, nil
+	}
+	return false, nil
 }
