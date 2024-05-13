@@ -259,6 +259,7 @@ services:
       - db
     volumes:
       - minio_data:/minio_data
+      - ./config.json:/opt/bitnami/minio/conf/config.json
     environment:
       - MINIO_ROOT_USER=dennic
       - MINIO_ROOT_PASSWORD=dennic_service
