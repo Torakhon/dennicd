@@ -1,0 +1,1647 @@
+
+2024-04-24T20:08:57.799+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-24T20:09:04.797+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-24T20:09:04+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorWorkingHours", "grpc.method": "CreateDoctorWorkingHours", "peer.address": "127.0.0.1:56320", "grpc.code": "OK", "grpc.time_ms": 5.207}
+2024-04-24T20:15:50.100+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-24T20:15:57.574+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-24T20:15:57+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorWorkingHours", "grpc.method": "UpdateDoctorWorkingHours", "peer.address": "127.0.0.1:43546", "grpc.code": "OK", "grpc.time_ms": 4.972}
+2024-04-24T20:16:12.821+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-24T20:16:12+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorWorkingHours", "grpc.method": "UpdateDoctorWorkingHours", "peer.address": "127.0.0.1:40302", "error": "ERROR: new row for relation \"doctor_working_hours\" violates check constraint \"doctor_working_hours_day_of_week_check\" (SQLSTATE 23514)", "grpc.code": "Unknown", "grpc.time_ms": 2.947}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorWorkingHours_UpdateDoctorWorkingHours_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/healthcare.pb.go:2852
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-24T20:17:54.853+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-24T20:17:54+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorWorkingHours", "grpc.method": "UpdateDoctorWorkingHours", "peer.address": "127.0.0.1:52958", "error": "ERROR: new row for relation \"doctor_working_hours\" violates check constraint \"doctor_working_hours_day_of_week_check\" (SQLSTATE 23514)", "grpc.code": "Unknown", "grpc.time_ms": 0.564}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorWorkingHours_UpdateDoctorWorkingHours_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/healthcare.pb.go:2852
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-24T20:18:19.613+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-24T20:18:19+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorWorkingHours", "grpc.method": "UpdateDoctorWorkingHours", "peer.address": "127.0.0.1:46206", "grpc.code": "OK", "grpc.time_ms": 4.051}
+2024-04-24T20:18:31.290+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-24T20:18:31+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorWorkingHours", "grpc.method": "UpdateDoctorWorkingHours", "peer.address": "127.0.0.1:57184", "grpc.code": "OK", "grpc.time_ms": 3.844}
+2024-04-24T20:21:11.306+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-24T20:21:32.367+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-24T20:21:32+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorWorkingHours", "grpc.method": "UpdateDoctorWorkingHours", "peer.address": "127.0.0.1:41602", "grpc.code": "OK", "grpc.time_ms": 5.246}
+2024-04-24T21:32:31.557+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-24T21:57:59.775+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-24T21:58:15.224+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-24T21:58:15+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:58350", "grpc.code": "OK", "grpc.time_ms": 2.659}
+2024-04-25T00:28:23.359+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T00:29:02.566+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:29:02+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:37666", "grpc.code": "OK", "grpc.time_ms": 5.136}
+2024-04-25T00:29:14.227+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:29:14+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "GetDepartmentById", "peer.address": "127.0.0.1:60128", "grpc.code": "OK", "grpc.time_ms": 0.488}
+2024-04-25T00:29:20.322+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:29:20+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "GetAllDepartments", "peer.address": "127.0.0.1:60130", "grpc.code": "OK", "grpc.time_ms": 3.34}
+2024-04-25T00:29:20.455+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:29:20+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "GetAllDepartments", "peer.address": "127.0.0.1:60140", "grpc.code": "OK", "grpc.time_ms": 0.282}
+2024-04-25T00:29:31.525+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:29:31+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "UpdateDepartment", "peer.address": "127.0.0.1:53766", "grpc.code": "OK", "grpc.time_ms": 4.34}
+2024-04-25T00:29:40.933+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:29:40+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:57624", "grpc.code": "OK", "grpc.time_ms": 4.477}
+2024-04-25T00:29:47.294+0500	ERROR	services/department.go:131	there is no such department	{"error": "no rows in result set"}
+Healthcare_Evrone/internal/delivery/grpc/services.departmentRPC.DeleteDepartment
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/department.go:131
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:606
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:608
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T00:29:47.294+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T00:29:47+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:49726", "error": "no rows in result set", "grpc.code": "Unknown", "grpc.time_ms": 0.501}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:608
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T00:30:09.584+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T00:30:13.900+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:30:13+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:57466", "grpc.code": "OK", "grpc.time_ms": 5.065}
+2024-04-25T00:30:24.850+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:30:24+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:47670", "grpc.code": "OK", "grpc.time_ms": 4.528}
+2024-04-25T00:30:41.632+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T00:30:45.985+0500	ERROR	services/department.go:131	there is no such department	{"error": "no rows in result set"}
+Healthcare_Evrone/internal/delivery/grpc/services.departmentRPC.DeleteDepartment
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/department.go:131
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:606
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:608
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T00:30:45.985+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T00:30:45+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:50218", "error": "no rows in result set", "grpc.code": "Unknown", "grpc.time_ms": 1.242}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:608
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T00:31:03.429+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T00:31:05.615+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:31:05+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:50944", "grpc.code": "OK", "grpc.time_ms": 5.812}
+2024-04-25T00:31:09.119+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:31:09+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:50950", "grpc.code": "OK", "grpc.time_ms": 4.759}
+2024-04-25T00:32:13.218+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T00:32:15.029+0500	ERROR	services/department.go:131	there is no such department	{"error": "no rows in result set"}
+Healthcare_Evrone/internal/delivery/grpc/services.departmentRPC.DeleteDepartment
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/department.go:131
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:606
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:608
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T00:32:15.030+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T00:32:15+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:56694", "error": "no rows in result set", "grpc.code": "Unknown", "grpc.time_ms": 1.282}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_DeleteDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:608
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T00:32:20.699+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T00:32:22.102+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T00:32:22+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:56706", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 4.531}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T00:32:32.001+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T00:32:33.230+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:32:33+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:34132", "grpc.code": "OK", "grpc.time_ms": 5.11}
+2024-04-25T00:32:36.293+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:32:36+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:34142", "grpc.code": "OK", "grpc.time_ms": 2.762}
+2024-04-25T00:38:10.027+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T00:38:10+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:43172", "grpc.code": "OK", "grpc.time_ms": 4.332}
+2024-04-25T00:38:11.569+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T00:38:11+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:43188", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 0.559}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T01:06:43.994+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T17:29:42.163+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T17:34:46.683+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T17:35:05.753+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:35:05+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:53388", "grpc.code": "OK", "grpc.time_ms": 40.733}
+2024-04-25T17:36:04.376+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:36:04+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:51600", "grpc.code": "OK", "grpc.time_ms": 10.574}
+2024-04-25T17:36:07.319+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:36:07+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:51610", "grpc.code": "OK", "grpc.time_ms": 4.408}
+2024-04-25T17:39:40.429+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T17:41:22.088+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T17:41:22+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:58134", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 4.584}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T17:41:25.384+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:41:25+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:37748", "grpc.code": "OK", "grpc.time_ms": 2.238}
+2024-04-25T17:41:28.513+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:41:28+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:37764", "grpc.code": "OK", "grpc.time_ms": 4.287}
+2024-04-25T17:42:19.246+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:42:19+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:45610", "grpc.code": "OK", "grpc.time_ms": 4.261}
+2024-04-25T17:43:08.844+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T17:43:16.164+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:43:16+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:34468", "grpc.code": "OK", "grpc.time_ms": 5.161}
+2024-04-25T17:43:51.941+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:43:51+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:42520", "grpc.code": "OK", "grpc.time_ms": 4.997}
+2024-04-25T17:43:57.337+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:43:57+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:50430", "grpc.code": "OK", "grpc.time_ms": 4.513}
+2024-04-25T17:45:03.257+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:45:03+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:49416", "grpc.code": "OK", "grpc.time_ms": 9.366}
+2024-04-25T17:45:18.338+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T17:45:18+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:37060", "grpc.code": "OK", "grpc.time_ms": 9.288}
+2024-04-25T20:57:01.501+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:14:34.963+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:18:45.939+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:20:12.501+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:21:09.505+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:23:36.963+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:24:46.889+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:27:06.027+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:34:51.960+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:38:06.899+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:43:07.785+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-25T21:43:49.997+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T21:43:49+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:46308", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 16.654}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T21:43:52.171+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:43:52+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:46324", "grpc.code": "OK", "grpc.time_ms": 5.269}
+2024-04-25T21:43:55.373+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:43:55+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:46328", "grpc.code": "OK", "grpc.time_ms": 1.633}
+2024-04-25T21:44:32.444+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T21:44:32+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:56492", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 0.68}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T21:44:36.246+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:44:36+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:56504", "grpc.code": "OK", "grpc.time_ms": 1.925}
+2024-04-25T21:44:54.591+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:44:54+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:46704", "grpc.code": "OK", "grpc.time_ms": 1.746}
+2024-04-25T21:45:08.574+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:45:08+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:45228", "grpc.code": "OK", "grpc.time_ms": 2.472}
+2024-04-25T21:45:34.333+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:45:34+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:38604", "grpc.code": "OK", "grpc.time_ms": 0.742}
+2024-04-25T21:45:45.296+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:45:45+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:54514", "grpc.code": "OK", "grpc.time_ms": 4.01}
+2024-04-25T21:46:02.589+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:46:02+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:49870", "grpc.code": "OK", "grpc.time_ms": 1.81}
+2024-04-25T21:46:12.759+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:46:12+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:52744", "grpc.code": "OK", "grpc.time_ms": 4.274}
+2024-04-25T21:46:30.872+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-25T21:46:30+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:46510", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 0.559}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-25T21:46:40.499+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:46:40+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55786", "grpc.code": "OK", "grpc.time_ms": 2.585}
+2024-04-25T21:47:14.032+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:47:14+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:50914", "grpc.code": "OK", "grpc.time_ms": 2.188}
+2024-04-25T21:47:35.250+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:47:35+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:43772", "grpc.code": "OK", "grpc.time_ms": 3.914}
+2024-04-25T21:47:45.061+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:47:45+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "GetAllDoctors", "peer.address": "127.0.0.1:42960", "grpc.code": "OK", "grpc.time_ms": 1.06}
+2024-04-25T21:48:00.656+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-25T21:48:00+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "GetDoctorById", "peer.address": "127.0.0.1:46084", "grpc.code": "OK", "grpc.time_ms": 0.639}
+2024-04-26T15:54:05.387+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T15:54:09.695+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T15:54:37.688+0500	ERROR	services/doctor.go:51	Failed to create doctor	{"error": "ERROR: invalid input syntax for type date: \"dasd\" (SQLSTATE 22007)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/doctor.go:51
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T15:54:37.688+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T15:54:37+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:44902", "error": "ERROR: invalid input syntax for type date: \"dasd\" (SQLSTATE 22007)", "grpc.code": "Unknown", "grpc.time_ms": 4.017}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T16:56:19.770+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T16:58:03.919+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T16:58:03+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:40288", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 10.394}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T16:58:07.819+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T16:58:07+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:40290", "grpc.code": "OK", "grpc.time_ms": 6.725}
+2024-04-26T16:58:10.695+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T16:58:10+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:42830", "grpc.code": "OK", "grpc.time_ms": 4.914}
+2024-04-26T17:00:14.991+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T17:00:21.474+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T17:00:21+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:54720", "grpc.code": "OK", "grpc.time_ms": 113.121}
+2024-04-26T17:00:24.267+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T17:00:24+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:54726", "grpc.code": "OK", "grpc.time_ms": 4.557}
+2024-04-26T17:00:28.343+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T17:00:28+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:54742", "grpc.code": "OK", "grpc.time_ms": 4.411}
+2024-04-26T17:00:31.941+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T17:00:31+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:35200", "grpc.code": "OK", "grpc.time_ms": 4.493}
+2024-04-26T17:00:37.019+0500	ERROR	services/doctor.go:51	Failed to create doctor	{"error": "ERROR: invalid input syntax for type date: \"dasd\" (SQLSTATE 22007)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/doctor.go:51
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T17:00:37.019+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T17:00:37+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:35206", "error": "ERROR: invalid input syntax for type date: \"dasd\" (SQLSTATE 22007)", "grpc.code": "Unknown", "grpc.time_ms": 4.196}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T17:00:49.334+0500	ERROR	services/doctor.go:51	Failed to create doctor	{"error": "object already exist"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/doctor.go:51
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T17:00:49.334+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T17:00:49+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:44072", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 2.729}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T17:00:53.168+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T17:00:53+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:47872", "grpc.code": "OK", "grpc.time_ms": 5.63}
+2024-04-26T17:00:57.383+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T17:00:57+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:47874", "grpc.code": "OK", "grpc.time_ms": 4.737}
+2024-04-26T19:01:14.440+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T19:02:45.354+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T19:02:45+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:59840", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 18.345}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T19:02:47.769+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:02:47+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:59846", "grpc.code": "OK", "grpc.time_ms": 9.068}
+2024-04-26T19:02:49.849+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:02:49+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:33620", "grpc.code": "OK", "grpc.time_ms": 5.146}
+2024-04-26T19:02:52.276+0500	ERROR	services/doctor.go:51	Failed to create doctor	{"error": "object already exist"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/doctor.go:51
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T19:02:52.276+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T19:02:52+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:33630", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 4.58}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T19:02:55.157+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:02:55+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:33636", "grpc.code": "OK", "grpc.time_ms": 5.439}
+2024-04-26T19:02:57.471+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:02:57+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:33642", "grpc.code": "OK", "grpc.time_ms": 4.121}
+2024-04-26T19:05:40.127+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:05:40+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:57718", "grpc.code": "OK", "grpc.time_ms": 4.176}
+2024-04-26T19:05:42.140+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:05:42+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:57720", "grpc.code": "OK", "grpc.time_ms": 4.438}
+2024-04-26T19:06:26.725+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:06:26+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:47036", "grpc.code": "OK", "grpc.time_ms": 4.311}
+2024-04-26T19:06:28.979+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:06:28+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:47050", "grpc.code": "OK", "grpc.time_ms": 4.182}
+2024-04-26T19:06:36.432+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T19:06:36+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:32846", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 2.973}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T19:06:37.962+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:06:37+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:32850", "grpc.code": "OK", "grpc.time_ms": 4.204}
+2024-04-26T19:06:43.901+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:06:43+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:37014", "grpc.code": "OK", "grpc.time_ms": 4.358}
+2024-04-26T19:07:12.394+0500	ERROR	services/doctor.go:51	Failed to create doctor	{"error": "object already exist"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/doctor.go:51
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T19:07:12.394+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T19:07:12+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:38364", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 3.428}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T19:07:15.154+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:07:15+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:38378", "grpc.code": "OK", "grpc.time_ms": 4.312}
+2024-04-26T19:07:17.225+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:07:17+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:38394", "grpc.code": "OK", "grpc.time_ms": 1.719}
+2024-04-26T19:08:09.038+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:08:09+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:38432", "grpc.code": "OK", "grpc.time_ms": 4.996}
+2024-04-26T19:08:33.564+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:08:33+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:48924", "grpc.code": "OK", "grpc.time_ms": 1.512}
+2024-04-26T19:09:37.884+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T19:09:45.658+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:09:45+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:36700", "grpc.code": "OK", "grpc.time_ms": 5.585}
+2024-04-26T19:09:50.351+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:09:50+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:50662", "grpc.code": "OK", "grpc.time_ms": 0.4}
+2024-04-26T19:09:55.355+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:09:55+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:50678", "grpc.code": "OK", "grpc.time_ms": 4.934}
+2024-04-26T19:10:06.920+0500	ERROR	services/doctor.go:51	Failed to create doctor	{"error": "object already exist"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/doctor.go:51
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T19:10:06.920+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T19:10:06+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:60220", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 1.067}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T19:15:01.559+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T19:15:38.077+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T19:15:43.187+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:15:43+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:59160", "grpc.code": "OK", "grpc.time_ms": 5.201}
+2024-04-26T19:15:45.833+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:15:45+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:59172", "grpc.code": "OK", "grpc.time_ms": 4.568}
+2024-04-26T19:16:07.459+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T19:16:17.270+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:16:17+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:36714", "grpc.code": "OK", "grpc.time_ms": 2.809}
+2024-04-26T19:16:19.369+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:16:19+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:44930", "grpc.code": "OK", "grpc.time_ms": 1.963}
+2024-04-26T19:17:57.857+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:17:57+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:38338", "grpc.code": "OK", "grpc.time_ms": 5.972}
+2024-04-26T19:18:00.135+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:18:00+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:59028", "grpc.code": "OK", "grpc.time_ms": 4.644}
+2024-04-26T19:18:08.590+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:18:08+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:59042", "grpc.code": "OK", "grpc.time_ms": 4.099}
+2024-04-26T19:18:10.594+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:18:10+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:46744", "grpc.code": "OK", "grpc.time_ms": 4.29}
+2024-04-26T19:20:15.352+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T19:20:23.738+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:20:23+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:39362", "grpc.code": "OK", "grpc.time_ms": 5.275}
+2024-04-26T19:20:25.371+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:20:25+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:39364", "grpc.code": "OK", "grpc.time_ms": 4.106}
+2024-04-26T19:21:39.439+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T19:21:41.304+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:21:41+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:60370", "grpc.code": "OK", "grpc.time_ms": 5.169}
+2024-04-26T19:21:43.145+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:21:43+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:60384", "grpc.code": "OK", "grpc.time_ms": 4.862}
+2024-04-26T19:21:46.829+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:21:46+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:60386", "grpc.code": "OK", "grpc.time_ms": 4.749}
+2024-04-26T19:21:49.199+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T19:21:49+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:60394", "grpc.code": "OK", "grpc.time_ms": 4.558}
+2024-04-26T20:35:45.645+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-26T20:36:08.121+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T20:36:08+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:52206", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 2.916}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DepartmentService_CreateDepartment_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/department.pb.go:536
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T20:36:10.004+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T20:36:10+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "DeleteDepartment", "peer.address": "127.0.0.1:52214", "grpc.code": "OK", "grpc.time_ms": 3.082}
+2024-04-26T20:36:11.810+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T20:36:11+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DepartmentService", "grpc.method": "CreateDepartment", "peer.address": "127.0.0.1:52218", "grpc.code": "OK", "grpc.time_ms": 1.574}
+2024-04-26T20:36:47.762+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "object already exist"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T20:36:47.762+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-26T20:36:47+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:43018", "error": "object already exist", "grpc.code": "Unknown", "grpc.time_ms": 1.598}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/bobur/GolandProjects/Healthcare_Evrone/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/bobur/GolandProjects/Healthcare_Evrone/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/bobur/GolandProjects/Healthcare_Evrone/vendor/google.golang.org/grpc/server.go:1019
+2024-04-26T20:36:49.747+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T20:36:49+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "DeleteDoctor", "peer.address": "127.0.0.1:50274", "grpc.code": "OK", "grpc.time_ms": 2.589}
+2024-04-26T20:36:51.156+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-26T20:36:51+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:50284", "grpc.code": "OK", "grpc.time_ms": 1.646}
+2024-04-26T20:37:43.639+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-27T17:45:21.584+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-27T18:52:04.210+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: invalid input syntax for type date: \"\" (SQLSTATE 22007)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:52:04.212+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:52:04+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:53880", "error": "ERROR: invalid input syntax for type date: \"\" (SQLSTATE 22007)", "grpc.code": "Unknown", "grpc.time_ms": 16.412}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:52:54.123+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:52:54.124+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:52:54+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:45202", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 5.55}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:53:23.044+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-04-27T18:53:23+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "GetAllDoctors", "peer.address": "127.0.0.1:38358", "grpc.code": "OK", "grpc.time_ms": 5.254}
+2024-04-27T18:54:27.184+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:27.184+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:27+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55220", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.52}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:27.735+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:27.735+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:27+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55222", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.375}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:28.063+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:28.063+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:28+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55232", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.35}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:28.497+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:28.497+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:28+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55246", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.39}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:28.713+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:28.713+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:28+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55260", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.009}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:28.914+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:28.914+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:28+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55268", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 0.705}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:29.099+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:29.099+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:29+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55284", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.063}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:29.319+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:29.319+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:29+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:55292", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.137}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:38.676+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:38.676+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:38+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:45304", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.015}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:50.756+0500	ERROR	services/doctor.go:63	Failed to create doctor	{"error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)"}
+Healthcare_Evrone/internal/delivery/grpc/services.doctorRPC.CreateDoctor
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/services/doctor.go:63
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:648
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptorData.func6
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:34
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+github.com/grpc-ecosystem/go-grpc-middleware/recovery.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/recovery/interceptors.go:33
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:31
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:54:50.757+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-04-27T18:54:50+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "healthcare.DoctorService", "grpc.method": "CreateDoctor", "peer.address": "127.0.0.1:52596", "error": "ERROR: null value in column \"birth_date\" of relation \"doctors\" violates not-null constraint (SQLSTATE 23502)", "grpc.code": "Unknown", "grpc.time_ms": 1.169}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+Healthcare_Evrone/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:16
+Healthcare_Evrone/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/internal/delivery/grpc/server/middleware.go:23
+Healthcare_Evrone/genproto/healthcare-service._DoctorService_CreateDoctor_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/genproto/healthcare-service/doctor.pb.go:650
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_healthcare_service/vendor/google.golang.org/grpc/server.go:1019
+2024-04-27T18:59:01.678+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-27T19:20:18.766+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-28T12:04:40.204+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-28T22:05:40.935+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-29T15:39:29.057+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-04-29T16:16:26.067+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":5050"}
+2024-05-04T05:48:00.379+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":9080"}
+2024-05-04T19:04:38.546+0500	INFO	app/app.go:123	gRPC Server Listening	{"url": ":9080"}

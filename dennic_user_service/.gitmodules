@@ -1,0 +1,6 @@
+[submodule "dennic-protos"]
+	path = dennic-protos
+	url = https://github.com/yigitaliyevamubina/dennic-protos.git
+[submodule "dennic_protos"]
+	path = dennic_protos
+	url = git@github.com:yigitaliyevamubina/dennic_protos.git

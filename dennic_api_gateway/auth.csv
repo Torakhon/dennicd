@@ -1,0 +1,39 @@
+p, unauthorized, /v1/swagger/*, GET
+p, unauthorized, /v1/swagger/index.html, GET
+p, unauthorized, /v1/swagger/index.html, POST
+p, unauthorized, /v1/swagger/swagger-ui.css, GET
+p, unauthorized, /v1/swagger/swagger-ui-bundle.js, GET
+p, unauthorized, /v1/swagger/swagger-ui-standalone-preset.js, GET
+p, unauthorized, /v1/swagger/favicon-32x32.png, GET
+p, unauthorized, /v1/swagger/swagger/doc.json, GET
+
+p, unauthorized, /v1/customer/register, POST
+p, unauthorized, /v1/customer/verify, POST
+p, unauthorized, /v1/customer/forget_password, POST
+p, unauthorized, /v1/customer/forget_password_verify, POST
+p, unauthorized, /v1/customer/login, POST
+
+
+p, unauthorized, /v1/file-upload, POST
+
+p, unauthorized, /v1/user/get, GET
+p, unauthorized, /v1/user/, GET
+p, unauthorized, /v1/user/, PUT
+p, unauthorized, /v1/user/, DELETE
+
+
+p, unauthorized, /v1/archive/, POST
+p, unauthorized, /v1/archive/get, GET
+p, unauthorized, /v1/archive/, GET
+p, unauthorized, /v1/archive/, PUT
+p, unauthorized, /v1/archive/, DELETE
+
+
+p, unauthorized, /v1/doctor-notes/, POST
+p, unauthorized, /v1/doctor-notes/get, GET
+p, unauthorized, /v1/doctor-notes/, GET
+p, unauthorized, /v1/doctor-notes/, PUT
+p, unauthorized, /v1/doctor-notes/, DELETE
+
+
+p, user, /v1/customer/logout, POST
