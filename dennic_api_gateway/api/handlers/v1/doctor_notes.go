@@ -58,7 +58,7 @@ func (h *HandlerV1) CreateDoctorNote(c *gin.Context) {
 		PatientId:     doctorNote.PatientId,
 		Prescription:  doctorNote.Prescription,
 		CreatedAt:     doctorNote.CreatedAt,
-		UpdatedAt:     doctorNote.UpdatedAt,
+		UpdatedAt:     e.UpdateTimeFilter(doctorNote.UpdatedAt),
 	})
 }
 
@@ -97,7 +97,7 @@ func (h *HandlerV1) GetDoctorNote(c *gin.Context) {
 		PatientId:     doctorNote.PatientId,
 		Prescription:  doctorNote.Prescription,
 		CreatedAt:     doctorNote.CreatedAt,
-		UpdatedAt:     doctorNote.UpdatedAt,
+		UpdatedAt:     e.UpdateTimeFilter(doctorNote.UpdatedAt),
 	})
 }
 
@@ -149,7 +149,7 @@ func (h *HandlerV1) ListDoctorNotes(c *gin.Context) {
 		doctorNote.PatientId = doctorNoteRes.PatientId
 		doctorNote.Prescription = doctorNoteRes.Prescription
 		doctorNote.CreatedAt = doctorNoteRes.CreatedAt
-		doctorNote.UpdatedAt = doctorNoteRes.UpdatedAt
+		doctorNote.UpdatedAt = e.UpdateTimeFilter(doctorNoteRes.UpdatedAt)
 		doctorNotesRes.DoctorNotes = append(doctorNotesRes.DoctorNotes, &doctorNote)
 	}
 
@@ -162,12 +162,14 @@ func (h *HandlerV1) ListDoctorNotes(c *gin.Context) {
 // @Tags Doctor Note
 // @Accept json
 // @Produce json
+// @Param notes_id query string true "notes_id"
 // @Param UpdateDoctorNoteReq body model_booking_service.UpdateDoctorNoteReq true "UpdateDoctorNoteReq"
 // @Success 200 {object} model_booking_service.DoctorNote
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/doctor-notes [put]
 func (h *HandlerV1) UpdateDoctorNote(c *gin.Context) {
+	id := c.Query("notes_id")
 	var (
 		body        model_booking_service.UpdateDoctorNoteReq
 		jsonMarshal protojson.MarshalOptions
@@ -184,8 +186,8 @@ func (h *HandlerV1) UpdateDoctorNote(c *gin.Context) {
 	defer cancel()
 
 	doctorNote, err := h.serviceManager.BookingService().DoctorNotes().UpdateDoctorNote(ctx, &pb.UpdateDoctorNoteReq{
-		Field:         body.Field,
-		Value:         body.Value,
+		Field:         "id",
+		Value:         id,
 		AppointmentId: body.AppointmentId,
 		DoctorId:      body.DoctorId,
 		PatientId:     body.PatientId,
@@ -203,7 +205,7 @@ func (h *HandlerV1) UpdateDoctorNote(c *gin.Context) {
 		PatientId:     doctorNote.PatientId,
 		Prescription:  doctorNote.Prescription,
 		CreatedAt:     doctorNote.CreatedAt,
-		UpdatedAt:     doctorNote.UpdatedAt,
+		UpdatedAt:     e.UpdateTimeFilter(doctorNote.UpdatedAt),
 	})
 }
 

@@ -61,7 +61,7 @@ func (h *HandlerV1) CreateDepartment(c *gin.Context) {
 		FloorNumber:      department.FloorNumber,
 		ShortDescription: department.ShortDescription,
 		CreatedAt:        department.CreatedAt,
-		UpdatedAt:        department.UpdatedAt,
+		UpdatedAt:        e.UpdateTimeFilter(department.UpdatedAt),
 	})
 }
 
@@ -75,7 +75,7 @@ func (h *HandlerV1) CreateDepartment(c *gin.Context) {
 // @Success 200 {object} model_healthcare_service.DepartmentRes
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
-// @Router /v1/department [get]
+// @Router /v1/department/get [get]
 func (h *HandlerV1) GetDepartment(c *gin.Context) {
 	field := c.Query("field")
 	value := c.Query("value")
@@ -100,7 +100,7 @@ func (h *HandlerV1) GetDepartment(c *gin.Context) {
 		FloorNumber:      department.FloorNumber,
 		ShortDescription: department.ShortDescription,
 		CreatedAt:        department.CreatedAt,
-		UpdatedAt:        department.UpdatedAt,
+		UpdatedAt:        e.UpdateTimeFilter(department.UpdatedAt),
 	})
 }
 
@@ -114,7 +114,7 @@ func (h *HandlerV1) GetDepartment(c *gin.Context) {
 // @Success 200 {object} model_healthcare_service.ListDepartments
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
-// @Router /v1/department/get [get]
+// @Router /v1/department [get]
 func (h *HandlerV1) ListDepartments(c *gin.Context) {
 	field := c.Query("field")
 	value := c.Query("value")
@@ -138,7 +138,6 @@ func (h *HandlerV1) ListDepartments(c *gin.Context) {
 		Limit:    int64(limitInt),
 		OrderBy:  orderBy,
 	})
-
 	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ListDepartments") {
 		return
 	}
@@ -146,13 +145,14 @@ func (h *HandlerV1) ListDepartments(c *gin.Context) {
 	for _, departmentRes := range departments.Departments {
 		departmentsRes.Departments = append(departmentsRes.Departments, &model_healthcare_service.DepartmentRes{
 			Id:               departmentRes.Id,
+			Order:            departmentRes.Order,
 			Name:             departmentRes.Name,
 			Description:      departmentRes.Description,
 			ImageUrl:         departmentRes.ImageUrl,
 			FloorNumber:      departmentRes.FloorNumber,
 			ShortDescription: departmentRes.ShortDescription,
 			CreatedAt:        departmentRes.CreatedAt,
-			UpdatedAt:        departmentRes.UpdatedAt,
+			UpdatedAt:        e.UpdateTimeFilter(departmentRes.UpdatedAt),
 		})
 	}
 
@@ -213,7 +213,7 @@ func (h *HandlerV1) UpdateDepartment(c *gin.Context) {
 		FloorNumber:      department.FloorNumber,
 		ShortDescription: department.ShortDescription,
 		CreatedAt:        department.CreatedAt,
-		UpdatedAt:        department.UpdatedAt,
+		UpdatedAt:        e.UpdateTimeFilter(department.UpdatedAt),
 	})
 }
 

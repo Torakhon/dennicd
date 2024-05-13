@@ -109,7 +109,7 @@ func NewConfig() (*Config, error) {
 	config.Redis.Password = getEnv("REDIS_PASSWORD", "")
 	config.Redis.Name = getEnv("REDIS_DATABASE", "0")
 
-	config.BookingService.Host = getEnv("BOOKING_SERVICE_GRPC_HOST", "dennic_booking_service")
+	config.BookingService.Host = getEnv("BOOKING_SERVICE_GRPC_HOST", "dennic_booking_servise")
 	config.BookingService.Port = getEnv("BOOKING_SERVICE_GRPC_PORT", ":9090")
 
 	config.HealthcareService.Host = getEnv("HEALTHCARE_SERVICE_GRPC_HOST", "dennic_healthcare_service")
@@ -147,9 +147,9 @@ func NewConfig() (*Config, error) {
 	config.Kafka.Topic.InvestmentPaymentTransaction = getEnv("KAFKA_TOPIC_INVESTMENT_PAYMENT_TRANSACTION", "investment.payment.transaction")
 
 	// model_minio configuration
-	config.MinioService.Endpoint = getEnv("MINIO_SERVICE_ENDPOINT", "localhost:9000")
-	config.MinioService.AccessKey = getEnv("MINIO_SERVICE_ACCESS_KEY", "jeG8haxwCfKSdgvi")
-	config.MinioService.SecretKey = getEnv("MINIO_SERVICE_SECRET_KEY", "Ucu7bxBBjnio96loEEfCGzVSK97nk9ul")
+	config.MinioService.Endpoint = getEnv("MINIO_SERVICE_ENDPOINT", "minio:9000")
+	config.MinioService.AccessKey = getEnv("MINIO_SERVICE_ACCESS_KEY", "dennic")
+	config.MinioService.SecretKey = getEnv("MINIO_SERVICE_SECRET_KEY", "dennic_service")
 	config.MinioService.BucketName = getEnv("MINIO_SERVICE_BUCKET_NAME", "dennic")
 
 	return &config, nil
