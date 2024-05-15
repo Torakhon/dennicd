@@ -1,6 +1,6 @@
 module dennic_user_service
 
-go 1.20
+go 1.22
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
