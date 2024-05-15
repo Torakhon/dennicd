@@ -81,21 +81,20 @@ func (h *HandlerV1) CreatePatient(c *gin.Context) {
 // @Tags Patient
 // @Accept json
 // @Produce json
-// @Param GetDoctorTimeReq query models.FieldValueReq true "FieldValueReq"
+// @Param id query string true "id"
 // @Success 200 {object} model_booking_service.Patient
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/patient/get [get]
 func (h *HandlerV1) GetPatient(c *gin.Context) {
-	field := c.Query("field")
-	value := c.Query("value")
+	id := c.Query("id")
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.Context.Timeout))
 	defer cancel()
 
 	res, err := h.serviceManager.BookingService().PatientService().GetPatient(ctx, &pb.PatientFieldValueReq{
-		Field:    field,
-		Value:    value,
+		Field:    "id",
+		Value:    id,
 		IsActive: false,
 	})
 
@@ -126,20 +125,21 @@ func (h *HandlerV1) GetPatient(c *gin.Context) {
 // @Tags Patient
 // @Accept json
 // @Produce json
+// @Param searchField query string false "searchField" Enums(first_name, last_name,blood_group,phone_number,address,city,country)
 // @Param ListReq query models.ListReq false "ListReq"
 // @Success 200 {object} model_booking_service.PatientsType
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/patient [get]
 func (h *HandlerV1) ListPatient(c *gin.Context) {
-	field := c.Query("field")
+	field := c.Query("searchField")
 	value := c.Query("value")
 	limit := c.Query("limit")
 	page := c.Query("page")
 	orderBy := c.Query("orderBy")
 
 	pageInt, limitInt, err := e.ParseQueryParams(page, limit)
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ListPatient") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ListPatient") {
 		return
 	}
 
@@ -190,16 +190,14 @@ func (h *HandlerV1) ListPatient(c *gin.Context) {
 // @Tags Patient
 // @Accept json
 // @Produce json
-// @Param patient_id query string true "patient_id"
 // @Param UpdatePatientReq body model_booking_service.UpdatePatientReq true "UpdatePatientReq"
 // @Success 200 {object} model_booking_service.Patient
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/patient [put]
 func (h *HandlerV1) UpdatePatient(c *gin.Context) {
-	id := c.Query("patient_id")
 	var (
-		body        model_booking_service.Patient
+		body        model_booking_service.UpdatePatientReq
 		jsonMarshal protojson.MarshalOptions
 	)
 	jsonMarshal.UseProtoNames = true
@@ -215,7 +213,7 @@ func (h *HandlerV1) UpdatePatient(c *gin.Context) {
 
 	res, err := h.serviceManager.BookingService().PatientService().UpdatePatient(ctx, &pb.UpdatePatientReq{
 		Field:          "id",
-		Value:          id,
+		Value:          body.PatientId,
 		FirstName:      body.FirstName,
 		LastName:       body.LastName,
 		BirthDate:      body.BirthDate,

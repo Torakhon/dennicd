@@ -4,22 +4,25 @@ build:
 	CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -installsuffix cgo -o ${CURRENT_DIR}/bin/${APP} ${APP_CMD_DIR}/main.go
 
 
+#---------LOCAL---------
+
 #OTLP_COLLECTOR_HOST = 0.0.0.0
 #
-#POSTGRES_HOST = localhost
-#POSTGRES_PORT = 5432
 #POSTGRES_USER = postgres
 #POSTGRES_PASSWORD = 20030505
+#POSTGRES_HOST = localhost
+#POSTGRES_PORT = 5432
 #POSTGRES_DATABASE = dennic
 
-#-----------------DOCKER----------------
+#---------DOCKER---------
 OTLP_COLLECTOR_HOST = otlp-collector
 
-POSTGRES_HOST = postgresdb
-POSTGRES_PORT = 5432
 POSTGRES_USER = postgres
 POSTGRES_PASSWORD = 20030505
+POSTGRES_HOST = postgresdb
+POSTGRES_PORT = 5432
 POSTGRES_DATABASE = dennic
+
 
 
 proto-gen:
@@ -40,12 +43,11 @@ migrate-file:
 	migrate create -ext sql -dir migrations/ -seq create_doctorsService_table
 
 
-run:
-	go run cmd/app/main.go
-	migrate create -ext sql -dir migrations/ -seq alter_specialization_table
-
 pull-proto-module:
 	git submodule update --init --recursive
 
 update-proto-module:
 	git submodule update --remote --merge
+
+run:
+	go run cmd/app/main.go

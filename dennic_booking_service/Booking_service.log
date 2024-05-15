@@ -1702,3 +1702,238 @@ google.golang.org/grpc.(*Server).serveStreams.func2.1
 2024-05-12T04:31:42.954+0500	INFO	app/main.go:36	Conten service stops !
 2024-05-12T04:32:26.252+0500	INFO	app/app.go:127	gRPC Server Listening	{"url": ":9090"}
 2024-05-12T05:13:34.265+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-12T05:13:34+05:00", "grpc.request.deadline": "2024-05-12T05:13:36+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.ArchiveService", "grpc.method": "GetAllArchives", "peer.address": "127.0.0.1:53674", "grpc.code": "OK", "grpc.time_ms": 12.161}
+2024-05-15T13:51:04.457+0500	INFO	app/app.go:127	gRPC Server Listening	{"url": ":9090"}
+2024-05-15T14:22:30.514+0500	INFO	app/main.go:36	Conten service stops !
+2024-05-15T14:44:09.508+0500	INFO	app/app.go:127	gRPC Server Listening	{"url": ":9090"}
+2024-05-15T14:48:03.418+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T14:48:03+05:00", "grpc.request.deadline": "2024-05-15T14:48:05+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:51978", "grpc.code": "OK", "grpc.time_ms": 23.408}
+2024-05-15T14:48:18.623+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T14:48:18+05:00", "grpc.request.deadline": "2024-05-15T14:48:20+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:51978", "grpc.code": "OK", "grpc.time_ms": 9.121}
+2024-05-15T14:48:27.486+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T14:48:27+05:00", "grpc.request.deadline": "2024-05-15T14:48:29+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:51978", "error": "ERROR: syntax error at or near \"$1\" (SQLSTATE 42601)", "grpc.code": "Unknown", "grpc.time_ms": 10.037}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._BookedAppointmentsService_GetAllAppointment_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/booked_appointments.pb.go:854
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T14:48:33.562+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T14:48:33+05:00", "grpc.request.deadline": "2024-05-15T14:48:35+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:51978", "grpc.code": "OK", "grpc.time_ms": 1.196}
+2024-05-15T14:48:45.736+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T14:48:45+05:00", "grpc.request.deadline": "2024-05-15T14:48:47+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:51978", "grpc.code": "OK", "grpc.time_ms": 1.138}
+2024-05-15T14:48:56.243+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T14:48:56+05:00", "grpc.request.deadline": "2024-05-15T14:48:58+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:51978", "grpc.code": "OK", "grpc.time_ms": 1.147}
+2024-05-15T17:27:08.745+0500	INFO	app/main.go:36	Conten service stops !
+2024-05-15T17:27:10.849+0500	INFO	app/app.go:127	gRPC Server Listening	{"url": ":9090"}
+2024-05-15T17:28:06.909+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T17:28:06+05:00", "grpc.request.deadline": "2024-05-15T17:28:08+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.ArchiveService", "grpc.method": "GetAllArchives", "peer.address": "127.0.0.1:60852", "grpc.code": "OK", "grpc.time_ms": 4.878}
+2024-05-15T17:52:05.202+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T17:52:05+05:00", "grpc.request.deadline": "2024-05-15T17:52:07+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:49794", "grpc.code": "OK", "grpc.time_ms": 6.097}
+2024-05-15T17:52:23.278+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T17:52:23+05:00", "grpc.request.deadline": "2024-05-15T17:52:25+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:49794", "grpc.code": "OK", "grpc.time_ms": 3.139}
+2024-05-15T20:04:54.566+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:04:54+05:00", "grpc.request.deadline": "2024-05-15T20:04:56+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:45000", "grpc.code": "OK", "grpc.time_ms": 41.564}
+2024-05-15T20:05:10.247+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T20:05:10+05:00", "grpc.request.deadline": "2024-05-15T20:05:12+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAppointment", "peer.address": "127.0.0.1:45000", "error": "ERROR: syntax error at or near \"=\" (SQLSTATE 42601)", "grpc.code": "Unknown", "grpc.time_ms": 1.614}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._BookedAppointmentsService_GetAppointment_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/booked_appointments.pb.go:836
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T20:05:16.371+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T20:05:16+05:00", "grpc.request.deadline": "2024-05-15T20:05:18+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAppointment", "peer.address": "127.0.0.1:45000", "error": "ERROR: invalid input syntax for type integer: \"123e4567-e89b-12d3-a456-426614174005\" (SQLSTATE 22P02)", "grpc.code": "Unknown", "grpc.time_ms": 2.657}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._BookedAppointmentsService_GetAppointment_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/booked_appointments.pb.go:836
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T20:07:49.614+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T20:07:49+05:00", "grpc.request.deadline": "2024-05-15T20:07:51+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAppointment", "peer.address": "127.0.0.1:35478", "error": "ERROR: syntax error at or near \"=\" (SQLSTATE 42601)", "grpc.code": "Unknown", "grpc.time_ms": 0.396}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._BookedAppointmentsService_GetAppointment_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/booked_appointments.pb.go:836
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T20:08:00.809+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T20:08:00+05:00", "grpc.request.deadline": "2024-05-15T20:08:02+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAppointment", "peer.address": "127.0.0.1:35478", "error": "ERROR: syntax error at or near \"=\" (SQLSTATE 42601)", "grpc.code": "Unknown", "grpc.time_ms": 0.692}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._BookedAppointmentsService_GetAppointment_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/booked_appointments.pb.go:836
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T20:08:06.798+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:08:06+05:00", "grpc.request.deadline": "2024-05-15T20:08:08+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAllAppointment", "peer.address": "127.0.0.1:35478", "grpc.code": "OK", "grpc.time_ms": 1.384}
+2024-05-15T20:08:24.348+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T20:08:24+05:00", "grpc.request.deadline": "2024-05-15T20:08:26+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAppointment", "peer.address": "127.0.0.1:35478", "error": "ERROR: syntax error at or near \"=\" (SQLSTATE 42601)", "grpc.code": "Unknown", "grpc.time_ms": 0.53}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._BookedAppointmentsService_GetAppointment_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/booked_appointments.pb.go:836
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T20:13:47.291+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:13:47+05:00", "grpc.request.deadline": "2024-05-15T20:13:49+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAppointment", "peer.address": "127.0.0.1:60774", "grpc.code": "OK", "grpc.time_ms": 6.733}
+2024-05-15T20:14:21.138+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:14:21+05:00", "grpc.request.deadline": "2024-05-15T20:14:23+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.ArchiveService", "grpc.method": "GetAllArchives", "peer.address": "127.0.0.1:60774", "grpc.code": "OK", "grpc.time_ms": 4.975}
+2024-05-15T20:14:29.426+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T20:14:29+05:00", "grpc.request.deadline": "2024-05-15T20:14:31+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.ArchiveService", "grpc.method": "GetArchive", "peer.address": "127.0.0.1:60774", "error": "ERROR: syntax error at or near \"=\" (SQLSTATE 42601)", "grpc.code": "Unknown", "grpc.time_ms": 0.734}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._ArchiveService_GetArchive_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/archive.pb.go:811
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T20:15:51.418+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T20:15:51+05:00", "grpc.request.deadline": "2024-05-15T20:15:53+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.ArchiveService", "grpc.method": "GetArchive", "peer.address": "127.0.0.1:40914", "error": "ERROR: invalid input syntax for type integer: \"\" (SQLSTATE 22P02)", "grpc.code": "Unknown", "grpc.time_ms": 0.548}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._ArchiveService_GetArchive_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/archive.pb.go:811
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T20:16:58.669+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:16:58+05:00", "grpc.request.deadline": "2024-05-15T20:17:00+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.ArchiveService", "grpc.method": "GetArchive", "peer.address": "127.0.0.1:38798", "grpc.code": "OK", "grpc.time_ms": 0.843}
+2024-05-15T20:17:05.852+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:17:05+05:00", "grpc.request.deadline": "2024-05-15T20:17:07+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.DoctorNotesService", "grpc.method": "GetAllNotes", "peer.address": "127.0.0.1:38798", "grpc.code": "OK", "grpc.time_ms": 6.134}
+2024-05-15T20:18:03.278+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:18:03+05:00", "grpc.request.deadline": "2024-05-15T20:18:05+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.DoctorTimeService", "grpc.method": "GetAllDoctorTimes", "peer.address": "127.0.0.1:38798", "grpc.code": "OK", "grpc.time_ms": 3.314}
+2024-05-15T20:18:38.021+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:18:38+05:00", "grpc.request.deadline": "2024-05-15T20:18:40+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.PatientsService", "grpc.method": "GetAllPatients", "peer.address": "127.0.0.1:38798", "grpc.code": "OK", "grpc.time_ms": 3.885}
+2024-05-15T20:19:16.201+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:19:16+05:00", "grpc.request.deadline": "2024-05-15T20:19:18+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.BookedAppointmentsService", "grpc.method": "GetAppointment", "peer.address": "127.0.0.1:57862", "grpc.code": "OK", "grpc.time_ms": 0.529}
+2024-05-15T20:19:22.509+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:19:22+05:00", "grpc.request.deadline": "2024-05-15T20:19:24+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.ArchiveService", "grpc.method": "GetArchive", "peer.address": "127.0.0.1:57862", "grpc.code": "OK", "grpc.time_ms": 0.595}
+2024-05-15T20:19:29.994+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:19:29+05:00", "grpc.request.deadline": "2024-05-15T20:19:31+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.DoctorNotesService", "grpc.method": "GetDoctorNote", "peer.address": "127.0.0.1:57862", "grpc.code": "OK", "grpc.time_ms": 3.543}
+2024-05-15T20:19:38.641+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:19:38+05:00", "grpc.request.deadline": "2024-05-15T20:19:40+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.DoctorTimeService", "grpc.method": "GetDoctorTime", "peer.address": "127.0.0.1:57862", "grpc.code": "OK", "grpc.time_ms": 3.674}
+2024-05-15T20:19:48.534+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:19:48+05:00", "grpc.request.deadline": "2024-05-15T20:19:50+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.PatientsService", "grpc.method": "GetAllPatients", "peer.address": "127.0.0.1:57862", "grpc.code": "OK", "grpc.time_ms": 0.872}
+2024-05-15T20:19:58.142+0500	ERROR	zap/options.go:212	finished unary call with code Unknown	{"grpc.start_time": "2024-05-15T20:19:58+05:00", "grpc.request.deadline": "2024-05-15T20:20:00+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.PatientsService", "grpc.method": "GetPatient", "peer.address": "127.0.0.1:57862", "error": "ERROR: syntax error at or near \"=\" (SQLSTATE 42601)", "grpc.code": "Unknown", "grpc.time_ms": 0.518}
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.DefaultMessageProducer
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/options.go:212
+github.com/grpc-ecosystem/go-grpc-middleware/logging/zap.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/server_interceptors.go:39
+booking_service/internal/app.NewApp.ChainUnaryServer.func5.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:48
+github.com/grpc-ecosystem/go-grpc-middleware/tags.UnaryServerInterceptor.func1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/tags/interceptors.go:23
+booking_service/internal/app.NewApp.ChainUnaryServer.func5
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/github.com/grpc-ecosystem/go-grpc-middleware/chain.go:53
+booking_service/internal/app.NewApp.UnaryInterceptor.func7.1.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:16
+booking_service/internal/app.NewApp.UnaryInterceptor.func7
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/internal/delivery/grpc/server/middleware.go:23
+booking_service/genproto/booking_service._PatientsService_GetPatient_Handler
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/genproto/booking_service/patient.pb.go:962
+google.golang.org/grpc.(*Server).processUnaryRPC
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1369
+google.golang.org/grpc.(*Server).handleStream
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1780
+google.golang.org/grpc.(*Server).serveStreams.func2.1
+	/home/ali/Goland/Project/Dennic/Dennic/dennic_booking_service/vendor/google.golang.org/grpc/server.go:1019
+2024-05-15T20:23:22.954+0500	INFO	zap/options.go:212	finished unary call with code OK	{"grpc.start_time": "2024-05-15T20:23:22+05:00", "grpc.request.deadline": "2024-05-15T20:23:24+05:00", "system": "grpc", "span.kind": "server", "grpc.service": "booking_service.PatientsService", "grpc.method": "GetPatient", "peer.address": "127.0.0.1:46890", "grpc.code": "OK", "grpc.time_ms": 4.97}
+2024-05-15T20:25:25.343+0500	INFO	app/main.go:36	Conten service stops !

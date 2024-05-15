@@ -5,6 +5,13 @@ import (
 	"strings"
 )
 
+type Minio struct {
+	Endpoint string
+	Bucket   struct {
+		User string
+	}
+}
+
 type Config struct {
 	APP         string
 	Environment string
@@ -35,6 +42,7 @@ type Config struct {
 			InvestorCreate string
 		}
 	}
+	MinioService Minio
 }
 
 func New() *Config {
@@ -48,7 +56,7 @@ func New() *Config {
 	c.Context.Timeout = getEnv("CONTEXT_TIMEOUT", "30s")
 
 	// db configuration
-	c.DB.Host = getEnv("POSTGRES_HOST", "postgresdb")
+	c.DB.Host = getEnv("POSTGRES_HOST", "localhost")
 	c.DB.Port = getEnv("POSTGRES_PORT", "5432")
 	c.DB.User = getEnv("POSTGRES_USER", "postgres")
 	c.DB.Password = getEnv("POSTGRES_PASSWORD", "20030505")
@@ -56,12 +64,16 @@ func New() *Config {
 	c.DB.Name = getEnv("POSTGRES_DATABASE", "dennic")
 
 	// otlp collector configuration
-	c.OTLPCollector.Host = getEnv("OTLP_COLLECTOR_HOST", "otel-collector")
+	c.OTLPCollector.Host = getEnv("OTLP_COLLECTOR_HOST", "0000")
 	c.OTLPCollector.Port = getEnv("OTLP_COLLECTOR_PORT", ":4317")
 
 	// kafka configuration
 	c.Kafka.Address = strings.Split(getEnv("KAFKA_ADDRESS", "localhost:29092"), ",")
 	c.Kafka.Topic.InvestorCreate = getEnv("KAFKA_TOPIC_INVESTOR_CREATE", "investor.created")
+
+	// Minio
+	c.MinioService.Endpoint = getEnv("MINIO_SERVICE_ENDPOINT", "http://dennic.uz:9000")
+	c.MinioService.Bucket.User = getEnv("MINIO_SERVICE_BUCKET_USER", "user")
 
 	return &c
 }

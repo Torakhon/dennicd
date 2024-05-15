@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	specTableName                       = "Specializations"
+	specTableName                       = "specializations"
 	serviceNameSpecialization           = "doctor_working_hours"
 	serviceNameSpecializationRepoPrefix = "doctor_working_hours"
 )
@@ -126,7 +126,7 @@ func (p *Specialization) GetSpecializationById(ctx context.Context, in *entity.G
 	return &spec, nil
 }
 
-func (p *Specialization) GetAllSpecializations(ctx context.Context, all *entity.GetAll) (*entity.ListSpecializations, error) {
+func (p *Specialization) GetAllSpecializations(ctx context.Context, all *entity.GetAllSpecializations) (*entity.ListSpecializations, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameSpecialization, serviceNameSpecializationRepoPrefix+"Get all")
 	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
@@ -136,11 +136,16 @@ func (p *Specialization) GetAllSpecializations(ctx context.Context, all *entity.
 	offset := all.Limit * (all.Page - 1)
 
 	queryBuilder := p.db.Sq.Builder.Select(p.specializationSelectQueryPrefix()).From(p.tableName)
+
+	countBuilder := p.db.Sq.Builder.Select("count(*)").From(p.tableName)
+	if all.DepartmentId != "" {
+		queryBuilder = queryBuilder.Where(p.db.Sq.Equal("department_id", all.DepartmentId))
+		countBuilder = countBuilder.Where(fmt.Sprintf("department_id = '%s'", all.DepartmentId))
+	}
+
 	if all.Field != "" {
 		queryBuilder = queryBuilder.Where(fmt.Sprintf(`%s ILIKE '%s'`, all.Field, all.Value+"%"))
 	}
-	countBuilder := p.db.Sq.Builder.Select("count(*)").From(departmentTableName)
-
 	if !all.IsActive {
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 		countBuilder = countBuilder.Where("deleted_at IS NULL")
@@ -185,6 +190,7 @@ func (p *Specialization) GetAllSpecializations(ctx context.Context, all *entity.
 	}
 	var count int32
 	queryCount, _, err := countBuilder.ToSql()
+	fmt.Println(queryCount)
 	err = p.db.QueryRow(ctx, queryCount).Scan(&count)
 	if err != nil {
 		return nil, p.db.Error(err)

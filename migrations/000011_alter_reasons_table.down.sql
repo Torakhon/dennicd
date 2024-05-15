@@ -1,1 +1,0 @@
-ALTER TABLE reasons DROP COLUMN image_url;

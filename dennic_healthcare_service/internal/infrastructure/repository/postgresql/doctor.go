@@ -36,7 +36,9 @@ func (p *DocTor) docTorSelectQueryPrefix() string {
 			doctor_order,
 			first_name,
 			last_name,
+			image_url,
 			gender,
+			birth_date,
 			phone_number,
 			email,
 			password,
@@ -55,6 +57,36 @@ func (p *DocTor) docTorSelectQueryPrefix() string {
 		`
 }
 
+func (p *DocTor) getDocTorSelectQueryPrefix() string {
+	return `d.id,                                                            
+                        d.doctor_order,
+                        d.first_name,
+                        d.last_name,
+                        d.image_url,
+                        d.gender,
+                        d.birth_date,
+                        d.phone_number,
+                        d.email,
+                        d.password,
+                        d.address,
+                        d.city,
+                        d.country,
+                        d.salary,
+						dwh.start_time,
+						dwh.finish_time,
+						dwh.day_of_week,
+                        d.biography,
+                        d.start_work_date,
+                        d.end_work_date,
+                        d.work_years,
+                        d.department_id,
+                        d.room_number,
+                        d.created_at,
+                        d.updated_at
+						
+`
+}
+
 func (h *DocTor) CreateDoctor(ctx context.Context, req *entity.Doctor) (*entity.Doctor, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctor, serviceNameDoctorRepoPrefix+"Create")
@@ -65,6 +97,7 @@ func (h *DocTor) CreateDoctor(ctx context.Context, req *entity.Doctor) (*entity.
 		"id":              req.Id,
 		"first_name":      req.FirstName,
 		"last_name":       req.LastName,
+		"image_url":       req.ImageUrl,
 		"gender":          req.Gender,
 		"birth_date":      req.BirthDate,
 		"phone_number":    req.PhoneNumber,
@@ -86,13 +119,15 @@ func (h *DocTor) CreateDoctor(ctx context.Context, req *entity.Doctor) (*entity.
 	if err != nil {
 		return nil, h.db.ErrSQLBuild(err, fmt.Sprintf("%s %s", h.tableName, "create"))
 	}
-	var startWorkYear, endWorkYear, updatedAt sql.NullTime
+	var startWorkYear, endWorkYear, updatedAt, birthDate sql.NullTime
 	err = h.db.QueryRow(ctx, query, args...).Scan(
 		&req.Id,
 		&req.Order,
 		&req.FirstName,
 		&req.LastName,
+		&req.ImageUrl,
 		&req.Gender,
+		&birthDate,
 		&req.PhoneNumber,
 		&req.Email,
 		&req.Password,
@@ -110,6 +145,7 @@ func (h *DocTor) CreateDoctor(ctx context.Context, req *entity.Doctor) (*entity.
 		&updatedAt,
 	)
 
+	req.BirthDate = birthDate.Time.Format("2006-01-02")
 	req.StartWorkDate = startWorkYear.Time.String()
 	if endWorkYear.Valid {
 		req.EndWorkDate = endWorkYear.Time.String()
@@ -121,34 +157,36 @@ func (h *DocTor) CreateDoctor(ctx context.Context, req *entity.Doctor) (*entity.
 	return req, nil
 }
 
-func (h *DocTor) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*entity.Doctor, error) {
+func (h *DocTor) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*entity.DoctorAndDoctorHours, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctor, serviceNameDoctorRepoPrefix+"Get")
 	span.SetAttributes(attribute.Key(get.Field).String(get.Value))
 
 	defer span.End()
 
-	var doctor entity.Doctor
-	var startWorkYear, endWorkYear, updatedAt sql.NullTime
-	queryBuilder := h.db.Sq.Builder.Select(h.docTorSelectQueryPrefix()).From(doctorTableName)
+	var doctor entity.DoctorAndDoctorHours
+	var startWorkYear, endWorkYear, updatedAt, birthDate, startTime, finishTime sql.NullTime
+	queryBuilder := h.db.Sq.Builder.Select(h.getDocTorSelectQueryPrefix()).
+		From(h.tableName + " d ").Join("doctor_working_hours dwh ON dwh.doctor_id = d.id")
 
 	if !get.IsActive {
-		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
+		queryBuilder = queryBuilder.Where("d.deleted_at IS NULL")
 	}
 
-	queryBuilder = queryBuilder.Where(h.db.Sq.Equal(get.Field, get.Value))
+	queryBuilder = queryBuilder.Where(h.db.Sq.Equal("d."+get.Field, get.Value))
 
 	query, args, err := queryBuilder.ToSql()
 	if err != nil {
 		return nil, err
 	}
-
 	err = h.db.QueryRow(ctx, query, args...).Scan(
 		&doctor.Id,
 		&doctor.Order,
 		&doctor.FirstName,
 		&doctor.LastName,
+		&doctor.ImageUrl,
 		&doctor.Gender,
+		&birthDate,
 		&doctor.PhoneNumber,
 		&doctor.Email,
 		&doctor.Password,
@@ -156,6 +194,9 @@ func (h *DocTor) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*ent
 		&doctor.City,
 		&doctor.Country,
 		&doctor.Salary,
+		&startTime,
+		&finishTime,
+		&doctor.DayOfWeek,
 		&doctor.Bio,
 		&startWorkYear,
 		&endWorkYear,
@@ -168,11 +209,18 @@ func (h *DocTor) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*ent
 	if updatedAt.Valid {
 		doctor.UpdatedAt = updatedAt.Time
 	}
-
+	if startTime.Valid {
+		doctor.StartTime = startTime.Time.Format("15:04")
+	}
+	if finishTime.Valid {
+		doctor.FinishTime = finishTime.Time.Format("15:04")
+	}
 	doctor.StartWorkDate = startWorkYear.Time.String()
 	if endWorkYear.Valid {
 		doctor.EndWorkDate = endWorkYear.Time.String()
 	}
+
+	doctor.BirthDate = birthDate.Time.Format("2006-01-02")
 
 	if err != nil {
 		return nil, err
@@ -181,7 +229,7 @@ func (h *DocTor) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*ent
 	return &doctor, nil
 }
 
-func (h *DocTor) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity.ListDoctors, error) {
+func (h *DocTor) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity.ListDoctorsAndHours, error) {
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctor, serviceNameDoctorRepoPrefix+"Get all")
 	span.SetAttributes(attribute.Key(all.Field).String(all.Value))
@@ -190,16 +238,17 @@ func (h *DocTor) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity
 
 	offset := all.Limit * (all.Page - 1)
 
-	queryBuilder := h.db.Sq.Builder.Select(h.docTorSelectQueryPrefix()).From(doctorTableName)
+	queryBuilder := h.db.Sq.Builder.Select(h.getDocTorSelectQueryPrefix()).
+		From(h.tableName + " d ").Join("doctor_working_hours dwh ON dwh.doctor_id = d.id")
 	if all.Field != "" {
 		queryBuilder = queryBuilder.Where(fmt.Sprintf(`%s ILIKE '%s'`, all.Field, all.Value+"%"))
 	}
 	if all.OrderBy != "" {
 		queryBuilder = queryBuilder.OrderBy(all.OrderBy)
 	}
-	countBuilder := h.db.Sq.Builder.Select("count(*)").From(departmentTableName)
+	countBuilder := h.db.Sq.Builder.Select("count(*)").From(h.tableName)
 	if !all.IsActive {
-		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
+		queryBuilder = queryBuilder.Where("d.deleted_at IS NULL")
 		countBuilder = countBuilder.Where("deleted_at IS NULL")
 	}
 	queryBuilder = queryBuilder.Limit(uint64(all.Limit)).Offset(uint64(offset))
@@ -208,20 +257,22 @@ func (h *DocTor) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity
 	if err != nil {
 		return nil, err
 	}
-	var doctors entity.ListDoctors
+	var doctors entity.ListDoctorsAndHours
 	rows, err := h.db.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err
 	}
 	for rows.Next() {
-		var doctor entity.Doctor
-		var startWorkYear, endWorkYear, birthDate, updatedAt sql.NullTime
+		var doctor entity.DoctorAndDoctorHours
+		var startWorkYear, endWorkYear, birthDate, updatedAt, startTime, finishTime sql.NullTime
 		err = rows.Scan(
 			&doctor.Id,
 			&doctor.Order,
 			&doctor.FirstName,
 			&doctor.LastName,
+			&doctor.ImageUrl,
 			&doctor.Gender,
+			&birthDate,
 			&doctor.PhoneNumber,
 			&doctor.Email,
 			&doctor.Password,
@@ -229,6 +280,9 @@ func (h *DocTor) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity
 			&doctor.City,
 			&doctor.Country,
 			&doctor.Salary,
+			&startTime,
+			&finishTime,
+			&doctor.DayOfWeek,
 			&doctor.Bio,
 			&startWorkYear,
 			&endWorkYear,
@@ -244,7 +298,13 @@ func (h *DocTor) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity
 		if updatedAt.Valid {
 			doctor.UpdatedAt = updatedAt.Time
 		}
-		doctor.BirthDate = birthDate.Time.String()
+		if startTime.Valid {
+			doctor.StartTime = startTime.Time.Format("15:04")
+		}
+		if finishTime.Valid {
+			doctor.FinishTime = finishTime.Time.Format("15:04")
+		}
+		doctor.BirthDate = birthDate.Time.Format("2006-01-02")
 		doctor.StartWorkDate = startWorkYear.Time.String()
 		if endWorkYear.Valid {
 			doctor.EndWorkDate = endWorkYear.Time.String()
@@ -272,7 +332,9 @@ func (h *DocTor) UpdateDoctor(ctx context.Context, update *entity.Doctor) (*enti
 	data := map[string]any{
 		"first_name":      update.FirstName,
 		"last_name":       update.LastName,
+		"image_url":       update.ImageUrl,
 		"gender":          update.Gender,
+		"birth_date":      update.BirthDate,
 		"phone_number":    update.PhoneNumber,
 		"email":           update.Email,
 		"password":        update.Password,
@@ -296,13 +358,15 @@ func (h *DocTor) UpdateDoctor(ctx context.Context, update *entity.Doctor) (*enti
 
 		return nil, h.db.ErrSQLBuild(err, h.tableName+" update")
 	}
-	var startWorkYear, endWorkYear sql.NullTime
+	var startWorkYear, endWorkYear, birthDate sql.NullTime
 	err = h.db.QueryRow(ctx, query, args...).Scan(
 		&update.Id,
 		&update.Order,
 		&update.FirstName,
 		&update.LastName,
+		&update.ImageUrl,
 		&update.Gender,
+		&birthDate,
 		&update.PhoneNumber,
 		&update.Email,
 		&update.Password,
@@ -324,7 +388,7 @@ func (h *DocTor) UpdateDoctor(ctx context.Context, update *entity.Doctor) (*enti
 	if endWorkYear.Valid {
 		update.EndWorkDate = endWorkYear.Time.String()
 	}
-
+	update.BirthDate = birthDate.Time.Format("2006-01-02")
 	if err != nil {
 		return nil, h.db.Error(err)
 	}
@@ -340,7 +404,8 @@ func (h *DocTor) DeleteDoctor(ctx context.Context, del *entity.GetReqStr) (bool,
 	defer span.End()
 
 	data := map[string]any{
-		"deleted_at": time.Now().Add(time.Hour * 5),
+		"deleted_at":    time.Now().Add(time.Hour * 5),
+		"end_work_date": time.Now().Add(time.Hour * 5),
 	}
 	var args []interface{}
 	var query string
@@ -369,9 +434,9 @@ func (h *DocTor) DeleteDoctor(ctx context.Context, del *entity.GetReqStr) (bool,
 	return false, nil
 }
 
-func (h *DocTor) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetReqStrDep) (doctors []*entity.Doctor, err error) {
+func (h *DocTor) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetReqStrDep) (*entity.ListDoctors, error) {
 	ctx, span := otlp.Start(ctx, serviceNameDoctor, serviceNameDoctorRepoPrefix+"Get all by department_id")
-	span.SetAttributes(attribute.Key("ListDoctorsByDepartmentId").String(in.Field))
+	span.SetAttributes(attribute.Key("ListDoctorsByDepartmentId").String(in.DepartmentId))
 
 	defer span.End()
 
@@ -384,7 +449,9 @@ func (h *DocTor) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetRe
 	if in.OrderBy != "" {
 		queryBuilder = queryBuilder.OrderBy(in.OrderBy)
 	}
+	countBuilder := h.db.Sq.Builder.Select("count(*)").From(h.tableName)
 	if !in.IsActive {
+		countBuilder = countBuilder.Where("deleted_at IS NULL")
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 	}
 
@@ -399,6 +466,7 @@ func (h *DocTor) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetRe
 	if err != nil {
 		return nil, err
 	}
+	var doctors entity.ListDoctors
 	for rows.Next() {
 		var doctor entity.Doctor
 		var startWorkYear, endWorkYear, birthDate, updatedAt sql.NullTime
@@ -407,7 +475,9 @@ func (h *DocTor) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetRe
 			&doctor.Order,
 			&doctor.FirstName,
 			&doctor.LastName,
+			&doctor.ImageUrl,
 			&doctor.Gender,
+			&birthDate,
 			&doctor.PhoneNumber,
 			&doctor.Email,
 			&doctor.Password,
@@ -430,13 +500,109 @@ func (h *DocTor) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetRe
 		if updatedAt.Valid {
 			doctor.UpdatedAt = updatedAt.Time
 		}
-		doctor.BirthDate = birthDate.Time.String()
-		doctor.StartWorkDate = startWorkYear.Time.String()
+		doctor.BirthDate = birthDate.Time.Format("2006-01-02")
+		doctor.StartWorkDate = startWorkYear.Time.Format("2006-01-02")
 		if endWorkYear.Valid {
-			doctor.EndWorkDate = endWorkYear.Time.String()
+			doctor.EndWorkDate = endWorkYear.Time.Format("2006-01-02")
 		}
 
-		doctors = append(doctors, &doctor)
+		doctors.Doctors = append(doctors.Doctors, doctor)
 	}
-	return doctors, nil
+	var count int64
+	queryCount, _, err := countBuilder.ToSql()
+	err = h.db.QueryRow(ctx, queryCount).Scan(&count)
+	if err != nil {
+		return nil, h.db.Error(err)
+	}
+	doctors.Count = count
+	return &doctors, nil
+}
+
+func (h *DocTor) ListDoctorBySpecializationId(ctx context.Context, in *entity.GetReqStrSpec) (*entity.ListDoctors, error) {
+
+	ctx, span := otlp.Start(ctx, serviceNameDoctor, serviceNameDoctorRepoPrefix+"Get all by specialization_id")
+	span.SetAttributes(attribute.Key("ListDoctorBySpecializationId").String(in.SpecializationId))
+
+	defer span.End()
+
+	offset := in.Limit * (in.Page - 1)
+
+	queryBuilder := h.db.Sq.Builder.Select(h.getDocTorSelectQueryPrefix()).
+		From(h.tableName + " d ").Join("doctor_service ds ON ds.doctor_id = d.id")
+	if in.Field != "" {
+		queryBuilder = queryBuilder.Where(fmt.Sprintf(`%s ILIKE '%s'`, in.Field, in.Value+"%"))
+	}
+	if in.OrderBy != "" {
+		queryBuilder = queryBuilder.OrderBy(in.OrderBy)
+	}
+	countBuilder := h.db.Sq.Builder.Select("count(*)").From(h.tableName + " d ").
+		Join("doctor_service ds ON ds.doctor_id = d.id").
+		Where(fmt.Sprintf("ds.specialization_id = '%s'", in.SpecializationId))
+	if !in.IsActive {
+		countBuilder = countBuilder.Where("d.deleted_at IS NULL")
+		queryBuilder = queryBuilder.Where("d.deleted_at IS NULL")
+	}
+
+	queryBuilder = queryBuilder.Where(h.db.Sq.Equal("ds.specialization_id", in.SpecializationId)).
+		Limit(uint64(in.Limit)).Offset(uint64(offset))
+	query, args, err := queryBuilder.ToSql()
+	if err != nil {
+		return nil, err
+	}
+	rows, err := h.db.Query(ctx, query, args...)
+	if err != nil {
+		return nil, err
+	}
+	var doctors entity.ListDoctors
+	for rows.Next() {
+		var doctor entity.Doctor
+		var startWorkYear, endWorkYear, birthDate, updatedAt sql.NullTime
+		err = rows.Scan(
+			&doctor.Id,
+			&doctor.Order,
+			&doctor.FirstName,
+			&doctor.LastName,
+			&doctor.ImageUrl,
+			&doctor.Gender,
+			&birthDate,
+			&doctor.PhoneNumber,
+			&doctor.Email,
+			&doctor.Password,
+			&doctor.Address,
+			&doctor.City,
+			&doctor.Country,
+			&doctor.Salary,
+			&doctor.Bio,
+			&startWorkYear,
+			&endWorkYear,
+			&doctor.WorkYears,
+			&doctor.DepartmentId,
+			&doctor.RoomNumber,
+			&doctor.CreatedAt,
+			&updatedAt,
+		)
+		if err != nil {
+			return nil, err
+		}
+		if updatedAt.Valid {
+			doctor.UpdatedAt = updatedAt.Time
+		}
+		doctor.BirthDate = birthDate.Time.Format("2006-01-02")
+		doctor.StartWorkDate = startWorkYear.Time.Format("2006-01-02")
+		if endWorkYear.Valid {
+			doctor.EndWorkDate = endWorkYear.Time.Format("2006-01-02")
+		}
+		doctors.Doctors = append(doctors.Doctors, doctor)
+	}
+	var count int64
+	queryCount, _, err := countBuilder.ToSql()
+	fmt.Println(queryCount)
+
+	err = h.db.QueryRow(ctx, queryCount).Scan(&count)
+	if err != nil {
+		return nil, h.db.Error(err)
+	}
+
+	doctors.Count = count
+	return &doctors, nil
 }

@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	doctorServicesWorkingHoursTableName = "doctor_service"
+	doctorServicesTableName             = "doctor_service"
 	serviceNameDoctorServices           = "doctors_service"
 	serviceNameDoctorServicesRepoPrefix = "doctors_service"
 )
@@ -24,7 +24,7 @@ type Ds struct {
 
 func NewDoctorServicesRepo(db *postgres.PostgresDB) *Ds {
 	return &Ds{
-		tableName: doctorServicesWorkingHoursTableName,
+		tableName: doctorServicesTableName,
 		db:        db,
 	}
 }
@@ -150,7 +150,7 @@ func (d Ds) GetAllDoctorServices(ctx context.Context, all *entity.GetAll) (*enti
 	if all.OrderBy != "" {
 		queryBuilder = queryBuilder.OrderBy(all.OrderBy)
 	}
-	countBuilder := d.db.Sq.Builder.Select("count(*)").From(departmentTableName)
+	countBuilder := d.db.Sq.Builder.Select("count(*)").From(d.tableName)
 	if !all.IsActive {
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 		countBuilder = countBuilder.Where("deleted_at IS NULL")

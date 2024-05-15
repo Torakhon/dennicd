@@ -67,20 +67,19 @@ func (h *HandlerV1) CreateReasons(c *gin.Context) {
 // @Tags Reasons
 // @Accept json
 // @Produce json
-// @Param GetReasons query models.FieldValueReq true "FieldValueReq"
+// @Param id query string true "id"
 // @Success 200 {object} model_healthcare_service.ReasonsRes
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/reasons/get [get]
 func (h *HandlerV1) GetReasons(c *gin.Context) {
-	field := c.Query("field")
-	value := c.Query("value")
+	id := c.Query("id")
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.Context.Timeout))
 	defer cancel()
 
 	reasons, err := h.serviceManager.HealthcareService().ReasonsService().GetReasonsById(ctx, &pb.GetReqStrReasons{
-		Field:    field,
-		Value:    value,
+		Field:    "id",
+		Value:    id,
 		IsActive: false,
 	})
 
@@ -105,19 +104,20 @@ func (h *HandlerV1) GetReasons(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param ListReq query models.ListReq false "ListReq"
+// @Param search query string false "search" Enums(name) "search"
 // @Success 200 {object} model_healthcare_service.ListReasons
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/reasons [get]
 func (h *HandlerV1) ListReasons(c *gin.Context) {
-	field := c.Query("field")
+	search := c.Query("search")
 	value := c.Query("value")
 	limit := c.Query("limit")
 	page := c.Query("page")
 	orderBy := c.Query("orderBy")
 
 	pageInt, limitInt, err := e.ParseQueryParams(page, limit)
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ListReasons") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ListReasons") {
 		return
 	}
 
@@ -125,7 +125,7 @@ func (h *HandlerV1) ListReasons(c *gin.Context) {
 	defer cancel()
 
 	reasons, err := h.serviceManager.HealthcareService().ReasonsService().GetAllReasons(ctx, &pb.GetAllReas{
-		Field:    field,
+		Field:    search,
 		Value:    value,
 		IsActive: false,
 		Page:     int32(pageInt),
@@ -161,7 +161,6 @@ func (h *HandlerV1) ListReasons(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param UpdateReasonsReq body model_healthcare_service.ReasonsReq true "UpdateReasonsReq"
-// @Param id query string true "id"
 // @Success 200 {object} model_healthcare_service.ReasonsRes
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
@@ -175,8 +174,6 @@ func (h *HandlerV1) UpdateReasons(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&body)
 
-	id := c.Query("id")
-
 	if e.HandleError(c, err, h.log, http.StatusBadRequest, "UpdateReasons") {
 		return
 	}
@@ -185,7 +182,7 @@ func (h *HandlerV1) UpdateReasons(c *gin.Context) {
 	defer cancel()
 
 	respreasons, err := h.serviceManager.HealthcareService().ReasonsService().UpdateReasons(ctx, &pb.Reasons{
-		Id:               id,
+		Id:               body.Id,
 		Name:             body.Name,
 		SpecializationId: body.SpecializationId,
 		ImageUrl:         body.ImageUrl,

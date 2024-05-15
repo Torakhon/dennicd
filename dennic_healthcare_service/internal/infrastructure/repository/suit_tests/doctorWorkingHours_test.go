@@ -7,6 +7,7 @@ import (
 	db "Healthcare_Evrone/internal/pkg/postgres"
 	"context"
 	"github.com/google/uuid"
+	"github.com/spf13/cast"
 	"github.com/stretchr/testify/suite"
 	"log"
 	"testing"
@@ -112,8 +113,9 @@ func (s *DoctorWorkingHoursTestSuite) TestDoctorWorkingHoursCrud() {
 	s.Suite.Equal(respDoctorService.StartTime, dwh.StartTime)
 	s.Suite.Equal(respDoctorService.StartTime, dwh.StartTime)
 
-	getDoctorWorkingHours, err := s.Repository.GetDoctorWorkingHoursById(ctx, &entity.GetReqInt{
-		Id:       respDoctorService.Id,
+	getDoctorWorkingHours, err := s.Repository.GetDoctorWorkingHoursById(ctx, &entity.GetReqStr{
+		Field:    "id",
+		Value:    cast.ToString(respDoctorService.Id),
 		IsActive: false,
 	})
 	s.Suite.NoError(err)
@@ -123,7 +125,14 @@ func (s *DoctorWorkingHoursTestSuite) TestDoctorWorkingHoursCrud() {
 	s.Suite.Equal(respDoctorService.StartTime, dwh.StartTime)
 	s.Suite.Equal(respDoctorService.StartTime, dwh.StartTime)
 
-	respAll, err := s.Repository.GetAllDoctorWorkingHours(ctx, 1, 10, "")
+	respAll, err := s.Repository.GetAllDoctorWorkingHours(ctx, &entity.GetAll{
+		Page:     1,
+		Limit:    10,
+		Field:    "",
+		Value:    "",
+		OrderBy:  "",
+		IsActive: false,
+	})
 	s.Suite.NoError(err)
 	s.Suite.NotNil(respAll)
 
@@ -144,26 +153,26 @@ func (s *DoctorWorkingHoursTestSuite) TestDoctorWorkingHoursCrud() {
 	s.Suite.Equal(respDoctorService.StartTime, updatedDoctorWorkingHours.StartTime)
 	s.Suite.Equal(respDoctorService.StartTime, updatedDoctorWorkingHours.StartTime)
 
-	deleteDoctorWorkingHours, err := s.Repository.DeleteDoctorWorkingHours(ctx, &entity.GetReqInt{
-		Id:            dwh.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+	deleteDoctorWorkingHours, err := s.Repository.DeleteDoctorWorkingHours(ctx, &entity.GetReqStr{
+		Field:    "id",
+		Value:    cast.ToString(dwh.Id),
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDoctorWorkingHours)
 	s.Suite.NoError(err)
 
 	deleteDoctor, err := s.RepositoryDoctor.DeleteDoctor(ctx, &entity.GetReqStr{
-		Id:            doctor.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    doctor.Id,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDoctor)
 	s.Suite.NoError(err)
 
 	deleteDep, err := s.RepositoryDepartment.DeleteDepartment(ctx, &entity.GetReqStr{
-		Id:            department.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    department.Id,
+		IsActive: false,
 	})
 	s.Suite.NotNil(deleteDep)
 	s.Suite.NoError(err)

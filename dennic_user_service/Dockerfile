@@ -1,18 +1,20 @@
-FROM golang:1.22-alpine3.18 AS builder
-
-RUN mkdir app
-COPY . /app
+# workspace (GOPATH) configured at /go
+FROM golang:1.18 as builder
 
 WORKDIR /app
 
-RUN go mod tidy && go mod vendor
+ADD . /app
 
-RUN go build -o main cmd/app/main.go
+# Copy the local package files to the container's workspace.
+COPY . ./
 
-FROM alpine:3.18
+# installing depends and build
+RUN make build-linux
 
-WORKDIR /app
+FROM alpine:latest
 
-COPY --from=builder /app .
+COPY --from=builder app/bin/User_service ./User_service
 
-CMD ["/app/main"]
+RUN chmod +x ./User_service
+
+CMD ["./User_service"]

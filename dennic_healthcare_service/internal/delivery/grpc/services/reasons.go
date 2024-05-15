@@ -45,7 +45,7 @@ func (r reasonsServiceRPC) CreateReasons(ctx context.Context, reasons *pb.Reason
 	if err != nil {
 		return nil, err
 	}
-	respImageUrl := minio.AddImageUrl(resp.ImageUrl)
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.Reasons)
 
 	return &pb.Reasons{
 		Id:               resp.Id,
@@ -71,7 +71,7 @@ func (r reasonsServiceRPC) GetReasonsById(ctx context.Context, reasons *pb.GetRe
 	if err != nil {
 		return nil, err
 	}
-	respImageUrl := minio.AddImageUrl(resp.ImageUrl)
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.Reasons)
 
 	return &pb.Reasons{
 		Id:               resp.Id,
@@ -102,7 +102,7 @@ func (r reasonsServiceRPC) GetAllReasons(ctx context.Context, all *pb.GetAllReas
 
 	var listReasonss pb.ListReasons
 	for _, reasons := range reasonss.Reasons {
-		respImageUrl := minio.AddImageUrl(reasons.ImageUrl)
+		respImageUrl := minio.AddImageUrl(reasons.ImageUrl, cfg.MinioService.Bucket.Reasons)
 
 		listReasonss.Reasons = append(listReasonss.Reasons, &pb.Reasons{
 			Id:               reasons.Id,
@@ -136,7 +136,7 @@ func (r reasonsServiceRPC) UpdateReasons(ctx context.Context, reasons *pb.Reason
 		return nil, err
 	}
 
-	respImageUrl := minio.AddImageUrl(resp.ImageUrl)
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.Reasons)
 
 	return &pb.Reasons{
 		Id:               resp.Id,

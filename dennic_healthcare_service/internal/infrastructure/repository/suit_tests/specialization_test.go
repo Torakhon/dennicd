@@ -69,7 +69,8 @@ func (s *SpecializationTestSuite) TestSpecializationCrud() {
 	s.Suite.Equal(respSpec.DepartmentId, special.DepartmentId)
 
 	getSpecialization, err := s.Repository.GetSpecializationById(ctx, &entity.GetReqStr{
-		Id:       special.ID,
+		Field:    "id",
+		Value:    special.ID,
 		IsActive: false,
 	})
 	s.Suite.NoError(err)
@@ -79,7 +80,15 @@ func (s *SpecializationTestSuite) TestSpecializationCrud() {
 	s.Suite.Equal(getSpecialization.Description, special.Description)
 	s.Suite.Equal(getSpecialization.DepartmentId, special.DepartmentId)
 
-	respAll, err := s.Repository.GetAllSpecializations(ctx, 1, 10, "")
+	respAll, err := s.Repository.GetAllSpecializations(ctx, &entity.GetAllSpecializations{
+		Page:         1,
+		Limit:        10,
+		Field:        "",
+		Value:        "",
+		OrderBy:      "",
+		DepartmentId: "",
+		IsActive:     false,
+	})
 	s.Suite.NoError(err)
 	s.Suite.NotNil(respAll)
 
@@ -100,17 +109,17 @@ func (s *SpecializationTestSuite) TestSpecializationCrud() {
 	s.Suite.Equal(newUpDescription, updatedSpecialization.Description)
 
 	deleteSpec, err := s.Repository.DeleteSpecialization(ctx, &entity.GetReqStr{
-		Id:            special.ID,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    special.ID,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteSpec)
 	s.Suite.NoError(err)
 
 	deleteDep, err := s.RepositoryDepartment.DeleteDepartment(ctx, &entity.GetReqStr{
-		Id:            department.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    department.Id,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDep)
 	s.Suite.NoError(err)

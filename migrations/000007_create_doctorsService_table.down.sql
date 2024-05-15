@@ -1,1 +1,0 @@
-DROP TABLE doctor_service;

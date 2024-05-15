@@ -39,6 +39,7 @@ func (p *userRepo) userSelectQueryPrefix() string {
 			phone_number,
 			password,
 			gender,
+			image_url,
 			created_at,
 			updated_at,
 			deleted_at`
@@ -58,6 +59,7 @@ func (p userRepo) Create(ctx context.Context, user *entity.User) error {
 		"password":      user.Password,
 		"gender":        user.Gender,
 		"refresh_token": user.RefreshToken,
+		"image_url":     user.ImageUrl,
 	}
 
 	query, args, err := p.db.Sq.Builder.Insert(p.tableName).SetMap(data).ToSql()
@@ -109,6 +111,7 @@ func (p userRepo) Get(ctx context.Context, req *entity.FieldValueReq) (*entity.U
 		&user.PhoneNumber,
 		&user.Password,
 		&user.Gender,
+		&user.ImageUrl,
 		&user.CreatedAt,
 		&updatedAt,
 		&deletedAt,
@@ -194,6 +197,7 @@ func (p userRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.Us
 			&user.PhoneNumber,
 			&user.Password,
 			&user.Gender,
+			&user.ImageUrl,
 			&user.CreatedAt,
 			&updatedAt,
 			&deletedAt,
@@ -213,7 +217,7 @@ func (p userRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.Us
 		user.Count = count
 		users = append(users, &user)
 	}
-	
+
 	return users, nil
 }
 
@@ -225,6 +229,7 @@ func (p userRepo) Update(ctx context.Context, user *entity.User) error {
 		"last_name":  user.LastName,
 		"birth_date": user.BirthDate,
 		"gender":     user.Gender,
+		"image_url":  user.ImageUrl,
 		"updated_at": user.UpdatedAt,
 	}
 
@@ -259,7 +264,7 @@ func (p *userRepo) Delete(ctx context.Context, req *entity.FieldValueReq) (*enti
 	if !req.DeleteStatus {
 		toSql, args, err := p.db.Sq.Builder.
 			Update(p.tableName).
-			Set("deleted_at", time.Now().Add(time.Hour * 5)).
+			Set("deleted_at", time.Now().Add(time.Hour*5)).
 			Where(p.db.Sq.And(
 				p.db.Sq.Equal("deleted_at", nil),
 				p.db.Sq.Equal(req.Field, req.Value),

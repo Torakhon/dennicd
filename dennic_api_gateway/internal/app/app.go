@@ -114,9 +114,6 @@ func (a *App) Stop() {
 	}
 
 	// shutdown otlp collector
-	if err := a.ShutdownOTLP(); err != nil {
-		a.Logger.Error("shutdown otlp collector", zap.Error(err))
-	}
 
 	// zap logger sync
 	a.Logger.Sync()

@@ -71,21 +71,20 @@ func (h *HandlerV1) CreateDoctorTimes(c *gin.Context) {
 // @Tags Doctor Time
 // @Accept json
 // @Produce json
-// @Param GetDoctorTimeReq query models.FieldValueReq true "FieldValueReq"
+// @Param id query integer true "id"
 // @Success 200 {object} model_booking_service.DoctorTime
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/doctor-time/get [get]
 func (h *HandlerV1) GetDoctorTimes(c *gin.Context) {
-	field := c.Query("field")
-	value := c.Query("value")
+	id := c.Query("id")
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.Context.Timeout))
 	defer cancel()
 
 	res, err := h.serviceManager.BookingService().DoctorTimes().GetDoctorTime(ctx, &pb.DoctorTimeFieldValueReq{
-		Field:    field,
-		Value:    value,
+		Field:    "id",
+		Value:    id,
 		IsActive: false,
 	})
 
@@ -112,20 +111,21 @@ func (h *HandlerV1) GetDoctorTimes(c *gin.Context) {
 // @Tags Doctor Time
 // @Accept json
 // @Produce json
+// @Param searchField query string false "searchField" Enums(status)
 // @Param ListReq query models.ListReq false "ListReq"
 // @Success 200 {object} model_booking_service.DoctorTimesType
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/doctor-time [get]
 func (h *HandlerV1) ListDoctorTimes(c *gin.Context) {
-	field := c.Query("field")
+	field := c.Query("searchField")
 	value := c.Query("value")
 	limit := c.Query("limit")
 	page := c.Query("page")
 	orderBy := c.Query("orderBy")
 
 	pageInt, limitInt, err := e.ParseQueryParams(page, limit)
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ListDoctorTimes") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ListDoctorTimes") {
 		return
 	}
 
@@ -172,14 +172,12 @@ func (h *HandlerV1) ListDoctorTimes(c *gin.Context) {
 // @Tags Doctor Time
 // @Accept json
 // @Produce json
-// @Param doctor_time_id query string true "doctor_time_id"
 // @Param UpdateDoctorTimeReq body model_booking_service.UpdateDoctorTimeReq true "UpdateDoctorTimeReq"
 // @Success 200 {object} model_booking_service.DoctorTime
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/doctor-time [put]
 func (h *HandlerV1) UpdateDoctorTimes(c *gin.Context) {
-	id := c.Query("doctor_time_id")
 	var (
 		body        model_booking_service.UpdateDoctorTimeReq
 		jsonMarshal protojson.MarshalOptions
@@ -197,7 +195,7 @@ func (h *HandlerV1) UpdateDoctorTimes(c *gin.Context) {
 
 	res, err := h.serviceManager.BookingService().DoctorTimes().UpdateDoctorTime(ctx, &pb.UpdateDoctorTimeReq{
 		Field:        "id",
-		Value:        id,
+		Value:        body.DoctorTimeId,
 		DepartmentId: body.DepartmentId,
 		DoctorId:     body.DoctorId,
 		DoctorDate:   body.DoctorDate,

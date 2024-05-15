@@ -7,7 +7,6 @@ import (
 	"dennic_api_gateway/api/models/model_user_service"
 	ps "dennic_api_gateway/genproto/session_service"
 	pb "dennic_api_gateway/genproto/user_service"
-	jwt "dennic_api_gateway/internal/pkg/tokens"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -45,13 +44,13 @@ func (h *HandlerV1) Register(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&body)
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "Register") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
 		return
 	}
 
 	err = body.Validate()
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "Register") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error()) {
 		return
 	}
 
@@ -71,11 +70,11 @@ func (h *HandlerV1) Register(c *gin.Context) {
 		Value: body.PhoneNumber,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Register") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, NOT_REGISTERED) {
 		return
 	}
 	if existsPhone.Status {
-		err = errors.New("failed to check phone number uniques")
+		err = errors.New("you have already registered, try to login")
 		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "Register")
 		return
 	}
@@ -86,12 +85,12 @@ func (h *HandlerV1) Register(c *gin.Context) {
 	body.Id = uuid.New().String()
 
 	byteDate, err := json.Marshal(&body)
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "Register") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, SERVICE_ERROR) {
 		return
 	}
 
-	err = h.redis.Client.Set(ctx, body.PhoneNumber, byteDate, time.Minute*h.ContextTimeout).Err()
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Register") {
+	err = h.redis.Client.Set(ctx, body.PhoneNumber, byteDate, h.cfg.Redis.Time).Err()
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -126,7 +125,7 @@ func (h *HandlerV1) Verify(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&body)
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
 		return
 	}
 
@@ -135,19 +134,19 @@ func (h *HandlerV1) Verify(c *gin.Context) {
 
 	redisRes, err := h.redis.Client.Get(ctx, body.PhoneNumber).Result()
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, SERVICE_ERROR) {
 		return
 	}
 
 	err = json.Unmarshal([]byte(redisRes), &user)
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	if body.Code != user.Code {
-		err = errors.New("invalid code")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "Register")
+		err = errors.New(INVALID_CODE)
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_CODE)
 		return
 	}
 
@@ -155,14 +154,14 @@ func (h *HandlerV1) Verify(c *gin.Context) {
 		UserId: user.Id,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	if sessions != nil {
 		if sessions.Count >= 3 {
 			err = errors.New("the number of devices has exceeded the limit")
-			_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "Verify")
+			_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "the number of devices has exceeded the limit")
 			return
 		}
 	}
@@ -177,19 +176,19 @@ func (h *HandlerV1) Verify(c *gin.Context) {
 		PlatformName: body.PlatformName,
 		PlatformType: body.PlatformType,
 	})
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	user.Password, err = e.HashPassword(user.Password)
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	access, refresh, err := h.jwthandler.GenerateAuthJWT(user.PhoneNumber, user.Id, session.Id, "user")
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -204,13 +203,13 @@ func (h *HandlerV1) Verify(c *gin.Context) {
 		RefreshToken: refresh,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	err = h.redis.Client.Del(ctx, body.PhoneNumber).Err()
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Verify") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -248,13 +247,13 @@ func (h *HandlerV1) ForgetPassword(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&body)
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ForgetPasswordVerify") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
 		return
 	}
 
 	if len(body.PhoneNumber) != 13 && !govalidator.IsNumeric(body.PhoneNumber) {
-		err := errors.New("invalid phone number")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "ForgetPassword")
+		err := errors.New(INVALID_PHONE_NUMBER)
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_PHONE_NUMBER)
 		return
 	}
 
@@ -266,20 +265,32 @@ func (h *HandlerV1) ForgetPassword(c *gin.Context) {
 		Value: body.PhoneNumber,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ForgetPassword") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, NOT_REGISTERED) {
 		return
 	}
 	if !existsPhone.Status {
-		err = errors.New("you haven't registered before")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "ForgetPassword")
+		err = errors.New(NOT_REGISTERED)
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, NOT_REGISTERED)
 		return
+	}
+
+	codeRed, err := h.redis.Client.Get(ctx, body.PhoneNumber).Result()
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
+		return
+	}
+
+	if codeRed != "" {
+		err = errors.New(CODE_EXPIRATION_NOT_OVER)
+		if e.HandleError(c, err, h.log, http.StatusBadRequest, CODE_EXPIRATION_NOT_OVER) {
+			return
+		}
 	}
 
 	// TODO A method that sends a code to a number
 	code := 7777
 
-	err = h.redis.Client.Set(ctx, body.PhoneNumber, code, time.Minute*h.ContextTimeout).Err()
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ForgetPassword") {
+	err = h.redis.Client.Set(ctx, body.PhoneNumber, code, h.cfg.Redis.Time).Err()
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -302,30 +313,29 @@ func (h *HandlerV1) ForgetPassword(c *gin.Context) {
 // @Router /v1/customer/update-password [PUT]
 func (h *HandlerV1) UpdatePassword(c *gin.Context) {
 	newPassword := c.Query("NewPassword")
-	token := c.GetHeader("Authorization")
-
-	claims, err := jwt.ExtractClaim(token)
-
-	if e.HandleError(c, err, h.log, http.StatusUnauthorized, "ChangePasswordUser") {
-		return
-	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.Context.Timeout))
 	defer cancel()
 
+	userInfo, err := e.GetUserInfo(c)
+
+	if e.HandleError(c, err, h.log, http.StatusUnauthorized, "missing token in the header") {
+		return
+	}
+
 	user, err := h.serviceManager.UserService().UserService().Get(ctx, &pb.GetUserReq{
 		Field:    "id",
-		Value:    cast.ToString(claims["id"]),
+		Value:    userInfo.UserId,
 		IsActive: false,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ChangePasswordUser") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	hashPass, err := e.HashPassword(newPassword)
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ChangePasswordUser") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -334,7 +344,7 @@ func (h *HandlerV1) UpdatePassword(c *gin.Context) {
 		Password:    hashPass,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ChangePasswordUser") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -362,14 +372,14 @@ func (h *HandlerV1) VerifyOtpCode(c *gin.Context) {
 	defer cancel()
 
 	if len(phoneNumber) != 13 && !govalidator.IsNumeric(phoneNumber) {
-		err := errors.New("invalid phone number")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "VerifyOtpCode")
+		err := errors.New(INVALID_PHONE_NUMBER)
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_PHONE_NUMBER)
 		return
 	}
 
 	redisRes, err := h.redis.Client.Get(ctx, phoneNumber).Result()
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, "VerifyOtpCode") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, "code is expired") {
 		return
 	}
 
@@ -377,19 +387,19 @@ func (h *HandlerV1) VerifyOtpCode(c *gin.Context) {
 
 	err = json.Unmarshal([]byte(redisRes), &redisCode)
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "VerifyOtpCode") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	if reqCode != redisCode {
-		err = errors.New("invalid code")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "VerifyOtpCode")
+		err = errors.New(INVALID_CODE)
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_CODE)
 		return
 	}
 
 	err = h.redis.Client.Del(ctx, phoneNumber).Err()
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "VerifyOtpCode") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -399,12 +409,12 @@ func (h *HandlerV1) VerifyOtpCode(c *gin.Context) {
 		IsActive: false,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "VerifyOtpCode") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	access, err := h.jwthandler.GenerateJWT(user.PhoneNumber, user.Id, "user")
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "VerifyOtpCode") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -441,14 +451,14 @@ func (h *HandlerV1) Login(c *gin.Context) {
 	defer cancel()
 
 	if len(body.PhoneNumber) != 13 && !govalidator.IsNumeric(body.PhoneNumber) {
-		err := errors.New("invalid phone number")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "Register")
+		err := errors.New(INVALID_PHONE_NUMBER)
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_PHONE_NUMBER)
 		return
 	}
 
 	if !e.ValidatePassword(body.Password) {
 		err := errors.New("invalid password")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "Register")
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -458,13 +468,13 @@ func (h *HandlerV1) Login(c *gin.Context) {
 		IsActive: false,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Login") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, NOT_REGISTERED) {
 		return
 	}
 
 	if !e.CheckHashPassword(user.Password, body.Password) {
-		err = errors.New("invalid password")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "Register")
+		err = errors.New("incorrect password")
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -473,14 +483,14 @@ func (h *HandlerV1) Login(c *gin.Context) {
 		IsActive: false,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Login") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	if sessions != nil {
 		if sessions.Count >= 3 {
 			err = errors.New("the number of devices has exceeded the limit")
-			_ = e.HandleError(c, err, h.log, http.StatusBadRequest, "Verify")
+			_ = e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error())
 			return
 		}
 	}
@@ -496,12 +506,12 @@ func (h *HandlerV1) Login(c *gin.Context) {
 		PlatformType: body.PlatformType,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Login") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	access, refresh, err := h.jwthandler.GenerateAuthJWT(user.PhoneNumber, user.Id, sessionId, "user")
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Login") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -510,7 +520,7 @@ func (h *HandlerV1) Login(c *gin.Context) {
 		RefreshToken: refresh,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Login") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -538,10 +548,9 @@ func (h *HandlerV1) Login(c *gin.Context) {
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/customer/logout [post]
 func (h *HandlerV1) LogOut(c *gin.Context) {
-	token := c.GetHeader("Authorization")
-	claims, err := jwt.ExtractClaim(token)
+	userInfo, err := e.GetUserInfo(c)
 
-	if e.HandleError(c, err, h.log, http.StatusUnauthorized, "Logout") {
+	if e.HandleError(c, err, h.log, http.StatusUnauthorized, "missing token in the header") {
 		return
 	}
 
@@ -549,12 +558,78 @@ func (h *HandlerV1) LogOut(c *gin.Context) {
 	defer cancel()
 
 	_, err = h.serviceManager.SessionService().SessionService().DeleteSessionById(ctx, &ps.StrReq{
-		Id: cast.ToString(claims["session_id"]),
+		Id: userInfo.SessionId,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "LogOut") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
 	c.JSON(http.StatusOK, &model_user_service.MessageRes{Message: "Log out done!"})
+}
+
+// SenOtpCode ...
+// @Summary SenOtpCode
+// @Description SenOtpCode - Api for sen otp code users
+// @Tags customer
+// @Accept json
+// @Produce json
+// @Param SenOtpCode body model_user_service.PhoneNumberReq true "RegisterModelReq"
+// @Success 200 {object} model_user_service.MessageRes
+// @Failure 400 {object} model_common.StandardErrorModel
+// @Failure 500 {object} model_common.StandardErrorModel
+// @Router /v1/customer/send-otp [post]
+func (h *HandlerV1) SenOtpCode(c *gin.Context) {
+	var (
+		body        model_user_service.PhoneNumberReq
+		jsonMarshal protojson.MarshalOptions
+	)
+
+	jsonMarshal.UseProtoNames = true
+
+	err := c.ShouldBindJSON(&body)
+
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
+		return
+	}
+
+	if len(body.PhoneNumber) != 13 && !govalidator.IsNumeric(body.PhoneNumber) {
+		err := errors.New(INVALID_PHONE_NUMBER)
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_PHONE_NUMBER)
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.Context.Timeout))
+	defer cancel()
+
+	existsPhone, err := h.serviceManager.UserService().UserService().CheckField(ctx, &pb.CheckFieldUserReq{
+		Field: "phone_number",
+		Value: body.PhoneNumber,
+	})
+
+	codeRed, err := h.redis.Client.Get(ctx, body.PhoneNumber).Result()
+	if codeRed != "" {
+		err = errors.New(CODE_EXPIRATION_NOT_OVER)
+		if e.HandleError(c, err, h.log, http.StatusBadRequest, CODE_EXPIRATION_NOT_OVER) {
+			return
+		}
+	}
+
+	if !existsPhone.Status {
+		err = errors.New(NOT_REGISTERED)
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, NOT_REGISTERED)
+		return
+	}
+
+	// TODO A method that sends a code to a number
+	code := 7777
+
+	err = h.redis.Client.Set(ctx, body.PhoneNumber, code, h.cfg.Redis.Time).Err()
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
+		return
+	}
+
+	c.JSON(http.StatusOK, model_user_service.MessageRes{
+		Message: "Code has been sent to you phone number, please check.",
+	})
 }

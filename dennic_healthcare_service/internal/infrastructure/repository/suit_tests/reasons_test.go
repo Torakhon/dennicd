@@ -113,25 +113,26 @@ func (s *ReasonsTestSuite) TestReasonsCrud() {
 	s.Suite.NotNil(updateReason)
 	s.Suite.NotNil(updateReason.UpdatedAt)
 
-	deleteReas, err := s.Repository.DeleteReasons(ctx, &entity.DelReqStrReasons{
-		Id:            reason.Id,
-		IsHardDeleted: true,
+	deleteReas, err := s.Repository.DeleteReasons(ctx, &entity.GetReqStr{
+		Field:    "id",
+		Value:    reason.Id,
+		IsActive: true,
 	})
 	s.Suite.NoError(err)
 	s.Suite.NotNil(deleteReas)
 
 	deleteSpec, err := s.RepositorySpecialization.DeleteSpecialization(ctx, &entity.GetReqStr{
-		Id:            special.ID,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    special.ID,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteSpec)
 	s.Suite.NoError(err)
 
 	deleteDep, err := s.RepositoryDepartment.DeleteDepartment(ctx, &entity.GetReqStr{
-		Id:            department.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    department.Id,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDep)
 	s.Suite.NoError(err)

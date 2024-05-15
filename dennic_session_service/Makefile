@@ -3,22 +3,25 @@ CURRENT_DIR=$(shell pwd)
 build:
 	CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -installsuffix cgo -o ${CURRENT_DIR}/bin/${APP} ${APP_CMD_DIR}/main.go
 
+#---------LOCAL---------
+
 #OTLP_COLLECTOR_HOST = 0.0.0.0
 #
-#POSTGRES_HOST = localhost
-#POSTGRES_PORT = 5432
 #POSTGRES_USER = postgres
 #POSTGRES_PASSWORD = 20030505
+#POSTGRES_HOST = localhost
+#POSTGRES_PORT = 5432
 #POSTGRES_DATABASE = dennic
 
-#-------------DOCKER----------------
+#---------DOCKER---------
 OTLP_COLLECTOR_HOST = otlp-collector
 
-POSTGRES_HOST = postgresdb
-POSTGRES_PORT = 5432
 POSTGRES_USER = postgres
 POSTGRES_PASSWORD = 20030505
+POSTGRES_HOST = postgresdb
+POSTGRES_PORT = 5432
 POSTGRES_DATABASE = dennic
+
 
 proto-gen:
 	./scripts/genproto.sh

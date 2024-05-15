@@ -74,20 +74,19 @@ func (h *HandlerV1) CreateDoctorService(c *gin.Context) {
 // @Tags Doctor Services
 // @Accept json
 // @Produce json
-// @Param GetDoctorService query models.FieldValueReq true "FieldValueReq"
+// @Param id query string true "id"
 // @Success 200 {object} model_healthcare_service.DoctorServicesRes
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/doctor-services/get [get]
 func (h *HandlerV1) GetDoctorService(c *gin.Context) {
-	field := c.Query("field")
-	value := c.Query("value")
+	id := c.Query("id")
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.Context.Timeout))
 	defer cancel()
 
 	doctorServices, err := h.serviceManager.HealthcareService().DoctorsService().GetDoctorServiceByID(ctx, &pb.GetReqStr{
-		Field:    field,
-		Value:    value,
+		Field:    "id",
+		Value:    id,
 		IsActive: false,
 	})
 
@@ -115,20 +114,18 @@ func (h *HandlerV1) GetDoctorService(c *gin.Context) {
 // @Tags Doctor Services
 // @Accept json
 // @Produce json
-// @Param ListReq query models.ListReq false "ListReq"
+// @Param ListReq query model_healthcare_service.ListReqDoctorServices false "ListReq"
 // @Success 200 {object} model_healthcare_service.ListDoctorServices
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/doctor-services [get]
 func (h *HandlerV1) ListDoctorServices(c *gin.Context) {
-	field := c.Query("field")
-	value := c.Query("value")
 	limit := c.Query("limit")
 	page := c.Query("page")
 	orderBy := c.Query("orderBy")
 
 	pageInt, limitInt, err := e.ParseQueryParams(page, limit)
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ListDoctorServices") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ListDoctorServices") {
 		return
 	}
 
@@ -136,8 +133,8 @@ func (h *HandlerV1) ListDoctorServices(c *gin.Context) {
 	defer cancel()
 
 	doctorServicess, err := h.serviceManager.HealthcareService().DoctorsService().GetAllDoctorServices(ctx, &pb.GetAllDoctorServiceS{
-		Field:    field,
-		Value:    value,
+		Field:    "",
+		Value:    "",
 		IsActive: false,
 		Page:     int64(pageInt),
 		Limit:    int64(limitInt),
@@ -176,7 +173,6 @@ func (h *HandlerV1) ListDoctorServices(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param UpdateDoctorServicesReq body model_healthcare_service.DoctorServicesReq true "UpdateDoctorServicesReq"
-// @Param id query string true "id"
 // @Success 200 {object} model_healthcare_service.DoctorServicesRes
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
@@ -190,8 +186,6 @@ func (h *HandlerV1) UpdateDoctorServices(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&body)
 
-	id := c.Query("id")
-
 	if e.HandleError(c, err, h.log, http.StatusBadRequest, "UpdateDoctorServices") {
 		return
 	}
@@ -200,7 +194,7 @@ func (h *HandlerV1) UpdateDoctorServices(c *gin.Context) {
 	defer cancel()
 
 	doctorServices, err := h.serviceManager.HealthcareService().DoctorsService().UpdateDoctorServices(ctx, &pb.DoctorServices{
-		Id:               id,
+		Id:               body.Id,
 		DoctorId:         body.DoctorId,
 		SpecializationId: body.SpecializationId,
 		OnlinePrice:      body.OnlinePrice,

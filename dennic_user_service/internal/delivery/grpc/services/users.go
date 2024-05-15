@@ -4,6 +4,7 @@ import (
 	"context"
 	pb "dennic_user_service/genproto/user_service"
 	"dennic_user_service/internal/entity"
+	"dennic_user_service/internal/pkg/minio"
 	"dennic_user_service/internal/pkg/otlp"
 	"dennic_user_service/internal/usecase"
 	"dennic_user_service/internal/usecase/event"
@@ -36,6 +37,8 @@ func (u userRPC) Create(ctx context.Context, user *pb.User) (*pb.User, error) {
 
 	ctx, span := otlp.Start(ctx, UserServiceName, UserSpanName+"Create")
 	defer span.End()
+
+	reqImageUrl := minio.RemoveImageUrl(user.ImageUrl)
 	req := entity.User{
 		Id:           user.Id,
 		FirstName:    user.FirstName,
@@ -45,6 +48,7 @@ func (u userRPC) Create(ctx context.Context, user *pb.User) (*pb.User, error) {
 		Password:     user.Password,
 		Gender:       user.Gender,
 		RefreshToken: user.RefreshToken,
+		ImageUrl:     reqImageUrl,
 	}
 	UserId, err := u.user.Create(ctx, &req)
 	if err != nil {
@@ -78,6 +82,9 @@ func (u userRPC) Get(ctx context.Context, req *pb.GetUserReq) (*pb.User, error) 
 
 	ctx, span := otlp.Start(ctx, UserServiceName, UserSpanName+"Get")
 	defer span.End()
+	var (
+		respImageUrl string
+	)
 	resp, err := u.user.Get(ctx, &entity.FieldValueReq{
 		Field:        req.Field,
 		Value:        req.Value,
@@ -87,7 +94,9 @@ func (u userRPC) Get(ctx context.Context, req *pb.GetUserReq) (*pb.User, error) 
 	if err != nil {
 		return nil, err
 	}
-
+	if resp.ImageUrl != "" {
+		respImageUrl = minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.User)
+	}
 	response := &pb.User{
 		Id:           resp.Id,
 		UserOrder:    resp.UserOrder,
@@ -98,6 +107,7 @@ func (u userRPC) Get(ctx context.Context, req *pb.GetUserReq) (*pb.User, error) 
 		Password:     resp.Password,
 		Gender:       resp.Gender,
 		RefreshToken: resp.RefreshToken,
+		ImageUrl:     respImageUrl,
 		CreatedAt:    resp.CreatedAt.String(),
 		UpdatedAt:    resp.UpdatedAt.String(),
 		DeletedAt:    resp.DeletedAt.String(),
@@ -130,9 +140,18 @@ func (u userRPC) ListUsers(ctx context.Context, req *pb.ListUsersReq) (*pb.ListU
 		return nil, err
 	}
 
-	var users pb.ListUsersResp
+	var (
+		users        pb.ListUsersResp
+		respImageUrl string
+	)
 
 	for _, in := range resp {
+		if in.ImageUrl != "" {
+			respImageUrl = minio.AddImageUrl(in.ImageUrl, cfg.MinioService.Bucket.User)
+		}
+		if in.ImageUrl == "" {
+			respImageUrl = minio.RemoveImageUrl(in.ImageUrl)
+		}
 		user := &pb.User{
 			Id:           in.Id,
 			UserOrder:    in.UserOrder,
@@ -143,6 +162,7 @@ func (u userRPC) ListUsers(ctx context.Context, req *pb.ListUsersReq) (*pb.ListU
 			Password:     in.Password,
 			Gender:       in.Gender,
 			RefreshToken: in.RefreshToken,
+			ImageUrl:     respImageUrl,
 			CreatedAt:    in.CreatedAt.String(),
 			UpdatedAt:    in.UpdatedAt.String(),
 			DeletedAt:    in.DeletedAt.String(),
@@ -165,12 +185,14 @@ func (u userRPC) Update(ctx context.Context, user *pb.User) (*pb.User, error) {
 
 	ctx, span := otlp.Start(ctx, UserServiceName, UserSpanName+"Update")
 	defer span.End()
+	reqImageUrl := minio.RemoveImageUrl(user.ImageUrl)
 	req := entity.User{
 		Id:        user.Id,
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		BirthDate: user.BirthDate,
 		Gender:    user.Gender,
+		ImageUrl:  reqImageUrl,
 		UpdatedAt: time.Now().Add(time.Hour * 5),
 	}
 
@@ -179,7 +201,9 @@ func (u userRPC) Update(ctx context.Context, user *pb.User) (*pb.User, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	var (
+		respImageUrl string
+	)
 	resp, err := u.user.Get(ctx, &entity.FieldValueReq{
 		Field:        "id",
 		Value:        user.Id,
@@ -188,7 +212,9 @@ func (u userRPC) Update(ctx context.Context, user *pb.User) (*pb.User, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	if resp.ImageUrl != "" {
+		respImageUrl = minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.User)
+	}
 	response := &pb.User{
 		Id:           resp.Id,
 		UserOrder:    resp.UserOrder,
@@ -199,6 +225,7 @@ func (u userRPC) Update(ctx context.Context, user *pb.User) (*pb.User, error) {
 		Password:     resp.Password,
 		Gender:       resp.Gender,
 		RefreshToken: resp.RefreshToken,
+		ImageUrl:     respImageUrl,
 		CreatedAt:    resp.CreatedAt.String(),
 		UpdatedAt:    resp.UpdatedAt.String(),
 	}

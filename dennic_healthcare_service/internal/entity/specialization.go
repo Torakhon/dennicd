@@ -18,3 +18,13 @@ type ListSpecializations struct {
 	Specializations []Specialization
 	Count           int32
 }
+
+type GetAllSpecializations struct {
+	Page         int64
+	Limit        int64
+	Field        string
+	Value        string
+	OrderBy      string
+	DepartmentId string
+	IsActive     bool
+}

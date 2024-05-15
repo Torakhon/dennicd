@@ -52,7 +52,7 @@ func (r specializationRPC) CreateSpecialization(ctx context.Context, specializat
 	if err != nil {
 		return nil, err
 	}
-	respImageUrl := minio.AddImageUrl(resp.ImageUrl)
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.Specialization)
 	return &pb.Specializations{
 		Id:           resp.ID,
 		Order:        resp.Order,
@@ -79,7 +79,7 @@ func (r specializationRPC) GetSpecializationById(ctx context.Context, str *pb.Ge
 	if err != nil {
 		return nil, err
 	}
-	respImageUrl := minio.AddImageUrl(spec.ImageUrl)
+	respImageUrl := minio.AddImageUrl(spec.ImageUrl, cfg.MinioService.Bucket.Specialization)
 	return &pb.Specializations{
 		Id:           spec.ID,
 		Order:        spec.Order,
@@ -97,20 +97,21 @@ func (r specializationRPC) GetAllSpecializations(ctx context.Context, all *pb.Ge
 	ctx, span := otlp.Start(ctx, serviceNameSpecializationDelivery, serviceNameSpecializationDeliveryRepoPrefix+"Create")
 	span.SetAttributes(attribute.Key("GetAllSpecializations").String(all.Value))
 	defer span.End()
-	specializations, err := r.specialization.GetAllSpecializations(ctx, &entity.GetAll{
-		Page:     int64(all.Page),
-		Limit:    int64(all.Limit),
-		Field:    all.Field,
-		Value:    all.Value,
-		OrderBy:  all.OrderBy,
-		IsActive: all.IsActive,
+	specializations, err := r.specialization.GetAllSpecializations(ctx, &entity.GetAllSpecializations{
+		Page:         int64(all.Page),
+		Limit:        int64(all.Limit),
+		Field:        all.Field,
+		Value:        all.Value,
+		OrderBy:      all.OrderBy,
+		IsActive:     all.IsActive,
+		DepartmentId: all.DepartmentId,
 	})
 	if err != nil {
 		return nil, err
 	}
 	var listSpec pb.ListSpecializations
 	for _, s := range specializations.Specializations {
-		respImageUrl := minio.AddImageUrl(s.ImageUrl)
+		respImageUrl := minio.AddImageUrl(s.ImageUrl, cfg.MinioService.Bucket.Specialization)
 		listSpec.Specializations = append(listSpec.Specializations, &pb.Specializations{
 			Id:           s.ID,
 			Order:        s.Order,
@@ -143,7 +144,7 @@ func (r specializationRPC) UpdateSpecialization(ctx context.Context, in *pb.Spec
 	if err != nil {
 		return nil, err
 	}
-	respImageUrl := minio.AddImageUrl(resp.ImageUrl)
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.Specialization)
 	return &pb.Specializations{
 		Id:           resp.ID,
 		Order:        resp.Order,

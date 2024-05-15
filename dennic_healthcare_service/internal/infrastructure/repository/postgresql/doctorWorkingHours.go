@@ -71,8 +71,8 @@ func (p Dwh) CreateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWork
 	if err != nil {
 		return nil, p.db.Error(err)
 	}
-	in.StartTime = startTime.Time.String()
-	in.FinishTime = finishTime.Time.String()
+	in.StartTime = startTime.Time.Format("15:04:05")
+	in.FinishTime = finishTime.Time.Format("15:04:05")
 
 	if updatedAt.Valid {
 		in.UpdatedAt = updatedAt.Time
@@ -111,8 +111,8 @@ func (p Dwh) GetDoctorWorkingHoursById(ctx context.Context, in *entity.GetReqStr
 		&updatedAt,
 		&deletedAt,
 	)
-	doctorWorkingHours.StartTime = startTime.Time.String()
-	doctorWorkingHours.FinishTime = finishTime.Time.String()
+	doctorWorkingHours.StartTime = startTime.Time.Format("15:04:05")
+	doctorWorkingHours.FinishTime = finishTime.Time.Format("15:04:05")
 
 	if updatedAt.Valid {
 		doctorWorkingHours.UpdatedAt = updatedAt.Time
@@ -142,7 +142,7 @@ func (p Dwh) GetAllDoctorWorkingHours(ctx context.Context, all *entity.GetAll) (
 	if all.OrderBy != "" {
 		queryBuilder = queryBuilder.OrderBy(all.OrderBy)
 	}
-	countBuilder := p.db.Sq.Builder.Select("count(*)").From(departmentTableName)
+	countBuilder := p.db.Sq.Builder.Select("count(*)").From(p.tableName)
 	if !all.IsActive {
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 		countBuilder = countBuilder.Where("deleted_at IS NULL")
@@ -171,8 +171,8 @@ func (p Dwh) GetAllDoctorWorkingHours(ctx context.Context, all *entity.GetAll) (
 			&deletedAt,
 		)
 
-		Dwhour.StartTime = startTime.Time.String()
-		Dwhour.FinishTime = finishTime.Time.String()
+		Dwhour.StartTime = startTime.Time.Format("15:04:05")
+		Dwhour.FinishTime = finishTime.Time.Format("15:04:05")
 		if updatedAt.Valid {
 			Dwhour.UpdatedAt = updatedAt.Time
 		}
@@ -229,8 +229,8 @@ func (p Dwh) UpdateDoctorWorkingHours(ctx context.Context, in *entity.DoctorWork
 	if err != nil {
 		return nil, p.db.Error(err)
 	}
-	in.StartTime = startTime.Time.String()
-	in.FinishTime = finishTime.Time.String()
+	in.StartTime = startTime.Time.Format("15:04:05")
+	in.FinishTime = finishTime.Time.Format("15:04:05")
 
 	if updatedAt.Valid {
 		in.UpdatedAt = updatedAt.Time

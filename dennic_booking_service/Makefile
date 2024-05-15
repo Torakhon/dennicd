@@ -7,7 +7,9 @@ CMD_DIR=./cmd
 
 .DEFAULT_GOAL = build
 
-#OTLP_COLLECTOR_HOST = localhost
+#---------LOCAL---------
+
+#OTLP_COLLECTOR_HOST = 0.0.0.0
 #
 #POSTGRES_USER = postgres
 #POSTGRES_PASSWORD = 20030505

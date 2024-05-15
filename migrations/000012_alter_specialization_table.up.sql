@@ -1,1 +1,0 @@
-ALTER TABLE specializations ADD COLUMN image_url varchar(200) NOT NULL;

@@ -44,6 +44,7 @@ func (p *adminRepo) adminSelectQueryPrefix() string {
 			start_work_year,
 			end_work_year,
 			work_years,
+			image_url,
 			created_at,
 			updated_at,
 			deleted_at`
@@ -68,6 +69,7 @@ func (p adminRepo) Create(ctx context.Context, admin *entity.Admin) error {
 		"end_work_year":   admin.EndWorkYear,
 		"work_years":      admin.WorkYears,
 		"refresh_token":   admin.RefreshToken,
+		"image_url":       admin.ImageUrl,
 	}
 
 	query, args, err := p.db.Sq.Builder.Insert(p.tableName).SetMap(data).ToSql()
@@ -129,6 +131,7 @@ func (p adminRepo) Get(ctx context.Context, req *entity.FieldValueReq) (*entity.
 		&start_work_year,
 		&end_work_year,
 		&admin.WorkYears,
+		&admin.ImageUrl,
 		&admin.CreatedAt,
 		&updatedAt,
 		&deletedAt,
@@ -228,6 +231,7 @@ func (p adminRepo) List(ctx context.Context, req *entity.GetAllReq) ([]*entity.A
 			&start_work_year,
 			&end_work_year,
 			&admin.WorkYears,
+			&admin.ImageUrl,
 			&admin.CreatedAt,
 			&updatedAt,
 			&deletedAt,
@@ -271,6 +275,7 @@ func (p *adminRepo) Update(ctx context.Context, admin *entity.Admin) error {
 		"start_work_year": admin.StartWorkYear,
 		"end_work_year":   admin.EndWorkYear,
 		"work_years":      admin.WorkYears,
+		"image_url":       admin.ImageUrl,
 		"updated_at":      admin.UpdatedAt,
 	}
 
@@ -304,7 +309,7 @@ func (p *adminRepo) Delete(ctx context.Context, req *entity.FieldValueReq) (*ent
 	if !req.DeleteStatus {
 		toSql, args, err := p.db.Sq.Builder.
 			Update(p.tableName).
-			Set("deleted_at", time.Now().Add(time.Hour * 5)).
+			Set("deleted_at", time.Now().Add(time.Hour*5)).
 			Where(p.db.Sq.EqualMany(map[string]interface{}{
 				"deleted_at": nil,
 				req.Field:    req.Value,

@@ -7,8 +7,8 @@ import (
 
 var cfg = config.New()
 
-func AddImageUrl(imageUrl string) string {
-	str := cfg.MinioService.Endpoint + "/" + cfg.MinioService.BucketName + "/" + imageUrl
+func AddImageUrl(imageUrl, bucketName string) string {
+	str := cfg.MinioService.Endpoint + "/" + bucketName + "/" + imageUrl
 	return str
 }
 

@@ -3,6 +3,7 @@ package services
 import (
 	pb "Healthcare_Evrone/genproto/healthcare-service"
 	"Healthcare_Evrone/internal/entity"
+	"Healthcare_Evrone/internal/pkg/config"
 	"Healthcare_Evrone/internal/pkg/minio"
 	"Healthcare_Evrone/internal/pkg/otlp"
 	"Healthcare_Evrone/internal/usecase"
@@ -22,6 +23,8 @@ const (
 	serviceNameDepartmentDelivery           = "DepartmentDelivery"
 	serviceNameDepartmentDeliveryRepoPrefix = "DepartmentDelivery"
 )
+
+var cfg = config.New()
 
 func DepartmentRPC(logget *zap.Logger, departmentUsecase usecase.DepartmentsUsecase) pb.DepartmentServiceServer {
 	return &departmentRPC{
@@ -54,7 +57,7 @@ func (r departmentRPC) CreateDepartment(ctx context.Context, dep *pb.Department)
 	if err != nil {
 		return nil, err
 	}
-	respImageUrl := minio.AddImageUrl(resp.ImageUrl)
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.Department)
 
 	return &pb.Department{
 		Id:               resp.Id,
@@ -79,7 +82,7 @@ func (r departmentRPC) GetDepartmentById(ctx context.Context, get *pb.GetReqStrD
 	if err != nil {
 		return nil, err
 	}
-	respImageUrl := minio.AddImageUrl(resp.ImageUrl)
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.Department)
 	return &pb.Department{
 		Id:               resp.Id,
 		Order:            resp.Order,
@@ -113,7 +116,7 @@ func (r departmentRPC) GetAllDepartments(ctx context.Context, get *pb.GetAllDepa
 
 	var departments pb.ListDepartments
 	for _, dep := range resp.Departments {
-		respImageUrl := minio.AddImageUrl(dep.ImageUrl)
+		respImageUrl := minio.AddImageUrl(dep.ImageUrl, cfg.MinioService.Bucket.Department)
 		departments.Departments = append(departments.Departments, &pb.Department{
 			Id:               dep.Id,
 			Order:            dep.Order,
@@ -153,7 +156,7 @@ func (r departmentRPC) UpdateDepartment(ctx context.Context, update *pb.Departme
 	if err != nil {
 		return nil, err
 	}
-	respImageUrl := minio.AddImageUrl(resp.ImageUrl)
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.Department)
 	return &pb.Department{
 		Id:               resp.Id,
 		Order:            resp.Order,

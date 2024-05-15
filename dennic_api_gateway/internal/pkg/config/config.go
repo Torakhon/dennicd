@@ -18,10 +18,9 @@ type webAddress struct {
 }
 
 type minio struct {
-	Endpoint   string
-	AccessKey  string
-	SecretKey  string
-	BucketName string
+	Endpoint  string
+	AccessKey string
+	SecretKey string
 }
 
 type Config struct {
@@ -51,6 +50,7 @@ type Config struct {
 		Port     string
 		Password string
 		Name     string
+		Time     time.Duration
 	}
 	Token struct {
 		Secret     string
@@ -89,18 +89,18 @@ func NewConfig() (*Config, error) {
 	config.Context.Timeout = cast.ToInt(getEnv("CONTEXT_TIMEOUT", "2"))
 
 	// server configuration
-	config.Server.Host = getEnv("SERVER_HOST", "dennic_api_gateway")
+	config.Server.Host = getEnv("SERVER_HOST", "localhost")
 	config.Server.Port = getEnv("SERVER_PORT", ":9050")
 	config.Server.ReadTimeout = getEnv("SERVER_READ_TIMEOUT", "10s")
 	config.Server.WriteTimeout = getEnv("SERVER_WRITE_TIMEOUT", "10s")
 	config.Server.IdleTimeout = getEnv("SERVER_IDLE_TIMEOUT", "120s")
 
 	// db configuration
-	config.DB.Host = getEnv("POSTGRES_HOST", "postgresdb")
+	config.DB.Host = getEnv("POSTGRES_HOST", "localhost")
 	config.DB.Port = getEnv("POSTGRES_PORT", "5432")
 	config.DB.Name = getEnv("POSTGRES_DATABASE", "dennic")
 	config.DB.User = getEnv("POSTGRES_USER", "postgres")
-	config.DB.Password = getEnv("POSTGRES_PASSWORD", "20030505")
+	config.DB.Password = getEnv("POSTGRES_PASSWORD", "2003")
 	config.DB.SSLMode = getEnv("POSTGRES_SSLMODE", "disable")
 
 	// redis configuration
@@ -108,17 +108,18 @@ func NewConfig() (*Config, error) {
 	config.Redis.Port = getEnv("REDIS_PORT", "6379")
 	config.Redis.Password = getEnv("REDIS_PASSWORD", "")
 	config.Redis.Name = getEnv("REDIS_DATABASE", "0")
+	config.Redis.Time = time.Minute
 
-	config.BookingService.Host = getEnv("BOOKING_SERVICE_GRPC_HOST", "dennic_booking_servise")
+	config.BookingService.Host = getEnv("BOOKING_SERVICE_GRPC_HOST", "localhost")
 	config.BookingService.Port = getEnv("BOOKING_SERVICE_GRPC_PORT", ":9090")
 
-	config.HealthcareService.Host = getEnv("HEALTHCARE_SERVICE_GRPC_HOST", "dennic_healthcare_service")
+	config.HealthcareService.Host = getEnv("HEALTHCARE_SERVICE_GRPC_HOST", "localhost")
 	config.HealthcareService.Port = getEnv("HEALTHCARE_SERVICE_GRPC_PORT", ":9080")
 
-	config.SessionService.Host = getEnv("SESSION_SERVICE_GRPC_HOST", "dennic_session_service")
+	config.SessionService.Host = getEnv("SESSION_SERVICE_GRPC_HOST", "localhost")
 	config.SessionService.Port = getEnv("SESSION_SERVICE_GRPC_PORT", ":9060")
 
-	config.UserService.Host = getEnv("USER_SERVICE_GRPC_HOST", "dennic_user_service")
+	config.UserService.Host = getEnv("USER_SERVICE_GRPC_HOST", "localhost")
 	config.UserService.Port = getEnv("USER_SERVICE_GRPC_PORT", ":9070")
 
 	// token configuration
@@ -138,8 +139,7 @@ func NewConfig() (*Config, error) {
 	config.Token.RefreshTTL = refreshTTL
 
 	// otlp collector configuration
-	config.OTLPCollector.Host = getEnv("OTLP_COLLECTOR_HOST", "otel-collector"+
-		"")
+	config.OTLPCollector.Host = getEnv("OTLP_COLLECTOR_HOST", "otel-collector")
 	config.OTLPCollector.Port = getEnv("OTLP_COLLECTOR_PORT", ":4317")
 
 	// kafka configuration
@@ -147,10 +147,9 @@ func NewConfig() (*Config, error) {
 	config.Kafka.Topic.InvestmentPaymentTransaction = getEnv("KAFKA_TOPIC_INVESTMENT_PAYMENT_TRANSACTION", "investment.payment.transaction")
 
 	// model_minio configuration
-	config.MinioService.Endpoint = getEnv("MINIO_SERVICE_ENDPOINT", "minio:9000")
+	config.MinioService.Endpoint = getEnv("MINIO_SERVICE_ENDPOINT", "dennic.uz:9000")
 	config.MinioService.AccessKey = getEnv("MINIO_SERVICE_ACCESS_KEY", "dennic")
 	config.MinioService.SecretKey = getEnv("MINIO_SERVICE_SECRET_KEY", "dennic_service")
-	config.MinioService.BucketName = getEnv("MINIO_SERVICE_BUCKET_NAME", "dennic")
 
 	return &config, nil
 }

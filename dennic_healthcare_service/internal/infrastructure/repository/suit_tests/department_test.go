@@ -52,7 +52,8 @@ func (s *DepartmentTestSuite) TestDepartmentCrud() {
 	s.Suite.Equal(respDep.ShortDescription, department.ShortDescription)
 
 	getDepartment, err := s.Repository.GetDepartmentById(ctx, &entity.GetReqStr{
-		Id:       department.Id,
+		Field:    "id",
+		Value:    department.Id,
 		IsActive: false,
 	})
 	s.Suite.NoError(err)
@@ -64,7 +65,14 @@ func (s *DepartmentTestSuite) TestDepartmentCrud() {
 	s.Suite.Equal(getDepartment.FloorNumber, department.FloorNumber)
 	s.Suite.Equal(getDepartment.ShortDescription, department.ShortDescription)
 
-	respAll, err := s.Repository.GetAllDepartments(ctx, 1, 10, "")
+	respAll, err := s.Repository.GetAllDepartments(ctx, &entity.GetAll{
+		Page:     1,
+		Limit:    10,
+		Field:    "",
+		Value:    "",
+		OrderBy:  "",
+		IsActive: false,
+	})
 	s.Suite.NoError(err)
 	s.Suite.NotNil(respAll)
 
@@ -90,9 +98,9 @@ func (s *DepartmentTestSuite) TestDepartmentCrud() {
 	s.Suite.Equal(department.ShortDescription, updatedDepartment.ShortDescription)
 
 	deleteDep, err := s.Repository.DeleteDepartment(ctx, &entity.GetReqStr{
-		Id:            department.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    department.Id,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDep)
 	s.Suite.NoError(err)

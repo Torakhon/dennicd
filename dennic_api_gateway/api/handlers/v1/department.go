@@ -55,6 +55,7 @@ func (h *HandlerV1) CreateDepartment(c *gin.Context) {
 
 	c.JSON(http.StatusOK, model_healthcare_service.DepartmentRes{
 		Id:               department.Id,
+		Order:            department.Order,
 		Name:             department.Name,
 		Description:      department.Description,
 		ImageUrl:         department.ImageUrl,
@@ -71,20 +72,19 @@ func (h *HandlerV1) CreateDepartment(c *gin.Context) {
 // @Tags Department
 // @Accept json
 // @Produce json
-// @Param GetDepartment query models.FieldValueReq true "FieldValueReq"
+// @Param id query string true "id"
 // @Success 200 {object} model_healthcare_service.DepartmentRes
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/department/get [get]
 func (h *HandlerV1) GetDepartment(c *gin.Context) {
-	field := c.Query("field")
-	value := c.Query("value")
+	id := c.Query("id")
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.Context.Timeout))
 	defer cancel()
 
 	department, err := h.serviceManager.HealthcareService().DepartmentService().GetDepartmentById(ctx, &pb.GetReqStrDepartment{
-		Field:    field,
-		Value:    value,
+		Field:    "id",
+		Value:    id,
 		IsActive: false,
 	})
 
@@ -94,6 +94,7 @@ func (h *HandlerV1) GetDepartment(c *gin.Context) {
 
 	c.JSON(http.StatusOK, model_healthcare_service.DepartmentRes{
 		Id:               department.Id,
+		Order:            department.Order,
 		Name:             department.Name,
 		Description:      department.Description,
 		ImageUrl:         department.ImageUrl,
@@ -111,19 +112,20 @@ func (h *HandlerV1) GetDepartment(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param ListReq query models.ListReq false "ListReq"
+// @Param search query string false "search" Enums(name, description) "search"
 // @Success 200 {object} model_healthcare_service.ListDepartments
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/department [get]
 func (h *HandlerV1) ListDepartments(c *gin.Context) {
-	field := c.Query("field")
+	search := c.Query("search")
 	value := c.Query("value")
 	limit := c.Query("limit")
 	page := c.Query("page")
 	orderBy := c.Query("orderBy")
 
 	pageInt, limitInt, err := e.ParseQueryParams(page, limit)
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ListDepartments") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ListDepartments") {
 		return
 	}
 
@@ -131,7 +133,7 @@ func (h *HandlerV1) ListDepartments(c *gin.Context) {
 	defer cancel()
 
 	departments, err := h.serviceManager.HealthcareService().DepartmentService().GetAllDepartments(ctx, &pb.GetAllDepartment{
-		Field:    field,
+		Field:    search,
 		Value:    value,
 		IsActive: false,
 		Page:     int64(pageInt),
@@ -169,7 +171,6 @@ func (h *HandlerV1) ListDepartments(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param UpdateDepartmentReq body model_healthcare_service.DepartmentReq true "UpdateDepartmentReq"
-// @Param id query string true "id"
 // @Success 200 {object} model_healthcare_service.DepartmentReq
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
@@ -183,8 +184,6 @@ func (h *HandlerV1) UpdateDepartment(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&body)
 
-	id := c.Query("id")
-
 	if e.HandleError(c, err, h.log, http.StatusBadRequest, "UpdateDepartment") {
 		return
 	}
@@ -193,7 +192,7 @@ func (h *HandlerV1) UpdateDepartment(c *gin.Context) {
 	defer cancel()
 
 	department, err := h.serviceManager.HealthcareService().DepartmentService().UpdateDepartment(ctx, &pb.Department{
-		Id:               id,
+		Id:               body.Id,
 		Name:             body.Name,
 		Description:      body.Description,
 		ImageUrl:         body.ImageUrl,
@@ -207,6 +206,7 @@ func (h *HandlerV1) UpdateDepartment(c *gin.Context) {
 
 	c.JSON(http.StatusOK, model_healthcare_service.DepartmentRes{
 		Id:               department.Id,
+		Order:            department.Order,
 		Name:             department.Name,
 		Description:      department.Description,
 		ImageUrl:         department.ImageUrl,

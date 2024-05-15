@@ -122,7 +122,7 @@ func (r *Reasons) GetAllReasons(ctx context.Context, reas *entity.GetAllReas) (*
 	if reas.Field != "" {
 		queryBuilder = queryBuilder.Where(fmt.Sprintf(`%s ILIKE '%s'`, reas.Field, reas.Value+"%"))
 	}
-	countBuilder := r.db.Sq.Builder.Select("count(*)").From(departmentTableName)
+	countBuilder := r.db.Sq.Builder.Select("count(*)").From(r.tableName)
 	if !reas.IsActive {
 		queryBuilder = queryBuilder.Where("deleted_at IS NULL")
 		countBuilder = countBuilder.Where("deleted_at IS NULL")

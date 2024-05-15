@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS admins (
     end_work_year DATE,
     work_years INTEGER DEFAULT 0,
     refresh_token TEXT NOT NULL,
+    image_url   VARCHAR(200),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP,
     deleted_at TIMESTAMP

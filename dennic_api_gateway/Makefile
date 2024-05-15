@@ -4,28 +4,27 @@ export
 CURRENT_DIR=$(shell pwd)
 APP=evrone_api_gateway
 CMD_DIR=./cmd
-
-#SERVER_HOST = localhost
+#SERVER_HOST = localhost:
 #SERVER_PORT = 9050
 #
 #REDIS_HOST = localhost
 #REDIS_PORT = 6379
 #
-#BOOKING_SERVICE_GRPC_HOST = localhost
+#BOOKING_SERVICE_GRPC_HOST = localhost:
 #BOOKING_SERVICE_GRPC_PORT = 9090
 #
-#HEALTHCARE_SERVICE_GRPC_HOST = localhost
+#HEALTHCARE_SERVICE_GRPC_HOST = localhost:
 #HEALTHCARE_SERVICE_GRPC_PORT = 9080
 #
-#SESSION_SERVICE_GRPC_HOST = localhost
+#SESSION_SERVICE_GRPC_HOST = localhost:
 #SESSION_SERVICE_GRPC_PORT = 9060
 #
-#USER_SERVICE_GRPC_HOST = localhost
+#USER_SERVICE_GRPC_HOST = localhost:
 #USER_SERVICE_GRPC_PORT = 9070
 #
-#OTLP_COLLECTOR_HOST = localhost
+#OTLP_COLLECTOR_HOST = 0.0.0.0:
 #
-#MINIO_SERVICE_ENDPOINT = localhost:9000
+#MINIO_SERVICE_ENDPOINT = dennic.uz:9000
 #
 #POSTGRES_USER = postgres
 #POSTGRES_PASSWORD = 20030505
@@ -35,7 +34,7 @@ CMD_DIR=./cmd
 
 # -------------DOCKER--------------
 
-SERVER_HOST = dennic_api_gateway
+SERVER_HOST = dennic_api_gateway:
 SERVER_PORT = 9050
 
 REDIS_HOST = redisdb
@@ -62,7 +61,6 @@ POSTGRES_PASSWORD = 20030505
 POSTGRES_HOST = postgresdb
 POSTGRES_PORT = 5432
 POSTGRES_DATABASE = dennic
-
 
 
 # build for current os

@@ -12,6 +12,7 @@ type User struct {
 	Password     string
 	Gender       string
 	RefreshToken string
+	ImageUrl     string
 	Count        int64
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
@@ -35,6 +36,7 @@ type Admin struct {
 	EndWorkYear   string
 	WorkYears     uint64
 	RefreshToken  string
+	ImageUrl      string
 	Count         int64
 	CreatedAt     time.Time
 	UpdatedAt     time.Time

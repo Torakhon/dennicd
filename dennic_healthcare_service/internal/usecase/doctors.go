@@ -17,11 +17,12 @@ const (
 
 type DoctorUsecase interface {
 	CreateDoctor(ctx context.Context, doctor *entity.Doctor) (*entity.Doctor, error)
-	GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*entity.Doctor, error)
-	GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity.ListDoctors, error)
+	GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*entity.DoctorAndDoctorHours, error)
+	GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity.ListDoctorsAndHours, error)
 	UpdateDoctor(ctx context.Context, update *entity.Doctor) (*entity.Doctor, error)
 	DeleteDoctor(ctx context.Context, del *entity.GetReqStr) (bool, error)
-	ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetReqStrDep) (doctors []*entity.Doctor, err error)
+	ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetReqStrDep) (*entity.ListDoctors, error)
+	ListDoctorBySpecializationId(ctx context.Context, spec *entity.GetReqStrSpec) (*entity.ListDoctors, error)
 }
 
 type newsService struct {
@@ -48,7 +49,7 @@ func (u newsService) CreateDoctor(ctx context.Context, doctor *entity.Doctor) (*
 	return u.repo.CreateDoctor(ctx, doctor)
 }
 
-func (u newsService) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*entity.Doctor, error) {
+func (u newsService) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (*entity.DoctorAndDoctorHours, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
 
 	defer cancel()
@@ -60,7 +61,7 @@ func (u newsService) GetDoctorById(ctx context.Context, get *entity.GetReqStr) (
 	return u.repo.GetDoctorById(ctx, get)
 }
 
-func (u newsService) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity.ListDoctors, error) {
+func (u newsService) GetAllDoctors(ctx context.Context, all *entity.GetAll) (*entity.ListDoctorsAndHours, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
 	defer cancel()
 
@@ -94,14 +95,26 @@ func (u newsService) DeleteDoctor(ctx context.Context, del *entity.GetReqStr) (b
 	return u.repo.DeleteDoctor(ctx, del)
 }
 
-func (u newsService) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetReqStrDep) (doctors []*entity.Doctor, err error) {
+func (u newsService) ListDoctorsByDepartmentId(ctx context.Context, in *entity.GetReqStrDep) (*entity.ListDoctors, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
 	defer cancel()
 
 	ctx, span := otlp.Start(ctx, serviceNameDoctorUseCase, serviceNameDoctorUseCaseRepoPrefix+"Get all")
-	span.SetAttributes(attribute.Key("GetAllDoctors").String(in.Value))
+	span.SetAttributes(attribute.Key("ListDoctorsByDepartmentId").String(in.DepartmentId))
 
 	defer span.End()
 
 	return u.repo.ListDoctorsByDepartmentId(ctx, in)
+}
+
+func (u newsService) ListDoctorBySpecializationId(ctx context.Context, in *entity.GetReqStrSpec) (*entity.ListDoctors, error) {
+	ctx, cancel := context.WithTimeout(ctx, u.ctxTimeout)
+	defer cancel()
+
+	ctx, span := otlp.Start(ctx, serviceNameDoctorUseCase, serviceNameDoctorUseCaseRepoPrefix+"Get all")
+	span.SetAttributes(attribute.Key("ListDoctorBySpecializationId").String(in.SpecializationId))
+
+	defer span.End()
+
+	return u.repo.ListDoctorBySpecializationId(ctx, in)
 }

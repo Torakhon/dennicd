@@ -5,7 +5,6 @@ import (
 	e "dennic_api_gateway/api/handlers/regtool"
 	"dennic_api_gateway/api/models/model_user_service"
 	pb "dennic_api_gateway/genproto/user_service"
-	"dennic_api_gateway/internal/pkg/logger"
 	jwt "dennic_api_gateway/internal/pkg/tokens"
 	"net/http"
 	"time"
@@ -28,10 +27,9 @@ import (
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/user/get [GET]
 func (h *HandlerV1) GetUserByID(c *gin.Context) {
+	userInfo, err := e.GetUserInfo(c)
 
-	token := c.GetHeader("Authorization")
-	claims, err := jwt.ExtractClaim(token)
-	if e.HandleError(c, err, h.log, http.StatusUnauthorized, "GetUserByID") {
+	if e.HandleError(c, err, h.log, http.StatusUnauthorized, "missing token in the header") {
 		return
 	}
 
@@ -41,15 +39,11 @@ func (h *HandlerV1) GetUserByID(c *gin.Context) {
 	response, err := h.serviceManager.UserService().UserService().Get(
 		ctx, &pb.GetUserReq{
 			Field:    "id",
-			Value:    cast.ToString(claims["id"]),
+			Value:    userInfo.UserId,
 			IsActive: false,
 		})
 
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		h.log.Error("failed to get user", logger.Error(err))
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, "cannot get user by id") {
 		return
 	}
 
@@ -62,6 +56,7 @@ func (h *HandlerV1) GetUserByID(c *gin.Context) {
 		PhoneNumber: response.PhoneNumber,
 		Password:    response.Password,
 		Gender:      response.Gender,
+		ImageUrl:    response.ImageUrl,
 		CreatedAt:   response.CreatedAt,
 		UpdatedAt:   response.UpdatedAt,
 	}
@@ -112,11 +107,7 @@ func (h *HandlerV1) ListUsers(c *gin.Context) {
 			Field:    field,
 			OrderBy:  orderBy,
 		})
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
-		h.log.Error("failed to list users", logger.Error(err))
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -132,6 +123,7 @@ func (h *HandlerV1) ListUsers(c *gin.Context) {
 			PhoneNumber: in.PhoneNumber,
 			Password:    in.Password,
 			Gender:      in.Gender,
+			ImageUrl:    in.ImageUrl,
 			CreatedAt:   in.CreatedAt,
 			UpdatedAt:   in.UpdatedAt,
 		}
@@ -162,11 +154,7 @@ func (h *HandlerV1) UpdateUser(c *gin.Context) {
 	jspbMarshal.UseProtoNames = true
 
 	err := c.ShouldBindJSON(&body)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		h.log.Error("failed to bind json", logger.Error(err))
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
 		return
 	}
 
@@ -179,14 +167,11 @@ func (h *HandlerV1) UpdateUser(c *gin.Context) {
 		LastName:  body.LastName,
 		BirthDate: body.BrithDate,
 		Gender:    body.Gender,
+		ImageUrl:  body.ImageUrl,
 	}
 
 	response, err := h.serviceManager.UserService().UserService().Update(ctx, req)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
-		h.log.Error("failed to update user", logger.Error(err))
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -196,6 +181,7 @@ func (h *HandlerV1) UpdateUser(c *gin.Context) {
 		LastName:  response.LastName,
 		BrithDate: response.BirthDate,
 		Gender:    response.Gender,
+		ImageUrl:  response.ImageUrl,
 		UpdatedAt: response.UpdatedAt,
 	}
 
@@ -222,21 +208,17 @@ func (h *HandlerV1) UpdateRefreshToken(c *gin.Context) {
 	jspbMarshal.UseProtoNames = true
 
 	err := c.ShouldBindJSON(&RefreshToken)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		h.log.Error("failed to bind json", logger.Error(err))
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
 		return
 	}
 
 	claims, err := jwt.ExtractClaim(RefreshToken.RefreshToken)
-	if e.HandleError(c, err, h.log, http.StatusUnauthorized, "UpdateRefreshToken") {
+	if e.HandleError(c, err, h.log, http.StatusUnauthorized, "missing token in the header") {
 		return
 	}
 
 	access, refresh, err := h.jwthandler.GenerateAuthJWT(cast.ToString(claims["phone"]), cast.ToString(claims["id"]), cast.ToString(claims["session_id"]), "user")
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "Login") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 
@@ -248,7 +230,7 @@ func (h *HandlerV1) UpdateRefreshToken(c *gin.Context) {
 		RefreshToken: refresh,
 	})
 
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "UpdateRefreshToken") {
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 	resp := model_user_service.UpdateRefreshTokenUserResp{
@@ -288,11 +270,7 @@ func (h *HandlerV1) DeleteUser(c *gin.Context) {
 			IsActive: false,
 		})
 
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
-		h.log.Error("failed to delete user", logger.Error(err))
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
 	}
 

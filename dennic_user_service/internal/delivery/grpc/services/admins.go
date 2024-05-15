@@ -4,6 +4,8 @@ import (
 	"context"
 	pb "dennic_user_service/genproto/user_service"
 	"dennic_user_service/internal/entity"
+	"dennic_user_service/internal/pkg/config"
+	"dennic_user_service/internal/pkg/minio"
 	"dennic_user_service/internal/pkg/otlp"
 	"dennic_user_service/internal/usecase"
 	"dennic_user_service/internal/usecase/event"
@@ -23,6 +25,8 @@ type adminRPC struct {
 	brokerProducer event.BrokerProducer
 }
 
+var cfg = config.New()
+
 func NewAdminRPC(logger *zap.Logger, admin usecase.AdminStorageI,
 	brokerProducer event.BrokerProducer) pb.AdminServiceServer {
 	return &adminRPC{
@@ -36,6 +40,8 @@ func (a adminRPC) Create(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 
 	ctx, span := otlp.Start(ctx, AdminServiceName, AdinSpanName+"Create")
 	defer span.End()
+
+	reqImageUrl := minio.RemoveImageUrl(admin.ImageUrl)
 	req := entity.Admin{
 		Id:            admin.Id,
 		AdminOrder:    admin.AdminOrder,
@@ -53,6 +59,7 @@ func (a adminRPC) Create(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 		EndWorkYear:   admin.EndWorkYear,
 		WorkYears:     admin.WorkYears,
 		RefreshToken:  admin.RefreshToken,
+		ImageUrl:      reqImageUrl,
 	}
 	AdminId, err := a.admin.Create(ctx, &req)
 	if err != nil {
@@ -68,7 +75,7 @@ func (a adminRPC) Create(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 		a.logger.Error("Create admin error", zap.Error(err))
 		return nil, err
 	}
-
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.User)
 	return &pb.Admin{
 		Id:            resp.Id,
 		AdminOrder:    resp.AdminOrder,
@@ -86,6 +93,7 @@ func (a adminRPC) Create(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 		EndWorkYear:   resp.EndWorkYear,
 		WorkYears:     resp.WorkYears,
 		RefreshToken:  resp.RefreshToken,
+		ImageUrl:      respImageUrl,
 		CreatedAt:     resp.CreatedAt.String(),
 	}, nil
 }
@@ -104,7 +112,7 @@ func (a adminRPC) Get(ctx context.Context, req *pb.GetAdminReq) (*pb.Admin, erro
 		a.logger.Error("get admin error", zap.Error(err))
 		return nil, err
 	}
-
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.User)
 	response := &pb.Admin{
 		Id:            resp.Id,
 		AdminOrder:    resp.AdminOrder,
@@ -122,6 +130,7 @@ func (a adminRPC) Get(ctx context.Context, req *pb.GetAdminReq) (*pb.Admin, erro
 		EndWorkYear:   resp.EndWorkYear,
 		WorkYears:     resp.WorkYears,
 		RefreshToken:  resp.RefreshToken,
+		ImageUrl:      respImageUrl,
 		CreatedAt:     resp.CreatedAt.String(),
 		UpdatedAt:     resp.UpdatedAt.String(),
 		DeletedAt:     resp.DeletedAt.String(),
@@ -158,6 +167,7 @@ func (a adminRPC) ListAdmins(ctx context.Context, req *pb.ListAdminsReq) (*pb.Li
 	var admins pb.ListAdminsResp
 
 	for _, in := range resp {
+		respImageUrl := minio.AddImageUrl(in.ImageUrl, cfg.MinioService.Bucket.User)
 		admin := &pb.Admin{
 			Id:            in.Id,
 			AdminOrder:    in.AdminOrder,
@@ -175,6 +185,7 @@ func (a adminRPC) ListAdmins(ctx context.Context, req *pb.ListAdminsReq) (*pb.Li
 			EndWorkYear:   in.EndWorkYear,
 			WorkYears:     in.WorkYears,
 			RefreshToken:  in.RefreshToken,
+			ImageUrl:      respImageUrl,
 			CreatedAt:     in.CreatedAt.String(),
 			UpdatedAt:     in.UpdatedAt.String(),
 			DeletedAt:     in.DeletedAt.String(),
@@ -196,6 +207,7 @@ func (a adminRPC) Update(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 
 	ctx, span := otlp.Start(ctx, AdminServiceName, AdinSpanName+"Update")
 	defer span.End()
+	reqImageUrl := minio.RemoveImageUrl(admin.ImageUrl)
 	req := entity.Admin{
 		Id:            admin.Id,
 		FirstName:     admin.FirstName,
@@ -207,6 +219,7 @@ func (a adminRPC) Update(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 		StartWorkYear: admin.StartWorkYear,
 		EndWorkYear:   admin.EndWorkYear,
 		WorkYears:     admin.WorkYears,
+		ImageUrl:      reqImageUrl,
 		UpdatedAt:     time.Now().Add(time.Hour * 5),
 	}
 
@@ -227,7 +240,7 @@ func (a adminRPC) Update(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 		a.logger.Error("Create admin error", zap.Error(err))
 		return nil, err
 	}
-
+	respImageUrl := minio.AddImageUrl(resp.ImageUrl, cfg.MinioService.Bucket.User)
 	responer := &pb.Admin{
 		Id:            resp.Id,
 		AdminOrder:    resp.AdminOrder,
@@ -245,6 +258,7 @@ func (a adminRPC) Update(ctx context.Context, admin *pb.Admin) (*pb.Admin, error
 		EndWorkYear:   resp.EndWorkYear,
 		WorkYears:     resp.WorkYears,
 		RefreshToken:  resp.RefreshToken,
+		ImageUrl:      respImageUrl,
 		CreatedAt:     resp.CreatedAt.String(),
 		UpdatedAt:     resp.UpdatedAt.String(),
 	}

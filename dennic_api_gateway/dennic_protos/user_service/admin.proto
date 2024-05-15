@@ -31,9 +31,10 @@ service AdminService {
    string end_work_year = 14;
    uint64 work_years = 15;
    string refresh_token = 16;
-   string created_at = 17;
-   string updated_at = 18;
-   string deleted_at = 19;
+   string image_url = 17;
+   string created_at = 18;
+   string updated_at = 19;
+   string deleted_at = 20;
   }
 
   message GetAdminReq {

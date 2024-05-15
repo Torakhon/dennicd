@@ -7,6 +7,8 @@ CMD_DIR=./cmd
 
 .DEFAULT_GOAL = build
 
+#---------LOCAL---------
+
 #OTLP_COLLECTOR_HOST = 0.0.0.0
 #
 #POSTGRES_USER = postgres
@@ -15,8 +17,7 @@ CMD_DIR=./cmd
 #POSTGRES_PORT = 5432
 #POSTGRES_DATABASE = dennic
 
-#-------------- DOCKER --------------
-
+#---------DOCKER---------
 OTLP_COLLECTOR_HOST = otlp-collector
 
 POSTGRES_USER = postgres
@@ -24,6 +25,7 @@ POSTGRES_PASSWORD = 20030505
 POSTGRES_HOST = postgresdb
 POSTGRES_PORT = 5432
 POSTGRES_DATABASE = dennic
+
 
 # build for current os
 .PHONY: build

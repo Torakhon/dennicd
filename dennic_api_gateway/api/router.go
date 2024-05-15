@@ -33,7 +33,6 @@ type RouteOption struct {
 // NewRoute
 // @title Dennic Project
 // @version 1.7
-// @host 18.133.228.143:9050
 // @host dennic.uz:9050
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
@@ -77,6 +76,7 @@ func NewRoute(option RouteOption) *gin.Engine {
 	customer.POST("/forget-password", HandlerV1.ForgetPassword)
 	customer.PUT("/update-password", HandlerV1.UpdatePassword)
 	customer.POST("/verify-otp-code", HandlerV1.VerifyOtpCode)
+	customer.POST("/send-otp", HandlerV1.SenOtpCode)
 	customer.POST("/login", HandlerV1.Login)
 	customer.POST("/logout", HandlerV1.LogOut)
 
@@ -145,6 +145,7 @@ func NewRoute(option RouteOption) *gin.Engine {
 	doctor.POST("/", HandlerV1.CreateDoctor)
 	doctor.GET("/get", HandlerV1.GetDoctor)
 	doctor.GET("/", HandlerV1.ListDoctors)
+	doctor.GET("/spec", HandlerV1.ListDoctorsBySpecializationId)
 	doctor.PUT("/", HandlerV1.UpdateDoctor)
 	doctor.DELETE("/", HandlerV1.DeleteDoctor)
 

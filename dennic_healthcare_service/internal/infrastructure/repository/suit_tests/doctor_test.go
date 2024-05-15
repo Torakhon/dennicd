@@ -7,6 +7,7 @@ import (
 	db "Healthcare_Evrone/internal/pkg/postgres"
 	"context"
 	"github.com/google/uuid"
+	"github.com/spf13/cast"
 	"github.com/stretchr/testify/suite"
 	"log"
 	"testing"
@@ -18,6 +19,7 @@ type DoctorTestSuite struct {
 	CleanUpFunc          func()
 	Repository           *repo.DocTor
 	RepositoryDepartment *repo.DepartMent
+	RepositoryDWH        *repo.Dwh
 }
 
 func (s *DoctorTestSuite) SetupTest() {
@@ -28,6 +30,7 @@ func (s *DoctorTestSuite) SetupTest() {
 	}
 	s.Repository = repo.NewDoctorRepo(pgPool)
 	s.RepositoryDepartment = repo.NewDepartmentRepo(pgPool)
+	s.RepositoryDWH = repo.NewDoctorWorkingHoursRepo(pgPool)
 	s.CleanUpFunc = pgPool.Close
 }
 
@@ -95,8 +98,24 @@ func (s *DoctorTestSuite) TestDoctorCrud() {
 	s.Suite.Equal(respDoctor.RoomNumber, doctor.RoomNumber)
 	s.Suite.Equal(respDoctor.Password, doctor.Password)
 
+	dwh := &entity.DoctorWorkingHours{
+		DoctorId:   doctor.Id,
+		DayOfWeek:  "Monday",
+		StartTime:  "12-12-12 12:12:12",
+		FinishTime: "12-12-12 12:12:12",
+	}
+	respDoctorService, err := s.RepositoryDWH.CreateDoctorWorkingHours(ctx, dwh)
+	s.Suite.NoError(err)
+	s.Suite.NotNil(respDoctorService)
+	s.Suite.NotNil(respDoctorService.CreatedAt)
+	s.Suite.Equal(respDoctorService.DoctorId, dwh.DoctorId)
+	s.Suite.Equal(respDoctorService.DayOfWeek, dwh.DayOfWeek)
+	s.Suite.Equal(respDoctorService.StartTime, dwh.StartTime)
+	s.Suite.Equal(respDoctorService.StartTime, dwh.StartTime)
+
 	getDoctor, err := s.Repository.GetDoctorById(ctx, &entity.GetReqStr{
-		Id:       doctor.Id,
+		Field:    "id",
+		Value:    doctor.Id,
 		IsActive: false,
 	})
 	s.Suite.NoError(err)
@@ -119,7 +138,14 @@ func (s *DoctorTestSuite) TestDoctorCrud() {
 	s.Suite.Equal(getDoctor.RoomNumber, doctor.RoomNumber)
 	s.Suite.Equal(getDoctor.Password, doctor.Password)
 
-	respAll, err := s.Repository.GetAllDoctors(ctx, 1, 10, "")
+	respAll, err := s.Repository.GetAllDoctors(ctx, &entity.GetAll{
+		Page:     1,
+		Limit:    10,
+		Field:    "",
+		Value:    "",
+		OrderBy:  "",
+		IsActive: false,
+	})
 	s.Suite.NoError(err)
 	s.Suite.NotNil(respAll)
 
@@ -186,18 +212,27 @@ func (s *DoctorTestSuite) TestDoctorCrud() {
 	s.Suite.NotNil(resp)
 
 	deleteDoctor, err := s.Repository.DeleteDoctor(ctx, &entity.GetReqStr{
-		Id:            doctor.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    doctor.Id,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDoctor)
 	s.Suite.NoError(err)
 
 	deleteDep, err := s.RepositoryDepartment.DeleteDepartment(ctx, &entity.GetReqStr{
-		Id:            department.Id,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    department.Id,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDep)
+	s.Suite.NoError(err)
+
+	deleteDoctorWorkingHours, err := s.RepositoryDWH.DeleteDoctorWorkingHours(ctx, &entity.GetReqStr{
+		Field:    "id",
+		Value:    cast.ToString(dwh.Id),
+		IsActive: true,
+	})
+	s.Suite.NotNil(deleteDoctorWorkingHours)
 	s.Suite.NoError(err)
 }
 

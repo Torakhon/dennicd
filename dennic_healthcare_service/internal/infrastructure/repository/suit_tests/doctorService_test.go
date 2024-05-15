@@ -139,7 +139,8 @@ func (s *DoctorServiceTestSuite) TestDoctorServiceCrud() {
 	s.Suite.Equal(respDoctorService.Duration, doctorServices.Duration)
 
 	getDoctorService, err := s.Repository.GetDoctorServiceByID(ctx, &entity.GetReqStr{
-		Id:       doctorServices.Id,
+		Field:    "id",
+		Value:    doctorServices.Id,
 		IsActive: false,
 	})
 	s.Suite.NoError(err)
@@ -152,7 +153,14 @@ func (s *DoctorServiceTestSuite) TestDoctorServiceCrud() {
 	s.Suite.Equal(respDoctorService.Name, doctorServices.Name)
 	s.Suite.Equal(respDoctorService.Duration, doctorServices.Duration)
 
-	respAll, err := s.Repository.GetAllDoctorServices(ctx, 1, 10, "")
+	respAll, err := s.Repository.GetAllDoctorServices(ctx, &entity.GetAll{
+		Page:     1,
+		Limit:    10,
+		Field:    "",
+		Value:    "",
+		OrderBy:  "",
+		IsActive: false,
+	})
 	s.Suite.NoError(err)
 	s.Suite.NotNil(respAll)
 
@@ -179,33 +187,33 @@ func (s *DoctorServiceTestSuite) TestDoctorServiceCrud() {
 	s.Suite.Equal(doctorServices.Duration, updatedDoctorService.Duration)
 
 	deleteDoctorService, err := s.Repository.DeleteDoctorService(ctx, &entity.GetReqStr{
-		Id:            doctorServices.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    doctorServices.Id,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDoctorService)
 	s.Suite.NoError(err)
 
 	deleteSpec, err := s.RepositorySpecialization.DeleteSpecialization(ctx, &entity.GetReqStr{
-		Id:            special.ID,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    special.ID,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteSpec)
 	s.Suite.NoError(err)
 
 	deleteDoctor, err := s.RepositoryDoctor.DeleteDoctor(ctx, &entity.GetReqStr{
-		Id:            doctor.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    doctor.Id,
+		IsActive: true,
 	})
 	s.Suite.NotNil(deleteDoctor)
 	s.Suite.NoError(err)
 
 	deleteDep, err := s.RepositoryDepartment.DeleteDepartment(ctx, &entity.GetReqStr{
-		Id:            department.Id,
-		IsActive:      false,
-		IsHardDeleted: true,
+		Field:    "id",
+		Value:    department.Id,
+		IsActive: false,
 	})
 	s.Suite.NotNil(deleteDep)
 	s.Suite.NoError(err)

@@ -245,6 +245,8 @@ definitions:
         type: string
       appointment_time:
         type: string
+      booked_appointment_id:
+        type: string
       duration:
         type: integer
       expires_at:
@@ -256,6 +258,8 @@ definitions:
     type: object
   model_booking_service.UpdateArchiveReq:
     properties:
+      archive_id:
+        type: string
       doctor_availability_id:
         type: integer
       end_time:
@@ -277,6 +281,8 @@ definitions:
         type: integer
       doctor_id:
         type: string
+      doctor_notes_id:
+        type: string
       patient_id:
         type: string
       prescription:
@@ -289,6 +295,8 @@ definitions:
       doctor_date:
         type: string
       doctor_id:
+        type: string
+      doctor_time_id:
         type: string
       end_time:
         type: string
@@ -315,6 +323,8 @@ definitions:
         type: string
       last_name:
         type: string
+      patient_id:
+        type: string
       patient_problem:
         type: string
       phone_number:
@@ -322,7 +332,7 @@ definitions:
     type: object
   model_common.ResponseError:
     properties:
-      date:
+      data:
         type: string
       message:
         type: string
@@ -337,14 +347,22 @@ definitions:
   model_healthcare_service.DepartmentReq:
     properties:
       description:
+        example: description
         type: string
       floor_number:
+        example: 2
         type: integer
+      id:
+        example: 123e4567-e89b-12d3-a456-426614274001
+        type: string
       image_url:
+        example: http://example.com/image.png
         type: string
       name:
+        example: name
         type: string
       short_description:
+        example: short_description
         type: string
     type: object
   model_healthcare_service.DepartmentRes:
@@ -368,7 +386,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  model_healthcare_service.DoctorReq:
+  model_healthcare_service.DoctorAndDoctorHours:
     properties:
       address:
         type: string
@@ -380,18 +398,30 @@ definitions:
         type: string
       country:
         type: string
+      created_at:
+        type: string
+      day_of_week:
+        type: string
       department_id:
         type: string
       email:
         type: string
       end_work_date:
         type: string
+      finish_time:
+        type: string
       first_name:
         type: string
       gender:
         type: string
+      id:
+        type: string
+      image_url:
+        type: string
       last_name:
         type: string
+      order:
+        type: integer
       password:
         type: string
       phone_number:
@@ -400,9 +430,67 @@ definitions:
         type: integer
       salary:
         type: number
+      start_time:
+        type: string
       start_work_date:
         type: string
+      updated_at:
+        type: string
       work_years:
+        type: integer
+    type: object
+  model_healthcare_service.DoctorReq:
+    properties:
+      address:
+        example: Addres
+        type: string
+      bio:
+        example: Biography
+        type: string
+      birth_date:
+        example: "2012-12-12"
+        type: string
+      city:
+        example: City
+        type: string
+      country:
+        example: Country
+        type: string
+      department_id:
+        example: 123e4567-e89b-12d3-a456-426614174001
+        type: string
+      email:
+        example: email@gmail.com
+        type: string
+      first_name:
+        example: First Name
+        type: string
+      gender:
+        example: male
+        type: string
+      image_url:
+        example: http://example.com/image.png
+        type: string
+      last_name:
+        example: Last Name
+        type: string
+      password:
+        example: password
+        type: string
+      phone_number:
+        example: "+998901234567"
+        type: string
+      room_number:
+        example: 1
+        type: integer
+      salary:
+        example: 10
+        type: number
+      start_work_date:
+        example: "2012-12-12"
+        type: string
+      work_years:
+        example: 4
         type: integer
     type: object
   model_healthcare_service.DoctorRes:
@@ -431,6 +519,8 @@ definitions:
         type: string
       id:
         type: string
+      image_url:
+        type: string
       last_name:
         type: string
       order:
@@ -452,24 +542,33 @@ definitions:
     type: object
   model_healthcare_service.DoctorServicesReq:
     properties:
-      doctorId:
+      doctor_id:
+        example: 123e4567-e89b-12d3-a456-426614274001
         type: string
       duration:
+        example: "12:12"
+        type: string
+      id:
+        example: 123e4567-e89b-12d3-a456-426614274001
         type: string
       name:
+        example: name
         type: string
-      offlinePrice:
+      offline_price:
+        example: 1.1
         type: number
-      onlinePrice:
+      online_price:
+        example: 1.1
         type: number
-      specializationId:
+      specialization_id:
+        example: 123e4567-e89b-12d3-a456-426614375001
         type: string
     type: object
   model_healthcare_service.DoctorServicesRes:
     properties:
-      createdAt:
+      created_at:
         type: string
-      doctorId:
+      doctor_id:
         type: string
       duration:
         type: string
@@ -477,43 +576,110 @@ definitions:
         type: string
       name:
         type: string
-      offlinePrice:
+      offline_price:
         type: number
-      onlinePrice:
+      online_price:
         type: number
       order:
         type: integer
-      specializationId:
+      specialization_id:
         type: string
-      updatedAt:
+      updated_at:
         type: string
+    type: object
+  model_healthcare_service.DoctorUpdateReq:
+    properties:
+      address:
+        example: Addres
+        type: string
+      bio:
+        example: Biography
+        type: string
+      birth_date:
+        example: "2012-12-12"
+        type: string
+      city:
+        example: City
+        type: string
+      country:
+        example: Country
+        type: string
+      department_id:
+        example: 123e4567-e89b-12d3-a456-426614174001
+        type: string
+      email:
+        example: email@gmail.com
+        type: string
+      end-work-date:
+        example: "2022-12-12"
+        type: string
+      first_name:
+        example: First Name
+        type: string
+      gender:
+        example: male
+        type: string
+      id:
+        example: 123e4567-e89b-12d3-a456-426614274001
+        type: string
+      image_url:
+        example: http://example.com/image.png
+        type: string
+      last_name:
+        example: Last Name
+        type: string
+      password:
+        example: password
+        type: string
+      phone_number:
+        example: "+998901234567"
+        type: string
+      room_number:
+        example: 1
+        type: integer
+      salary:
+        example: 10
+        type: number
+      start_work_date:
+        example: "2012-12-12"
+        type: string
+      work_years:
+        example: 4
+        type: integer
     type: object
   model_healthcare_service.DoctorWorkingHoursReq:
     properties:
-      dayOfWeek:
+      day_of_week:
+        example: Monday
         type: string
-      doctorId:
+      doctor_id:
+        example: 123e4567-e89b-12d3-a456-426614274001
         type: string
-      finishTime:
+      finish_time:
+        example: "12:00:00"
         type: string
-      startTime:
+      id:
+        example: 123e4567-e89b-12d3-a456-426614274001
+        type: string
+      start_time:
+        example: "12:00:00"
         type: string
     type: object
   model_healthcare_service.DoctorWorkingHoursRes:
     properties:
-      createdAt:
+      created_at:
         type: string
-      dayOfWeek:
+      day_of_week:
         type: string
-      doctorId:
+      doctor_id:
         type: string
-      finishTime:
+      finish_time:
         type: string
       id:
         type: integer
-      startTime:
+      start_time:
         type: string
-      updatedAt:
+      updated_at:
         type: string
     type: object
   model_healthcare_service.ListDepartments:
@@ -529,7 +695,7 @@ definitions:
     properties:
       count:
         type: integer
-      doctorServices:
+      doctor_services:
         items:
           $ref: '#/definitions/model_healthcare_service.DoctorServicesRes'
         type: array
@@ -572,37 +738,50 @@ definitions:
     type: object
   model_healthcare_service.ReasonsReq:
     properties:
-      imageUrl:
+      id:
+        example: 123e4567-e89b-12d3-a456-426614375001
+        type: string
+      image_url:
+        example: http://example.com/image.png
         type: string
       name:
+        example: name
         type: string
-      specializationId:
+      specialization_id:
+        example: 123e4567-e89b-12d3-a456-426614375001
         type: string
     type: object
   model_healthcare_service.ReasonsRes:
     properties:
-      createdAt:
+      created_at:
         type: string
       id:
         type: string
-      imageUrl:
+      image_url:
         type: string
       name:
         type: string
-      specializationId:
+      specialization_id:
         type: string
-      updatedAt:
+      updated_at:
         type: string
     type: object
   model_healthcare_service.SpecializationReq:
     properties:
       department_id:
+        example: 123e4567-e89b-12d3-a456-426614174003
         type: string
       description:
+        example: Specialization description
+        type: string
+      id:
+        example: 123e4567-e89b-12d3-a456-426614174003
         type: string
       image_url:
+        example: http://example.com/image.png
         type: string
       name:
+        example: Specialization
         type: string
     type: object
   model_healthcare_service.SpecializationRes:
@@ -677,6 +856,8 @@ definitions:
       gender:
         type: string
       id:
+        type: string
+      image_url:
         type: string
       last_name:
         type: string
@@ -783,6 +964,8 @@ definitions:
       id:
         example: UUID
         type: string
+      image_url:
+        type: string
       last_name:
         example: To'rayevich
         type: string
@@ -828,10 +1011,7 @@ paths:
       description: DeleteBookedAppointment - API to delete a appointment
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -856,8 +1036,11 @@ paths:
       - application/json
       description: ListBookedAppointments - API to list doctor notes
       parameters:
-      - in: query
-        name: field
+      - description: searchField
+        enum:
+        - key
+        in: query
+        name: searchField
         type: string
       - in: query
         name: limit
@@ -923,11 +1106,6 @@ paths:
       - application/json
       description: UpdateDoctorNote - API to update appointment
       parameters:
-      - description: appointment_id
-        in: query
-        name: appointment_id
-        required: true
-        type: string
       - description: UpdateAppointmentReq
         in: body
         name: UpdateAppointmentReq
@@ -958,12 +1136,11 @@ paths:
       - application/json
       description: GetBookedAppointment - API to get Booked appointment by ID
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
-        type: string
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -989,10 +1166,7 @@ paths:
       description: DeleteArchive - Api for delete archive
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -1017,8 +1191,11 @@ paths:
       - application/json
       description: ListArchive - Api for list archive
       parameters:
-      - in: query
-        name: field
+      - description: searchField
+        enum:
+        - status
+        in: query
+        name: searchField
         type: string
       - in: query
         name: limit
@@ -1084,11 +1261,6 @@ paths:
       - application/json
       description: UpdateArchive - Api for update archive
       parameters:
-      - description: archive_id
-        in: query
-        name: archive_id
-        required: true
-        type: string
       - description: UpdateArchiveReq
         in: body
         name: UpdateArchiveReq
@@ -1119,12 +1291,11 @@ paths:
       - application/json
       description: GetArchive - Api for get archive
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
-        type: string
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -1258,6 +1429,36 @@ paths:
       summary: Register
       tags:
       - customer
+  /v1/customer/send-otp:
+    post:
+      consumes:
+      - application/json
+      description: SenOtpCode - Api for sen otp code users
+      parameters:
+      - description: RegisterModelReq
+        in: body
+        name: SenOtpCode
+        required: true
+        schema:
+          $ref: '#/definitions/model_user_service.PhoneNumberReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_user_service.MessageRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model_common.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model_common.StandardErrorModel'
+      summary: SenOtpCode
+      tags:
+      - customer
   /v1/customer/update-password:
     put:
       consumes:
@@ -1358,10 +1559,7 @@ paths:
       description: DeleteDepartment - Api for delete department
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -1387,9 +1585,6 @@ paths:
       description: ListDepartments - Api for list department
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
         name: limit
         type: string
       - in: query
@@ -1400,6 +1595,13 @@ paths:
         type: string
       - in: query
         name: value
+        type: string
+      - description: search
+        enum:
+        - name
+        - description
+        in: query
+        name: search
         type: string
       produces:
       - application/json
@@ -1459,11 +1661,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model_healthcare_service.DepartmentReq'
-      - description: id
-        in: query
-        name: id
-        required: true
-        type: string
       produces:
       - application/json
       responses:
@@ -1488,11 +1685,10 @@ paths:
       - application/json
       description: GetDepartment - Api for get department
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+      - description: id
+        in: query
+        name: id
+        required: true
         type: string
       produces:
       - application/json
@@ -1519,10 +1715,7 @@ paths:
       description: DeleteDoctor - Api for delete doctor
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -1548,9 +1741,6 @@ paths:
       description: ListDoctors - Api for list doctor
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
         name: limit
         type: string
       - in: query
@@ -1562,13 +1752,27 @@ paths:
       - in: query
         name: value
         type: string
+      - description: search
+        enum:
+        - first_name
+        - last_name
+        - gender
+        - phone_number
+        - email
+        - address
+        - city
+        - country
+        - biography
+        in: query
+        name: search
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model_healthcare_service.ListDoctors'
+            $ref: '#/definitions/model_healthcare_service.DoctorAndDoctorHours'
         "400":
           description: Bad Request
           schema:
@@ -1619,12 +1823,7 @@ paths:
         name: UpdateDoctorReq
         required: true
         schema:
-          $ref: '#/definitions/model_healthcare_service.DoctorReq'
-      - description: id
-        in: query
-        name: id
-        required: true
-        type: string
+          $ref: '#/definitions/model_healthcare_service.DoctorUpdateReq'
       produces:
       - application/json
       responses:
@@ -1650,10 +1849,7 @@ paths:
       description: DeleteDoctorNote - API to delete a doctor note
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -1678,8 +1874,11 @@ paths:
       - application/json
       description: ListDoctorNotes - API to list doctor notes
       parameters:
-      - in: query
-        name: field
+      - description: searchField
+        enum:
+        - prescription
+        in: query
+        name: searchField
         type: string
       - in: query
         name: limit
@@ -1745,11 +1944,6 @@ paths:
       - application/json
       description: UpdateDoctorNote - API to update a doctor note
       parameters:
-      - description: notes_id
-        in: query
-        name: notes_id
-        required: true
-        type: string
       - description: UpdateDoctorNoteReq
         in: body
         name: UpdateDoctorNoteReq
@@ -1780,12 +1974,11 @@ paths:
       - application/json
       description: GetDoctorNote - API to get doctor note by ID
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
-        type: string
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -1811,10 +2004,7 @@ paths:
       description: DeleteDoctorService - Api for delete doctorServices
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -1840,9 +2030,6 @@ paths:
       description: ListDoctorServices - Api for list doctor_services
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
         name: limit
         type: string
       - in: query
@@ -1850,9 +2037,6 @@ paths:
         type: string
       - in: query
         name: page
-        type: string
-      - in: query
-        name: value
         type: string
       produces:
       - application/json
@@ -1912,11 +2096,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model_healthcare_service.DoctorServicesReq'
-      - description: id
-        in: query
-        name: id
-        required: true
-        type: string
       produces:
       - application/json
       responses:
@@ -1941,11 +2120,10 @@ paths:
       - application/json
       description: GetDoctorService - Api for get doctor_services
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+      - description: id
+        in: query
+        name: id
+        required: true
         type: string
       produces:
       - application/json
@@ -1972,10 +2150,7 @@ paths:
       description: DeleteDoctorTimes - Api for delete Doctor time
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -2000,8 +2175,11 @@ paths:
       - application/json
       description: ListDoctorTimes - Api for list doctor time
       parameters:
-      - in: query
-        name: field
+      - description: searchField
+        enum:
+        - status
+        in: query
+        name: searchField
         type: string
       - in: query
         name: limit
@@ -2067,11 +2245,6 @@ paths:
       - application/json
       description: UpdateDoctorTimes - Api for update doctor time
       parameters:
-      - description: doctor_time_id
-        in: query
-        name: doctor_time_id
-        required: true
-        type: string
       - description: UpdateDoctorTimeReq
         in: body
         name: UpdateDoctorTimeReq
@@ -2102,12 +2275,11 @@ paths:
       - application/json
       description: GetDoctorTimes - Api for get doctor time
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
-        type: string
+      - description: id
+        in: query
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -2133,10 +2305,7 @@ paths:
       description: DeleteDoctorWorkingHours - Api for delete doctor_working_hours
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -2162,9 +2331,6 @@ paths:
       description: ListDoctorWorkingHours - Api for list doctor_working_hours
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
         name: limit
         type: string
       - in: query
@@ -2175,6 +2341,12 @@ paths:
         type: string
       - in: query
         name: value
+        type: string
+      - description: search
+        enum:
+        - day_of_week
+        in: query
+        name: search
         type: string
       produces:
       - application/json
@@ -2234,11 +2406,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model_healthcare_service.DoctorWorkingHoursReq'
-      - description: id
-        in: query
-        name: id
-        required: true
-        type: string
       produces:
       - application/json
       responses:
@@ -2263,11 +2430,10 @@ paths:
       - application/json
       description: GetDoctorWorkingHours - Api for get doctor_working_hours
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+      - description: id
+        in: query
+        name: id
+        required: true
         type: string
       produces:
       - application/json
@@ -2293,11 +2459,10 @@ paths:
       - application/json
       description: GetDoctor - Api for get doctor
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+      - description: id
+        in: query
+        name: id
+        required: true
         type: string
       produces:
       - application/json
@@ -2305,7 +2470,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model_healthcare_service.DoctorRes'
+            $ref: '#/definitions/model_healthcare_service.DoctorAndDoctorHours'
         "400":
           description: Bad Request
           schema:
@@ -2315,6 +2480,48 @@ paths:
           schema:
             $ref: '#/definitions/model_common.StandardErrorModel'
       summary: GetDoctor
+      tags:
+      - Doctor
+  /v1/doctor/spec:
+    get:
+      consumes:
+      - application/json
+      description: ListDoctorsBySpecializationId - Api for list doctors by specialization
+        id
+      parameters:
+      - in: query
+        name: limit
+        type: string
+      - in: query
+        name: order_by
+        type: string
+      - in: query
+        name: page
+        type: string
+      - in: query
+        name: value
+        type: string
+      - description: specialization_id
+        in: query
+        name: specialization_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model_healthcare_service.ListDoctors'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model_common.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model_common.StandardErrorModel'
+      summary: ListDoctorsBySpecializationId
       tags:
       - Doctor
   /v1/file-upload:
@@ -2328,6 +2535,16 @@ paths:
         name: file
         required: true
         type: file
+      - description: bucket
+        enum:
+        - department
+        - reasons
+        - specialization
+        - doctor
+        - user
+        in: query
+        name: bucketName
+        type: string
       produces:
       - application/json
       responses:
@@ -2353,10 +2570,7 @@ paths:
       description: DeletePatient - Api for delete patient
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -2381,8 +2595,17 @@ paths:
       - application/json
       description: ListPatient - Api for list patient
       parameters:
-      - in: query
-        name: field
+      - description: searchField
+        enum:
+        - first_name
+        - last_name
+        - blood_group
+        - phone_number
+        - address
+        - city
+        - country
+        in: query
+        name: searchField
         type: string
       - in: query
         name: limit
@@ -2448,11 +2671,6 @@ paths:
       - application/json
       description: UpdatePatient - Api for update patient
       parameters:
-      - description: patient_id
-        in: query
-        name: patient_id
-        required: true
-        type: string
       - description: UpdatePatientReq
         in: body
         name: UpdatePatientReq
@@ -2483,11 +2701,10 @@ paths:
       - application/json
       description: GetPatient - Api for get patient
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+      - description: id
+        in: query
+        name: id
+        required: true
         type: string
       produces:
       - application/json
@@ -2548,10 +2765,7 @@ paths:
       description: DeleteReasons - Api for delete reasons
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -2577,9 +2791,6 @@ paths:
       description: ListReasons - Api for list reasons
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
         name: limit
         type: string
       - in: query
@@ -2590,6 +2801,12 @@ paths:
         type: string
       - in: query
         name: value
+        type: string
+      - description: search
+        enum:
+        - name
+        in: query
+        name: search
         type: string
       produces:
       - application/json
@@ -2649,11 +2866,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model_healthcare_service.ReasonsReq'
-      - description: id
-        in: query
-        name: id
-        required: true
-        type: string
       produces:
       - application/json
       responses:
@@ -2678,11 +2890,10 @@ paths:
       - application/json
       description: GetReasons - Api for get reasons
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+      - description: id
+        in: query
+        name: id
+        required: true
         type: string
       produces:
       - application/json
@@ -2766,10 +2977,7 @@ paths:
       description: DeleteSpecialization - Api for delete specialization
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+        name: id
         type: string
       produces:
       - application/json
@@ -2795,9 +3003,6 @@ paths:
       description: ListSpecializations - Api for list specialization
       parameters:
       - in: query
-        name: field
-        type: string
-      - in: query
         name: limit
         type: string
       - in: query
@@ -2808,6 +3013,17 @@ paths:
         type: string
       - in: query
         name: value
+        type: string
+      - description: department_id
+        in: query
+        name: department_id
+        type: string
+      - description: search
+        enum:
+        - name
+        - description
+        in: query
+        name: search
         type: string
       produces:
       - application/json
@@ -2896,11 +3112,10 @@ paths:
       - application/json
       description: GetSpecialization - Api for get specialization
       parameters:
-      - in: query
-        name: field
-        type: string
-      - in: query
-        name: value
+      - description: id
+        in: query
+        name: id
+        required: true
         type: string
       produces:
       - application/json

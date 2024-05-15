@@ -73,21 +73,20 @@ func (h *HandlerV1) CreateArchive(c *gin.Context) {
 // @Tags Archive
 // @Accept json
 // @Produce json
-// @Param GetArchiveReq query models.FieldValueReq true "FieldValueReq"
+// @Param id query integer true "id"
 // @Success 200 {object} model_booking_service.Archive
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/archive/get [get]
 func (h *HandlerV1) GetArchive(c *gin.Context) {
-	field := c.Query("field")
-	value := c.Query("value")
+	id := c.Query("id")
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.Context.Timeout))
 	defer cancel()
 
 	archive, err := h.serviceManager.BookingService().ArchiveService().GetArchive(ctx, &pb.ArchiveFieldValueReq{
-		Field:    field,
-		Value:    value,
+		Field:    "id",
+		Value:    id,
 		IsActive: false,
 	})
 
@@ -115,20 +114,21 @@ func (h *HandlerV1) GetArchive(c *gin.Context) {
 // @Tags Archive
 // @Accept json
 // @Produce json
+// @Param searchField query string false "searchField" Enums(status)
 // @Param ListReq query models.ListReq false "ListReq"
 // @Success 200 {object} model_booking_service.ArchivesType
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/archive [get]
 func (h *HandlerV1) ListArchive(c *gin.Context) {
-	field := c.Query("field")
+	field := c.Query("searchField")
 	value := c.Query("value")
 	limit := c.Query("limit")
 	page := c.Query("page")
 	orderBy := c.Query("orderBy")
 
 	pageInt, limitInt, err := e.ParseQueryParams(page, limit)
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, "ListArchive") {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, "ListArchive") {
 		return
 	}
 
@@ -176,14 +176,12 @@ func (h *HandlerV1) ListArchive(c *gin.Context) {
 // @Tags Archive
 // @Accept json
 // @Produce json
-// @Param archive_id  query string true "archive_id"
 // @Param UpdateArchiveReq body model_booking_service.UpdateArchiveReq true "UpdateArchiveReq"
 // @Success 200 {object} model_booking_service.Archive
 // @Failure 400 {object} model_common.StandardErrorModel
 // @Failure 500 {object} model_common.StandardErrorModel
 // @Router /v1/archive [put]
 func (h *HandlerV1) UpdateArchive(c *gin.Context) {
-	id := c.Query("archive_id")
 	var (
 		body        model_booking_service.UpdateArchiveReq
 		jsonMarshal protojson.MarshalOptions
@@ -201,7 +199,7 @@ func (h *HandlerV1) UpdateArchive(c *gin.Context) {
 
 	archive, err := h.serviceManager.BookingService().ArchiveService().UpdateArchive(ctx, &pb.UpdateArchiveReq{
 		Field:                "id",
-		Value:                id,
+		Value:                body.ArchiveId,
 		DoctorAvailabilityId: body.DoctorAvailabilityId,
 		StartTime:            body.StartTime,
 		EndTime:              body.EndTime,
