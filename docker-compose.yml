@@ -263,7 +263,11 @@ services:
     environment:
       - MINIO_ROOT_USER=dennic
       - MINIO_ROOT_PASSWORD=dennic_service
-      - MINIO_DEFAULT_BUCKETS=dennic
+      - MINIO_DEFAULT_BUCKETS=department
+      - MINIO_DEFAULT_BUCKETS=doctor
+      - MINIO_DEFAULT_BUCKETS=reasons
+      - MINIO_DEFAULT_BUCKETS=specialization
+      - MINIO_DEFAULT_BUCKETS=user
 
 
 
