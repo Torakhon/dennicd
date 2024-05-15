@@ -52,14 +52,14 @@ func New() *Config {
 	var config Config
 
 	// general configuration
-	config.APP = getEnv("APP", "app")
+	config.APP = getEnv("APP", "dennic_healthcare_service")
 	config.Environment = getEnv("ENVIRONMENT", "develop")
 	config.LogLevel = getEnv("LOG_LEVEL", "debug")
 	config.RPCPort = getEnv("RPC_PORT", ":9080")
 	config.Context.Timeout = getEnv("CONTEXT_TIMEOUT", "30s")
 
 	// db configuration
-	config.DB.Host = getEnv("POSTGRES_HOST", "localhost")
+	config.DB.Host = getEnv("POSTGRES_HOST", "postgresdb")
 	config.DB.Port = getEnv("POSTGRES_PORT", "5432")
 	config.DB.User = getEnv("POSTGRES_USER", "postgres")
 	config.DB.Password = getEnv("POSTGRES_PASSWORD", "20030505")
@@ -67,7 +67,7 @@ func New() *Config {
 	config.DB.Name = getEnv("POSTGRES_DATABASE", "dennic")
 
 	// otlp collector configuration
-	config.OTLPCollector.Host = getEnv("OTLP_COLLECTOR_HOST", "0.0.0.0")
+	config.OTLPCollector.Host = getEnv("OTLP_COLLECTOR_HOST", "otlp-collector")
 	config.OTLPCollector.Port = getEnv("OTLP_COLLECTOR_PORT", ":4317")
 
 	// kafka configuration
@@ -75,7 +75,7 @@ func New() *Config {
 	config.Kafka.Topic.Healthcare = getEnv("KAFKA_TOPIC_HEALTHCARE_CREATE", "user.created")
 
 	// Minio
-	config.MinioService.Endpoint = getEnv("MINIO_SERVICE_ENDPOINT", "http://dennic.uz:9000")
+	config.MinioService.Endpoint = getEnv("MINIO_SERVICE_ENDPOINT", "minio:9000")
 	config.MinioService.Bucket.Department = getEnv("MINIO_SERVICE_BUCKET_DEPARTMENT", "department")
 	config.MinioService.Bucket.Doctor = getEnv("MINIO_SERVICE_BUCKET_DOCTOR", "doctor")
 	config.MinioService.Bucket.Reasons = getEnv("MINIO_SERVICE_BUCKET_REASONS", "reasons")
