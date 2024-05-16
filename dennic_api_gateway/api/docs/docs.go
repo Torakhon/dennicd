@@ -5056,7 +5056,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.7",
-	Host:             "dennic.uz:9050",
+	Host:             "/v1",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "Dennic Project",

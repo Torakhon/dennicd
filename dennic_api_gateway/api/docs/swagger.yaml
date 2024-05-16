@@ -998,7 +998,7 @@ definitions:
       status:
         type: boolean
     type: object
-host: dennic.uz:9050
+host: /v1
 info:
   contact: {}
   title: Dennic Project

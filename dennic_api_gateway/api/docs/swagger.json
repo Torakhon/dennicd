@@ -5,7 +5,7 @@
         "contact": {},
         "version": "1.7"
     },
-    "host": "dennic.uz:9050",
+    "host": "/v1",
     "paths": {
         "/v1/appointment": {
             "get": {

@@ -478,22 +478,22 @@ func (h *HandlerV1) Login(c *gin.Context) {
 		return
 	}
 
-	sessions, err := h.serviceManager.SessionService().SessionService().GetUserSessions(ctx, &ps.StrUserReq{
-		UserId:   user.Id,
-		IsActive: false,
-	})
-
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
-		return
-	}
-
-	if sessions != nil {
-		if sessions.Count >= 3 {
-			err = errors.New("the number of devices has exceeded the limit")
-			_ = e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error())
-			return
-		}
-	}
+	//sessions, err := h.serviceManager.SessionService().SessionService().GetUserSessions(ctx, &ps.StrUserReq{
+	//	UserId:   user.Id,
+	//	IsActive: false,
+	//})
+	//
+	//if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
+	//	return
+	//}
+	//
+	//if sessions != nil {
+	//	if sessions.Count >= 3 {
+	//		err = errors.New("the number of devices has exceeded the limit")
+	//		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error())
+	//		return
+	//	}
+	//}
 
 	sessionId := uuid.New().String()
 
