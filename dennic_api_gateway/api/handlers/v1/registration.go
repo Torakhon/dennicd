@@ -50,7 +50,7 @@ func (h *HandlerV1) Register(c *gin.Context) {
 
 	err = body.Validate()
 
-	if e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error()) {
+	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
 		return
 	}
 
@@ -274,10 +274,10 @@ func (h *HandlerV1) ForgetPassword(c *gin.Context) {
 		return
 	}
 
-	codeRed, err := h.redis.Client.Get(ctx, body.PhoneNumber).Result()
-	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
-		return
-	}
+	codeRed, _ := h.redis.Client.Get(ctx, body.PhoneNumber).Result()
+	//if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
+	//	return
+	//}
 
 	if codeRed != "" {
 		err = errors.New(CODE_EXPIRATION_NOT_OVER)
