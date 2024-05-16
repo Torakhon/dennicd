@@ -998,7 +998,7 @@ definitions:
       status:
         type: boolean
     type: object
-host: /v1
+host: swag.dennic.uz
 info:
   contact: {}
   title: Dennic Project

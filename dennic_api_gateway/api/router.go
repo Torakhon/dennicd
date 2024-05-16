@@ -33,7 +33,7 @@ type RouteOption struct {
 // NewRoute
 // @title Dennic Project
 // @version 1.7
-// @host /v1
+// @host swag.dennic.uz
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
