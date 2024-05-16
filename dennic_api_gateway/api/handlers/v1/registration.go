@@ -9,6 +9,7 @@ import (
 	pb "dennic_api_gateway/genproto/user_service"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -47,7 +48,6 @@ func (h *HandlerV1) Register(c *gin.Context) {
 	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
 		return
 	}
-
 	err = body.Validate()
 
 	if e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY) {
@@ -133,12 +133,12 @@ func (h *HandlerV1) Verify(c *gin.Context) {
 	defer cancel()
 
 	redisRes, err := h.redis.Client.Get(ctx, body.PhoneNumber).Result()
-
 	if e.HandleError(c, err, h.log, http.StatusBadRequest, SERVICE_ERROR) {
 		return
 	}
 
 	err = json.Unmarshal([]byte(redisRes), &user)
+	fmt.Println(err, "==================")
 
 	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
 		return
@@ -274,10 +274,7 @@ func (h *HandlerV1) ForgetPassword(c *gin.Context) {
 		return
 	}
 
-	codeRed, _ := h.redis.Client.Get(ctx, body.PhoneNumber).Result()
-	//if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
-	//	return
-	//}
+	codeRed, err := h.redis.Client.Get(ctx, body.PhoneNumber).Result()
 
 	if codeRed != "" {
 		err = errors.New(CODE_EXPIRATION_NOT_OVER)
@@ -458,7 +455,7 @@ func (h *HandlerV1) Login(c *gin.Context) {
 
 	if !e.ValidatePassword(body.Password) {
 		err := errors.New("invalid password")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error())
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY)
 		return
 	}
 
@@ -474,26 +471,26 @@ func (h *HandlerV1) Login(c *gin.Context) {
 
 	if !e.CheckHashPassword(user.Password, body.Password) {
 		err = errors.New("incorrect password")
-		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error())
+		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY)
 		return
 	}
 
-	//sessions, err := h.serviceManager.SessionService().SessionService().GetUserSessions(ctx, &ps.StrUserReq{
-	//	UserId:   user.Id,
-	//	IsActive: false,
-	//})
-	//
-	//if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
-	//	return
-	//}
-	//
-	//if sessions != nil {
-	//	if sessions.Count >= 3 {
-	//		err = errors.New("the number of devices has exceeded the limit")
-	//		_ = e.HandleError(c, err, h.log, http.StatusBadRequest, err.Error())
-	//		return
-	//	}
-	//}
+	sessions, err := h.serviceManager.SessionService().SessionService().GetUserSessions(ctx, &ps.StrUserReq{
+		UserId:   user.Id,
+		IsActive: false,
+	})
+
+	if e.HandleError(c, err, h.log, http.StatusInternalServerError, SERVICE_ERROR) {
+		return
+	}
+
+	if sessions != nil {
+		if sessions.Count >= 3 {
+			err = errors.New("the number of devices has exceeded the limit")
+			_ = e.HandleError(c, err, h.log, http.StatusBadRequest, INVALID_REQUET_BODY)
+			return
+		}
+	}
 
 	sessionId := uuid.New().String()
 
